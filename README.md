@@ -1,4 +1,7 @@
+Installation:
 A set of scripts for legends of the jedi. Copy jedi file to /usr/local/bin/ along with gitpush and gitpull if you want to keep a github backup like this one.
+
+Install by using git clone github.com/bonginc/lotj-2024-local .tt/
 
 Connecting is done by, connect jedi after running the jedi file. 
 
