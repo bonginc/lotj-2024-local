@@ -15,5 +15,5 @@ mapoff ends and saves map
 
 
 Launching from a planet:
-When in a ship laun <planet>, i.e. laun arka will launch, fly through hyperspace, course to the planet and land without any assistance unless the landing pad has changed or coordinates. Also all laun planets are 4 letters of the planet unless it's nal hutta, i.e. laun nal, or mon cala, i.e. laun mon
+When in a ship laun \<planet\>, i.e. laun arka will launch, fly through hyperspace, course to the planet and land without any assistance unless the landing pad has changed or coordinates. Also all laun planets are 4 letters of the planet unless it's nal hutta, i.e. laun nal, or mon cala, i.e. laun mon
 
