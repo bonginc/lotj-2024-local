@@ -1,0 +1,57 @@
+#nop screen variables for tabbedWindow.tin
+#screen get cols getColsVar
+#screen get rows getRowsVar
+
+#math {mathColsVar} {$getColsVar / 2}
+#math {mathRowsVar} {$getRowsVar / 6}
+#math {halfColsVar} {$getColsVar / 2 + 1}
+#math {thirdColsVar} {$getColsVar / 3}
+#math {oneThirdColsVar} {$halfColsVar + 18}
+
+#split 10 6 0 {$halfColsVar - 19}
+
+#read .tt/world.tin
+#read .tt/update.tin
+
+#nop main start files. If you find errors start here
+#event {SESSION CONNECTED}
+{
+    #read .tt/macros.tin;
+    #read .tt/autotarget.tin;
+    #read .tt/locate.tin;
+    #read .tt/repairarmor.tin;
+    #read .tt/msdp.tin;
+    #read .tt/function.tin;
+    #read .tt/variables.tin;
+    #nop #read .tt/ponder.tin;
+    #read .tt/macros.tin;
+    #read .tt/autotarget.tin;
+    #read .tt/locate.tin;
+    #read .tt/repairarmor.tin;
+    #read .tt/alias.tin;
+    #nop #read .tt/fishing.tin;
+    #read .tt/study.tin;
+    #read .tt/research.tin;
+    #nop #read .tt/radar.tin;
+    #nop #read .tt/carbon.tin;
+    #read .tt/event.tin;
+    #nop #read .tt/search.tin;
+    #read .tt/automap.tin;
+    #nop #read .tt/sound.tin;
+    #nop #read .tt/path.tin;
+    #read .tt/tab.tin;
+    #nop #read .tt/arm.tin;
+    #read .tt/ships.tin;
+    #read .tt/planet.tin;
+    #read .tt/highlight.tin;
+    #read .tt/tabbedWindow.tin;
+    #read .tt/actionLog.tin;
+    #read .tt/log.tin;
+
+    #map read .tt/map;
+    #map flag vtmap on;
+    log on;
+    msdp_report;
+    #config mouse on;
+    comm_window_draw_tabs
+}

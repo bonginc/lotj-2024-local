@@ -1,0 +1,258 @@
+#nop F1
+#macro {\eOP} 
+{
+    #nop F1;
+    #echo {Facing $targets[1]};
+    face $targets[1]
+};
+
+#nop Shift F1
+#macro {\e[1;2P} 
+{
+    #nop F1;
+    #echo {Targeting $targets[1]};
+    target $targets[1]
+}
+
+#nop F2
+#macro {\eOQ}
+{
+  #if {$battleSet == 1} {
+  	#nop F2;
+    #echo {Battlegroup Firing Ions $targets[1]};
+    bfi;
+    fire ion
+  };
+  #else {
+  	#echo {Firing ions $targets[1]};
+	fi
+  }
+}
+
+#nop F3
+#macro {\eOR}
+{
+  #if {$battleSet == 1} {
+    #echo {Battle Firing Autoblasters: $targets[1]};
+    bn all fire;
+    fire
+  };  
+  #else {
+	  #nop F3;
+	  #echo {Firing Autoblasters: $targets[1]};
+	  fire
+  }
+}
+
+#nop F4
+#macro {\eOS} 
+{	
+  #if {$battleSet == 1} {
+    #nop {F4};
+    #echo {Battle fire Lasers $targets[1]};
+    bn all fire laser;
+    fire laser
+  };
+  #else {
+    #nop <F4>;
+  	#echo {Firing Lasers $targets[1]};
+    #nop #echo Backstab $targets[1];
+    #nop backstab $targets[1];
+    fire laser
+  }
+}
+
+#nop F5
+#macro {\e[15}	
+{	
+	#nop F5, Hide, Track target, Room $alreadyInRoom;
+	#if {"$alreadyInRoom" == "0"}
+	{
+		#action {You're already in the same room!}
+		{
+			ap $targets[1];
+			#action {You step closer to%*}
+			{
+        #if ("$hide" == "1") {
+			    hide;
+        };
+				draw;
+				$ambushOrBackstab $targets[1];
+				#unaction {You step closer to%*};
+			};
+			#unaction {You're already in the same room!};
+		};
+	};
+	#if {"$targets[1]" == "$targets[1]"} 
+	{	
+		#echo {TRACKING: $targets[1]};
+		track $targets[1];
+	
+		#action {You sense a trail towards the northwest...}
+		{
+			nw;
+			#unaction You sense a trail towards the northwest...
+		};
+	
+		#action {You sense a trail towards the northeast...}
+		{
+			ne;
+			#unaction You sense a trail towards the northeast...
+		};
+	
+		#action {You sense a trail towards the southwest...}
+		{
+			sw;
+			#unaction You sense a trail towards the southwest...
+		};
+
+		#action {You sense a trail towards the southeast...}
+		{
+			se;
+			#unaction You sense a trail towards the southeast...
+		};
+	
+		#action {You sense a trail towards the south...}
+		{
+			s;
+			#unaction You sense a trail towards the south...
+		};
+	
+		#action {You sense a trail towards the west...}
+		{
+			w;
+			#unaction You sense a trail towards the west...
+		};
+		
+		#action {You sense a trail towards the east...}
+		{
+			e;
+			#unaction You sense a trail towards the east...
+		};	
+
+		#action {You sense a trail towards the north...}
+		{
+			n;
+			#unaction You sense a trail towards the north...
+		};
+		#action {You sense a trail towards the up...}
+		{
+			u;
+			#unaction You sense a trail towards the up...
+		};
+		#action {You sense a trail towards the down...}
+		{
+			d;
+			#unaction You sense a trail towards the down...
+		};
+	};
+	#else 
+	{
+		#echo Hiding;
+		hide
+	}
+}
+
+#nop Shift F5
+#macro {\e[15;2-}	
+{
+    comm_window_draw_tabs;
+    comm_window_tab_click broadcasts;
+}
+
+#nop Shift F6
+#macro {\e[17;2~}
+{
+    comm_window_draw_tabs;
+    comm_window_tab_click broadcasts;
+}
+
+#nop F6
+#macro {\e[17~}	
+{
+  #if {$battleSet == 1} {
+    #nop F6;
+    #echo {Batllegroup Firing Torpedoes: $targets[1]};
+    bn all fire torp;
+    fire torp
+  };
+  #else {
+    #echo {Firing Torpedoes: $targets[1]};
+    fire torp
+  }
+}
+
+#nop Shift F7
+#macro {\e[18;2~}
+{
+    comm_window_draw_tabs;
+    comm_window_tab_click clan;
+}
+
+#nop F7
+#macro {\e[18~}
+{
+  #if {$battleSet == 1} {
+    #echo {Battlegroup Firing Rockets: $targets[1]};
+    bn all fire rocket;
+    fire rocket
+  };
+  #else {
+    #nop <F7>;
+    #echo {Firing Rockets: $targets[1]};
+    fire rocket
+  }
+}
+
+#nop F8
+#macro {\e[19~}
+{
+  #nop F8;
+  #echo {Recharge all shields!};
+  rech
+}
+
+#nop Shift F8
+#macro {\e[19;2~}
+{
+    comm_window_draw_tabs;
+    comm_window_tab_click comm
+}
+
+#nop Shift F9
+#macro {\e[20;2~}
+{
+    comm_window_draw_tabs;
+    comm_window_tab_click ooc
+}
+
+#nop F9
+#macro {\e[20~}	
+{
+	#nop F9;
+	use $flash;
+    #variable {flashlightToggle} {0}
+}
+
+#nop F10
+#macro {\e[21~}	
+{
+	#if {"$MSDP_HEALTH" == "$MSDP_HEALTHMAX"}
+	{
+		#ECHO Stop!;
+        remove medpac;
+        put medpac back;
+		#delay {2} {#unvariable {healthFull}};
+	};
+	#else
+	{
+		first;
+        #math {MSDP_MEDPACPOWER} {$MSDP_MEDPACPOWER - 1}
+	}
+}
+
+#variable {f1} {F1 missing command}
+#variable {flash} {flash}
+#variable {hide} {1}
+#variable {alreadyInRoom} {1}
+#variable {ambushOrBackstab} {backstab} 

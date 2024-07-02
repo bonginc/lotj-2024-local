@@ -1,0 +1,524 @@
+#CONFIG {AUTO TAB} {5000}
+#CONFIG {BUFFER SIZE} {1000000}
+#CONFIG {CHARSET} {ASCII}
+#CONFIG {COLOR PATCH} {ON}
+#CONFIG {COMMAND COLOR} {\e[0;37m}
+#CONFIG {COMMAND ECHO} {ON}
+#CONFIG {CONNECT RETRY} {15.0}
+#CONFIG {HISTORY SIZE} {9999}
+#CONFIG {LOG MODE} {plain}
+#CONFIG {MOUSE} {ON}
+#CONFIG {PACKET PATCH} {0.00}
+#CONFIG {REPEAT CHAR} {!}
+#CONFIG {REPEAT ENTER} {OFF}
+#CONFIG {SCROLL LOCK} {ON}
+#CONFIG {SPEEDWALK} {OFF}
+#CONFIG {TINTIN CHAR} {#}
+#CONFIG {VERBATIM} {OFF}
+#CONFIG {VERBATIM CHAR} {\}
+#CONFIG {VERBOSE} {OFF}
+#CONFIG {WORDWRAP} {ON}
+
+#PATHDIR {d} {u} {32}
+#PATHDIR {e} {w} {2}
+#PATHDIR {n} {s} {1}
+#PATHDIR {ne} {sw} {3}
+#PATHDIR {nw} {se} {9}
+#PATHDIR {s} {n} {4}
+#PATHDIR {se} {nw} {6}
+#PATHDIR {sw} {ne} {12}
+#PATHDIR {u} {d} {16}
+#PATHDIR {w} {e} {8}
+
+#TICKER {saveme} {save} {2600}
+#TICKER {stayon} {;}    {60}
+
+
+
+#nop ____________________________________
+#nop Button text
+
+#nop variables used in actionLog.tin file
+#VARIABLE {colorOne} {Blue}
+#VARIABLE {colorThree} {Blue}
+#VARIABLE {colorTwo} {Blue}
+
+#VARIABLE {boxvar} {pruned box}
+#VARIABLE alignvar calign
+#nop ____________________________________
+
+#nop Piloting Button labels
+#VARIABLE {combatBoxes}
+{
+  {1} {
+    {1} {Targ}
+    {2} {Fire}
+    {3} {FirIon}
+    {4} {FireRo}
+
+    {5} {FireMi}
+    {6} {FireTo}
+    {7} {Hyper}
+    {8} {CalY}
+
+    {9} {Radar}
+    {10}{Prox}
+    {11}{X-}
+    {12}{Look}
+    
+    {13}{Y+}
+    {14}{Ra}
+    {15}{Y-}
+    {16}{Spiral}
+
+    {17}{X+}
+    {18}{Status}
+    {19}{\nCombat\r}
+    {20}{\nPilot\r}
+    
+    {21}{\nTrack}
+    {22}{\nClear}
+  }
+  {2} {
+    {1} {Test1}
+    {2} {Test2}
+    {3} {FirIon}
+    {4} {FireRo}
+
+    {5} {FireMi}
+    {6} {FireTo}
+    {7} {Hyper}
+    {8} {Caly}
+
+    {9} {Radar}
+    {10}{Ra}
+    {11}{First}
+    {12}{calc}
+    
+    {13}{Rech}
+    {14}{Prox}
+    {15}{Status}
+    {16}{Radar}
+
+    {17}{Land}
+    {18}{Look}
+    {19}{\nCombat\r}
+    {20}{\nPilot\r}
+    
+    {21}{\nTrack}
+    {22}{\nClear}
+  }
+}
+
+#nop Pilot button command VARIABLE
+#VARIABLE {combatCommands} 
+{
+  {1} {
+    {1} {targ}
+    {2} {fire}
+    {3} {fire ion}
+    
+    {4} {fire rocket}
+    {5} {fire missile}
+    {6} {fire torpedo}
+    {7} {hyper}
+    {8} {cal yes}
+    
+    {9} {radar}
+    {10}{prox}
+    {11}{x-}
+    {12}{look}
+   
+    {13}{y+}
+    {14}{ra}
+    {15}{y-}
+    {16}{spiral}
+
+    {17}{x+}
+    {18}{status}
+    {19}{showCombat}
+    {20}{showPilot}
+
+    {21}{track $targets[1]}
+    {22}{cl}
+  }
+  {2} {
+    {1} {targ}
+    {2} {fire}
+    {3} {fire ion}
+    
+    {4} {fire rocket}
+    {5} {fire missile}
+    {6} {fire torpedo}
+    {7} {hyper}
+    {8} {cal yes}
+    
+    {9} {radar}
+    {10}{ra}
+    {11}{first}
+    {12}{calc}
+   
+    {13}{recharge}
+    {14}{p}
+    {15}{st}
+    {16}{radar}
+
+    {17}{land$planet}
+    {18}{look}
+    {19}{showCombat}
+    {20}{showPilot}
+
+    {21}{track $targets[1]}
+    {22}{cl}
+  }
+}
+
+
+
+#nop ________________ Cargo route setup ________________
+#VARIABLE {fillcargo} {$kashArka}
+#VARIABLE {kashArka} {pc arka;cargo food;pc kash;cargo electronics}
+#VARIABLE {coreCoruNal} {pc core;cargo electronics;pc coru;cargo spice; pc nal;cargo weapons}
+#variable {monTato} {pc mon;cargo common;pc tato;cargo water}
+#VARIABLE {ryloWroo} {pc rylo;cargo water;pc wroo;cargo precious}
+#variable {ryloTato} {pc rylo;cargo common;pc tato;cargo ele}
+#VARIABLE {tatoKash} {pc tato;cargo food;pc kash;cargo common}
+#variable {naltato} {pc nal;cargo common;pc tato;cargo weapons}
+#VARIABLE {cargo} {0}
+#nop ________________ Cargo route setup ________________
+
+
+
+#VARIABLE {alderaan} {aldera}
+#variable {alderaan1} {A Residential landing pad}
+#VARIABLE {alreadyInRoom} {1}
+#VARIABLE {ammo} {ammo}
+#VARIABLE {ammoCase} {bando}
+#VARIABLE {amount} {500}
+#VARIABLE {arkania} {a}
+#VARIABLE {backCloak} {huur}
+#VARIABLE {backpack} {backpack}
+#VARIABLE {bank}
+{
+    {1} {}
+}
+#VARIABLE {battleList}
+{
+    {1} {"Enter the first battleship name:"}
+    {2} {"Enter the second battleship name:"}
+    {3} {"Enter the last battleship name;"}
+}
+#VARIABLE {battleOne} {}
+#VARIABLE {battleThree} {}
+#VARIABLE {battleTwo} {}
+#VARIABLE {battleset} {0}
+#VARIABLE {bcomponent} {cruiser}
+#VARIABLE {bespin} {platform}
+#VARIABLE {bhatch} {20470}
+#VARIABLE {boolean} {true}
+#VARIABLE {botToggle} {}
+#VARIABLE {botcommand} {slice}
+#VARIABLE {bountyLink} {6279}
+#VARIABLE {bpart} {hull}
+#VARIABLE {bship} {ImpCargo04}
+#VARIABLE {build} {makearmor a}
+#VARIABLE {buildship} {hull}
+#VARIABLE {buttonvar} {1}
+#VARIABLE {buttonToggle} {showCombat}
+#VARIABLE {canteen} {canteen}
+#VARIABLE {carbrun} {se;se;s;s;ne;ne;sw;sw;s;sw;s;sw}
+#VARIABLE {circuit} {a simple hyperdrive circuit}
+#variable {cloak} {bear}
+#VARIABLE {cloakEnvi} {1}
+#VARIABLE {cloth} {body a thermal jacket with a zipper}
+#VARIABLE {code} {02132}
+#VARIABLE {colorMode} {tonumber{GetVariable("colorMode")}}
+
+
+#VARIABLE {combat} 
+{
+    {1} {throw}
+    {2} {blasters}
+    {3} {vibro-blades}
+    {4} {scan}
+    {5} {kick}
+    {6} {mount}
+    {7} {grenades}
+    {8} {force pikes}
+    {9} {bowcasters}
+    {10}{rescue}
+    {11}{snipe}
+    {12}{advanced vibroblade}
+    {13}{advanced blaster}
+    {14}{advanced forcepike}
+    {15}{bash}
+    {16}{second attack}
+    {17}{advanced bowcaster}
+    {18}{dodge}
+    {19}{disarm}
+    {20}{dual wield}
+    {21}{gouge}
+    {22}{berserk}
+    {23}{enhanced damage}
+    {24}{mines}
+    {25}{grip}
+    {26}{unarmed combat}
+    {27}{hitall}
+    {28}{blaster mastery}
+    {29}{forcepike mastery}
+    {30}{aim}
+    {31}{bowcaster mastery}
+    {32}{blastdoor}
+    {33}{flurry}
+}
+
+
+#VARIABLE {combatLevel} {stop}
+
+
+#VARIABLE {comm1} {aur}
+#VARIABLE {comm2} {besh}
+#VARIABLE {comm3} {cresh}
+#VARIABLE {comm4} {dorn}
+#VARIABLE {comm5} {esk}
+#VARIABLE {comm6} {forn}
+#VARIABLE {comm7} {grek}
+
+
+#VARIABLE {container} {hold a simple leather wallet}
+#VARIABLE {corellia} {beta}
+#VARIABLE {coruscant} {cargo}
+#VARIABLE {dac} {west}
+#VARIABLE {damageDelt} {}
+#variable {dant} {jedi}
+#VARIABLE {delay} {2}
+#VARIABLE {direction} {look}
+#VARIABLE {dismantle} {hull 1}
+#VARIABLE {docking} {34604}
+#VARIABLE {drawHols} {Draw}
+#VARIABLE {drawSaber} {Repe}
+#VARIABLE {drawSaberVar} {1}
+#VARIABLE {drink} {coffeine}
+#VARIABLE {droid} {droid}
+#VARIABLE {dship} {Vorodash}
+#variable {enemyradarCoords} {}
+#VARIABLE {entership} {venter}
+
+#variable {engineering} 
+{
+    {1} {makeclothing}
+    {2} {makecontainer}
+    {3} {makecanteen}
+    {4} {gather}
+    {5} {makecircuit}
+    {6} {makeflashlight}
+    {7} {makeholster}
+    {8} {makecomlink}
+    {9} {makegoggles}
+    {10}{repairarmor}
+    {11}{repairdoor}
+    {12}{survey}
+    {13}{repairweapon}
+    {14}{makedatapad}
+    {15}{makejewelry}
+    {16}{enhance armor}
+    {17}{repairstructure}
+    {18}{gemcutting}
+    {19}{makeblade}
+    {20}{repairhatch}
+    {21}{tuneship}
+    {22}{repairhull}
+    {23}{repairdroid}
+    {24}{makeforcepike}
+    {25}{makeblaster}
+    {26}{makelandmine}
+    {27}{makegrenade}
+    {28}{upgradeship}
+    {29}{makebowcaster}
+    {30}{makearmor}
+    {31}{buildstructure}
+    {32}{upgradedroid}
+    {33}{imbue}
+    {34}{makedroid}
+    {35}{restring}
+    {36}{buildship}
+}
+
+#variable {espionage} {
+    {1} {duplicate}
+    {2} {swipe}
+    {3} {tail}
+    {4} {conceal}
+    {5} {makebinders}
+    {6} {sabotage}
+    {7} {makecamera}
+    {8} {install_camera}
+    {9} {doorcut}
+    {10}{sharp eye}
+    {11}{monitor_camera}
+    {12}{camera_sweep}
+    {13}{blackjack}
+    {14}{makecutter}
+}
+
+#VARIABLE {firs} {1}
+#VARIABLE {flash} {flashlight}
+#VARIABLE {flashlightOnOff} {}
+#VARIABLE {gains} {}
+#VARIABLE {gotovar} {0}
+#VARIABLE {hatch} {50004}
+#VARIABLE {holster} {crimson}
+#VARIABLE {intercom} {0}
+#VARIABLE {jewelry} {wrist a medical ID bracelet}
+#VARIABLE {kash} {rw}
+#VARIABLE {korriban} {dre}
+
+#variable {leadership}
+{
+    {1} {call}
+    {2} {research}
+    {3} {teach}
+    {4} {makefood}
+    {5} {makedrink}
+    {6} {jail}
+    {7} {smalltalk}
+    {8} {bribe}
+    {9} {broadcast}
+    {10}{propaganda}
+}
+
+
+
+#VARIABLE {level} {stop}
+#VARIABLE {locateship} {}
+#VARIABLE {locked} {1}
+#VARIABLE {lorrd} {capital}
+#VARIABLE {mand} {alpha}
+#VARIABLE {mapCoords} {2 94 14 -4}
+#variable {mapvar} {0}
+#VARIABLE {medamount} {13}
+
+#variable {medical}
+{
+    {1} {aid}
+    {2} {first aid}
+    {3} {diagnose}
+    {4} {makemedpac}
+    {5} {revive}
+    {6} {doctor}
+    {7} {inject}
+    {8} {healwound}
+    {9} {cyber}
+}
+
+
+#VARIABLE {minstrel} {Capture}
+#VARIABLE {minus} {1}
+#VARIABLE {nabo} {theed}
+#VARIABLE {nalh} {gate 70}
+#VARIABLE {nofi} {1}
+#VARIABLE {off} {off}
+#VARIABLE {on} {on}
+#VARIABLE {ord} {alpha}
+#VARIABLE {order} {all}
+
+
+#variable {piloting}
+{
+    {1} {navigation}
+    {2} {ship systems}
+    {3} {small spacecraft}
+    {4} {weapon systems}
+    {5} {space combat 1}
+    {6} {dock}
+    {7} {fly}
+    {8} {tractor beams}
+    {9} {ship maintenance}
+    {10}{medium spacecraft}
+    {11}{roll}
+    {12}{emergency_refuel}
+    {13}{shipdodge}
+    {14}{corvette spacecraft}
+    {15}{large spacecraft}
+    {16}{space combat 2}
+    {17}{heavy spacecraft}
+    {18}{space combat 3}
+}
+
+
+#VARIABLE {pirate} {veeter}
+#VARIABLE {pirateKills} {}
+#VARIABLE {planet} {}
+#variable {plusMinus} {}
+#VARIABLE {radarOn} {1}
+#VARIABLE {researchList} {}
+#VARIABLE {result} {bobDONE}
+#variable {rship} {rhkroo}
+#VARIABLE {ryloth} {alpha}
+#VARIABLE {scanOn} {1}
+#VARIABLE {scanvar} {1}
+#VARIABLE {scanvarlabel} {Scan}
+#VARIABLE {ship} {TrophyCase}
+
+#variable {shipList} 
+{
+    {1} {CR-90 Corellian Corvette}
+    {2} {Thranta-class Corvette}
+    {3} {AEG-77 Vigo Gunship}
+    {4} {GR-75 Medium Transport}
+    {5} {Nebula-class Freighter}
+    {6} {YT-1300 Light Freighter}
+    {7} {Electra-class BU-1C Transport}
+    {8} {Rho-class Transport Shuttle}
+    {9} {S-161 Stinger XL Yacht}
+    {10}{Aurek Light Fighter}
+    {11}{Flashfire Starfighter}
+    {12}{Preybird-class Starfighter}
+    {13}{R-980 Viper}
+    {14}{Star Saber XC-01 Starfighter}
+    {15}{Zimbus-98 Starfighter}
+}
+
+#variable {slicer}
+{
+    {1} {showclan}
+    {2} {showplanet}
+    {3} {secure}
+    {4} {slice}
+    {5} {remodulate}
+    {6} {short}
+    {7} {locateship}
+    {8} {fakesignal}
+    {9} {hack}
+    {10}{encrypt_file}
+    {11}{networkhack}
+    {12}{disable_security}
+    {13}{jam}
+    {14}{lifthack}
+    {15}{security}
+    {16}{decrypt_file}
+    {17}{crackdatapad}
+    {18}{protect_account}
+    {19}{matchvector}
+    {20}{tapdata}
+}
+
+
+#VARIABLE {sniper} {rifle}
+#variable {spice} {a ryll pill}
+#VARIABLE {sship} {Dormant}
+#VARIABLE {target} {self}
+#VARIABLE {targets} {}
+#VARIABLE {tato} {mos}
+#VARIABLE {tentContainer} {tentacle}
+#VARIABLE {textcolor} {10}
+#VARIABLE {timesBy} {750}
+#VARIABLE {tone} {nasal}
+#variable {true} {1}
+#VARIABLE {vendordesc} {Here is a vendor description}
+#VARIABLE {vitapill} {greaves}
+#VARIABLE {waist} {greave}
+#VARIABLE {walkVar} {1}
+#VARIABLE {wroo} {trade}
+#VARIABLE {zero} {0}
+#VARIABLE {zone} {mountain}

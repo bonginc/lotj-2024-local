@@ -1,0 +1,4 @@
+#action {You failed%*} {hack $bank}
+#action {Damnit%*} {hack $bank}
+#action {You steal%*} {hack $bank}
+

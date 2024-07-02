@@ -1,0 +1,62 @@
+#action {The ship lurches slightly as it comes out of hyperspace.} {r};
+
+#action {[Status]: Hyperspace calculations have been completed.}{#nop sn all hyperspace on;hy};
+
+#echo {sectsetup %%1 %%2};
+#echo {sector};
+#echo {clearmap};
+#variable {sectorCoordVar} {0 0 0}
+
+#alias {sectsetup}
+{	
+	#variable x %1;
+	#variable y %2;
+	#echo {$x $y};
+	calculate '$x $y' $sectorCoordVar;
+	#script {python .tt/addCoord.py %1 %2 black};
+	#script {python .tt/graphCoord.py}
+};
+
+#alias {y+}
+{
+	#variable x $MSDP_SHIPGALX;
+	#variable y $MSDP_SHIPGALY;
+	#variable plusMinus y+;
+	#math {y} {$y + 1};
+	#echo {$x $y +};
+	calculate '$x $y' $sectorCoordVar;
+	#script {python .tt/addCoord.py $x $y green}
+};
+
+#alias {y-}
+{
+	#variable x $MSDP_SHIPGALX;
+	#variable y $MSDP_SHIPGALY;
+	#variable plusMinus y-;
+	#math {y} {$y - 1};
+	#echo {$x $y -};
+	calculate '$x $y' $sectorCoordVar;
+	#script {python .tt/addCoord.py $x $y green}
+}
+
+#alias {x+}
+{
+	#variable x $MSDP_SHIPGALX;
+	#variable y $MSDP_SHIPGALY;
+	#variable plusMinus x+;
+	#math {x} {$x + 1};
+	#echo {$x $y +};
+	calculate '$x $y' $sectorCoordVar;
+	#script {python .tt/addCoord.py $x $y green}
+};
+
+#alias {x-}
+{
+	#variable x $MSDP_SHIPGALX;
+	#variable y $MSDP_SHIPGALY;
+	#variable plusMinus x-;
+	#math {x} {$x - 1};
+	#echo {$x $y -};
+	calculate '$x $y' $sectorCoordVar;
+	#script {python .tt/addCoord.py $x $y green}
+}

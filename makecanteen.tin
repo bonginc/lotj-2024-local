@@ -1,0 +1,8 @@
+#alias {makecanteenStart} {
+    makecanteen $canteen;
+    #action {You finish your work and hold up your newly created canteen.} {makecanteen $canteen};
+    #action {You can't figure out how to fit the parts together.} {makecanteen $canteen}
+    };
+
+#variable {canteen} {&?a &?c&?a&?n&?t&?e&?e&?n&D};
+#echo {makecanteenStart starts the script. $canteen is the item}

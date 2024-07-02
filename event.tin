@@ -1,0 +1,35 @@
+#EVENT {MAP ENTER ROOM}
+{
+    #map map $sizeset $sizeset v mapvar;
+    #map offset 11 {$halfColsVar+19} -8 -1;
+    #map center 0 0 0;
+}
+
+#EVENT {SCREEN RESIZE} 
+{
+    comm_window_draw_tabs;;
+}
+
+#event {MAP SHORT-CLICKED MOUSE BUTTON ONE}
+{
+	#map run {%0} 1
+}
+
+#event {MAP REGION PRESSED MOUSE BUTTON ONE} {
+        #var {o_x} %0;
+        #var {o_y} %1;
+        #var {pressed_at} %0
+}
+
+#event {MAP REGION MOVED MOUSE BUTTON ONE} {
+            #var d_x %0;
+            #var d_y %1;
+            #math {c_x} {$o_x - $d_x};
+            #math {c_y} {$d_y - $o_y};
+            #map center $c_y $c_x 0
+}
+
+#nop #event {RECEIVED OUTPUT}
+{
+    updateButton
+}

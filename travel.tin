@@ -1,0 +1,83 @@
+VARIABLE {travel} {0}
+
+#VARIABLE {revdir}
+{
+     {down} {up}
+     {east} {west}
+     {north} {south}
+     {south} {north}
+     {up} {down}
+     {west} {east}
+}
+#VARIABLE {longdir}
+{
+     {d} {down}
+     {e} {east}
+     {n} {north}
+     {s} {south}
+     {u} {up}
+     {w} {west}
+}
+#VARIABLE {shortdir}
+{
+     {down} {d}
+     {east} {e}
+     {north} {n}
+     {south} {s}
+     {up} {u}
+     {west} {w}
+}
+#FUNCTION {finddir}
+{
+     #if {"%1" != "%2"}
+     {
+          #return %2
+     };
+     #else
+     {
+          #return %3
+     }
+}
+
+#ALIAS {travel}
+{
+     #if {$travel}
+     {
+          #variable travel 0;
+          #showme <118>You stop traveling.
+     };
+     #else
+     {
+          #variable travel 1;
+          #variable lastdir $revdir[$longdir[%0]];
+          #showme <118>You travel %0.;
+          %0
+     }
+}
+
+#ACTION {[Exits: %1]}
+{
+     #if {$travel}
+     {
+          #if {"%1" != "%* %*"}
+          {
+               #variable travel 0;
+               #showme <118>You stop traveling due to a dead end.
+          };
+          #else
+          {
+               #regexp {%1} {%* %* %*}
+               {
+                    #var travel 0;#showme <118>You stop traveling to pick up directions.
+               };
+               #else
+               {
+                    #regexp {%1} {%* %*}
+                    {
+                         #var newdir @finddir{$lastdir;&1;&2};#showme <118>You travel $newdir.;#var lastdir $revdir[$newdir];$shortdir[$newdir]
+                    }
+               }
+          }
+     }
+}
+{1}

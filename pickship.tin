@@ -1,0 +1,5 @@
+#action {You failed to pick the lock.} {pick $targets[1]}
+
+#action {You pick the lock and open the hatch on%*} {close $targets[1];pick $targets[1]}
+
+#action {^It's already closed.} {pick $targets[1]}

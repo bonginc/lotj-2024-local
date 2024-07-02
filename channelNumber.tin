@@ -1,0 +1,98 @@
+#alias {ettt} {
+  #variable {partName} {};
+  #variable {holdLocation} {};
+  #variable {channelName} {};
+  #variable {channelNumber} {};
+  show_targets;
+}
+
+#list split_targets clr 
+
+#var split_targets_row 1 
+#var targets_max_len 18
+
+#function get_split_targets 
+{ 
+  #var result $channelName; 
+  
+  #foreach {$channelName} 
+  { 
+    #var resultName $resultName M T
+  } 
+}  
+
+#function get_split_targets 
+{ 
+  #var result $channelNumber; 
+  
+  #foreach {$channelNumber} 
+  { 
+    #var resultNumber $resultNumber M T
+  } 
+}  
+
+#function get_target_len 
+{ 
+  #list channelName len resultName
+} 
+
+#function get_target_len 
+{ 
+  #list channelNumber len resultNumber
+} 
+
+#ali show_target 
+{ 
+  	#showme {@get_split_targets{1}} {$split_targets_row};
+}
+
+#showme {fillNameNumber \{NAME\} \{NUMBER\}}
+
+#alias {fillNameNumber} 
+{
+  #list channelNumber ins 1 %2; 
+  #list channelName ins 1 %1; 
+  #if {@get_target_len{} > $targets_max_len} 
+  { 
+    #list channelNumber del -1;
+    #list channelName del -1;
+  };
+  show_targets;
+} 
+
+#alias {fillPartName} 
+{
+  colorcheck %0;
+  #list partName ins 1 %0; 
+  #if {@get_target_len{} > $targets_max_len} 
+  { 
+    #list partName del -1;
+  };
+  show_targets;
+} 
+
+#ali cn 
+{ 
+  #list channelName ins -1 $channelName[1]; 
+  #list channelName del 1;
+  #list channelNumber ins -1 $channelNumber[1]; 
+  #list channelNumber del 1;
+  show_targets;
+} 
+
+#ali cl
+{ 
+  #list channelName ins 1 $channelName[-1]; 
+  #list channelName del 1;
+  #list channelNumber ins 1 $channelNumber[-1]; 
+  #list channelNumber del 1;
+  show_targets;
+}
+
+#alias {nn} 
+{
+  #list partName ins 1 $partName[-1]; 
+  #list partName del 1;
+  show_targets;
+  
+}

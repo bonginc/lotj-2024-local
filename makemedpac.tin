@@ -1,0 +1,13 @@
+#action {You finish your work and examine your new, organized medical kit.} {empty wine;makemedpac $medpac};
+
+#action {You will need a liquid container to help dress wounds.} {empty wine;makemedpac $medpac};
+
+#action {You can't figure out how to fit the parts together.} {makemedpac $medpac};
+
+#alias {makemedpacOff} {
+	#unaction {You finish your work and examine your new, organized medical kit.};
+	#unaction {You will need a liquid container to help dress wounds.};
+  	#unaction {You can't figure out how to fit the parts together.}
+}
+
+#variable {medpac} {&Oa simple medpac&d}

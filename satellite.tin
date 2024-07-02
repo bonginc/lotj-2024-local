@@ -1,0 +1,303 @@
+#class SCREEN open
+
+
+#MACRO {\eOP}
+{
+     #line quiet port uninit;
+     #read satellite.tin;
+     #gts launch commander
+}
+
+#MACRO {\eOQ}
+{
+     #line quiet zap comms;
+     #gts read satellite.tin;
+     #gts launch comms
+}
+
+#MACRO {\eOR}
+{
+     #line quiet zap mapper;
+     #gts read satellite.tin;
+     #gts launch mapper
+}
+
+#EVENT {PROGRAM START}
+{
+     #if {"%0" != ""}
+     {
+          launch %3
+     }
+}
+
+#ALIAS {launch}
+{
+     #screen save both;
+     #if {"%0" == "commander"}
+     {
+          #class MSDP kill;
+          #class SATELLITE kill;
+          #port init commander 5000;
+          #port flag private;
+          #screen set both commander
+     };
+     #elseif {"%0" == "mapper"}
+     {
+          #class COMMANDER kill;
+          #class SESSION kill;
+          #screen scrollbar hide;
+          #session mapper localhost 5000;
+          #screen set both mapper;
+          #screen RAISE DESKTOP DIMENSIONS
+     };
+     #elseif {"%0" == "comms"}
+     {
+          #class COMMANDER kill;
+          #class SESSION kill;
+          #screen scrollbar hide;
+          #session comms localhost 5000;
+          #screen set both comms;
+          #screen RAISE DESKTOP DIMENSIONS
+     };
+     #else
+     {
+          #line ignore #showme <118>syntax: launch <commander|comms|mapper>
+     }
+}
+
+#EVENT {SESSION DISCONNECTED}
+{
+     #screen load both
+}
+
+#EVENT {SESSION CREATED}
+{
+     #variable name {%0};
+     #switch {"$name"}
+     {
+          #case {"comms"}
+          {
+               #nop
+          };
+          #case {"mapper"}
+          {
+               #nop
+          };
+          #case {"commander"}
+          {
+               #delay 0 #gts
+          };
+          #default
+          {
+               #class TELNET kill;
+               #class COMMANDER kill;
+               #class SATELLITE kill;
+               #class MSDP kill
+          }
+     }
+}
+
+#class SCREEN close
+
+#class SATELLITE open
+
+#EVENT {SESSION CONNECTED}
+{
+     #variable name {%0};
+     #if {"$name" == "comms" || "$name" == "mapper"}
+     {
+          #send {screen name=(%0)}
+     }
+}
+
+#class SATELLITE close
+
+#class COMMANDER open
+
+#EVENT {PORT RECEIVED MESSAGE}
+{
+     #regexp {%4} {^screen name=(%*)}
+     {
+          #var connected[&1] 1;#port name {%0} {&1};
+     };
+     #regexp {%4} {^screen stole focus$}
+     {
+          #screen focus
+     }
+}
+
+#TICKER {LOCATION}
+{
+     #if {"$name" == "commander"}
+     {
+          #screen raise {screen location};
+          #screen raise {screen minimized}
+     }
+}
+{1}
+
+#class COMMANDER close
+
+#class SESSION open
+
+#ALIAS {comms}
+{
+     #screen get cols CMD_COLS;
+     #format comms {%w} {{%0} {$CMD_COLS / 2}};
+     #foreach {*comms[]} {tmp}
+     {
+          #commander #port send {comms} {$comms[$tmp]}
+     }
+}
+
+#ACTION {~%1 tells you %2}
+{
+     comms %1 tells you %2
+}
+
+#ACTION {~%1 chats %2}
+{
+     comms %1 chats %2
+}
+
+#EVENT {MAP UPDATED VTMAP}
+{
+     #screen get cols CMD_COLS;
+     #map map {10} {$CMD_COLS / 2} {variable} {tmp};
+     #commander #port send {mapper} {$tmp}
+}
+
+#ALIAS {test}
+{
+     #showme <138>Bubba tells you 'hello';
+     #showme <158>Pamela chats 'bye'
+}
+
+#class SESSION close
+
+#class MSDP open
+
+#VARIABLE {TELNET}
+{
+     {DO} {\xFD}
+     {DONT} {\xFE}
+     {IAC} {\xFF}
+     {MSDP} {\x45}
+     {SB} {\xFA}
+     {SE} {\xF0}
+     {WILL} {\xFB}
+     {WONT} {\xFC}
+}
+#VARIABLE {MSDP}
+{
+     {ARRAY_CLOSE} {\x06}
+     {ARRAY_OPEN} {\x05}
+     {TABLE_CLOSE} {\x04}
+     {TABLE_OPEN} {\x03}
+     {VAL} {\x02}
+     {VAR} {\x01}
+}
+#EVENT {IAC WILL MSDP}
+{
+     #send {$TELNET[IAC]$TELNET[DO]$TELNET[MSDP]\};
+     #delay 1 msdp_report
+}
+
+#EVENT {IAC SB MSDP}
+{
+     #variable {MSDP_%0} {%1}
+}
+
+#EVENT {IAC SB MSDP SCREEN_MINIMIZED}
+{
+     #if {%1 == 0}
+     {
+          #screen minimize off;
+          #send {screen stole focus}
+     };
+     #else
+     {
+          #screen minimize on
+     }
+}
+
+#EVENT {IAC SB MSDP SCREEN_LOCATION_WIDTH}
+{
+     #variable CMD_POS_WIDTH %1;
+     #if {"$name" == "comms"}
+     {
+          #delay 0 #screen move {$CMD_POS_HEIGHT - 200} {$CMD_POS_WIDTH}
+     };
+     #if {"$name" == "mapper"}
+     {
+          #delay 0 #screen move {$CMD_POS_HEIGHT - 200} {$CMD_POS_WIDTH + $CMD_WIDTH / 2}
+     }
+}
+
+#EVENT {IAC SB MSDP SCREEN_LOCATION_HEIGHT}
+{
+     #math CMD_POS_HEIGHT %1 - 30;
+     #if {"$name" == "comms"}
+     {
+          #delay 0 #screen move {$CMD_POS_HEIGHT - 200} {$CMD_POS_WIDTH}
+     };
+     #if {"$name" == "mapper"}
+     {
+          #delay 0 #screen move {$CMD_POS_HEIGHT - 200} {$CMD_POS_WIDTH + $CMD_WIDTH / 2}
+     }
+}
+
+#EVENT {IAC SB MSDP SCREEN_WIDTH}
+{
+     #variable CMD_WIDTH {%1};
+     #screen rescale {200} {%1 / 2};
+     #if {"$name" == "comms"}
+     {
+          #delay 0 #screen move {$CMD_POS_HEIGHT - 200} {$CMD_POS_WIDTH}
+     };
+     #if {"$name" == "mapper"}
+     {
+          #delay 0 #screen move {$CMD_POS_HEIGHT - 200} {$CMD_POS_WIDTH + $CMD_WIDTH / 2}
+     }
+}
+
+#EVENT {IAC SB MSDP SCREEN_HEIGHT}
+{
+     #variable CMD_HEIGHT {%1}
+}
+
+#EVENT {IAC SB MSDP IAC SE}
+{
+     #nop
+}
+
+#VARIABLE {MSDP_REPORTABLE_VARIABLES}
+{
+     {SCREEN_FOCUS} {}
+     {SCREEN_HEIGHT} {}
+     {SCREEN_LOCATION_HEIGHT} {}
+     {SCREEN_LOCATION_WIDTH} {}
+     {SCREEN_MINIMIZED} {}
+     {SCREEN_WIDTH} {}
+}
+#ALIAS {msdp_report}
+{
+     #variable result {$TELNET[IAC]$TELNET[SB]$TELNET[MSDP]$MSDP[VAR]REPORT$MSDP[VAL]$MSDP[ARRAY_OPEN]};
+     #foreach {*MSDP_REPORTABLE_VARIABLES[]} {tmp}
+     {
+          #variable result {$result$MSDP[VAL]$tmp}
+     };
+     #send {$result$MSDP[ARRAY_CLOSE]$TELNET[IAC]$TELNET[SE]\}
+}
+
+#ALIAS {msdp_send}
+{
+     #send {$TELNET[IAC]$TELNET[SB]$TELNET[MSDP]$MSDP[VAR]SEND$MSDP[VAL]%0$TELNET[IAC]$TELNET[SE]\}
+}
+
+#ALIAS {msdp_list}
+{
+     #send {$TELNET[IAC]$TELNET[SB]$TELNET[MSDP]$MSDP[VAR]LIST$MSDP[VAL]%0$TELNET[IAC]$TELNET[SE]\}
+}
+
+#class MSDP close

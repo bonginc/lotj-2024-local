@@ -1,0 +1,13 @@
+#echo {Gemcutting is on Ithor in the Tree of Tarintha}
+
+#action {You finish your work and hold up your newly cut gem.} {give crystal ele;'crystal;gem $crystal}
+#action {You finish cutting away one last facet from the ore.} {give crystal ele;'crystal;gem $crystal}
+#action {You can't figure out where to start cutting the ore.} {give crystal ele;'crystal;gem $crystal}
+#variable {crystal} {a high-energy fuel crystal}
+
+#alias {gemoff} {
+  #echo {Gem OFF};
+  #unaction {You finish your work and hold up your newly cut gem.};
+  #unaction {You finish cutting away one last facet from the ore.};
+  #unaction {You can't figure out where to start cutting the ore.};
+}

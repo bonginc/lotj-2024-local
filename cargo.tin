@@ -1,0 +1,86 @@
+#variable {cargoStatus} {On};
+#variable {cargo} {0};
+#variable {skillOn} {0};
+#variable {cargoenter} {xsen};
+#variable {cargoexit} {xsex}; 
+#variable {amount} {all};
+#variable {cargoship} {Concordia}
+
+#echo {$cargos[1], $planetCargo[1]};
+
+#alias {cargooff} {
+  ttt;
+  #variable {cargo} {0};
+  #variable {cargos}{};
+  #variable {planetCargo}{};
+  #unalias {sell$planetCargo[1]};
+  #unalias {sell$planetCargo[2]};
+  #unalias {sell$planetCargo[3]};
+  #unalias {buy$planetCargo[1]};
+  #unalias {buy$planetCargo[2]};
+  #unalias {buy$planetCargo[3]};
+  #variable {cargoStatus} {Off};
+  #unaction {You feel a slight thud as the ship sets down on the ground.};
+  #unaction {You sell%*units of%*};
+  #unaction {You purchased%*units of%*.};
+  
+  #echo {Cargo Off}
+};
+
+#alias {buy$planetCargo[1]}
+{
+	buycargo $cargoship $cargos[2] $amount
+};
+
+#alias {buy$planetCargo[2]}
+{
+	buycargo $cargoship $cargos[2] $amount
+};
+
+#alias {buy$planetCargo[3]}
+{
+	buycargo $cargoship $cargos[2] $amount
+};
+
+#alias {sell$planetCargo[1]}
+{
+	sellcargo $cargoship $cargos[1] $amount
+};
+
+#alias {sell$planetCargo[2]}
+{
+	sellcargo $cargoship $cargos[1] $amount
+};
+
+#alias {sell$planetCargo[3]}
+{
+	sellcargo $cargoship $cargos[1] $amount
+};
+
+#nop #action {You can't sell your cargo here without a permit.} {
+  sellcontraband $cargoship $cargos[1] 4500;
+  #2 buycontraband $cargoship $cargos[2] 4500;
+  listc $cargoship;
+  $cargoenter;
+  np;
+  laun $planetCargo[1]
+};
+
+#action {You feel a slight thud as the ship sets down on the ground.}
+{
+    $cargoexit;
+    sell$planetCargo[1]
+};
+
+#action {You sell%*units of%*.} {
+    buy$planetCargo[1]
+};
+
+#action {You purchased%*units of%*.} 
+{
+    np;
+    #nop untick sell;
+    $cargoenter;
+    go;
+    laun $planetCargo[1]
+}

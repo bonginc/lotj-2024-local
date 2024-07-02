@@ -1,0 +1,220 @@
+#ALIAS {bp}
+{
+    battlegroup position %0
+}
+
+#ALIAS {bprox}
+{
+    battlegroup nav $battleOne proximity;
+    battlegroup nav $battleTwo proximity;
+    prox;
+    #showme $battleOne;
+    #showme $battleTwo;
+    #showme $battleThree
+}
+
+#ALIAS {bradar}
+{
+    bn all radar
+}
+
+#ALIAS {brech}
+{
+    battlegroup nav all recharge;
+    recharge
+}
+
+#ALIAS {bspeed}
+{
+    battlegroup nav all speed %1;
+    speed %1
+}
+
+#ALIAS {bstat}
+{
+    status $battleOne;
+    status $battleTwo;
+    status
+}
+
+#ALIAS {btarg}
+{
+    battlegroup target all $targets[1];
+    target $targets[1]
+}
+
+#ALIAS {btestlocal}
+{
+    #math calcVar1 {%3 %1 %2};
+    #math calcVar2 {%4 %1 %2};
+    #math calcVar3 {%5 %1 %2};
+    #math calcVar4 {%8 %6 %7};
+    #math calcVar5 {%9 %6 %7};
+    #math calcVar6 {%10 %6 %7};
+    #math calcVar7 {%11 %11 %12};
+    #math calcVar8 {%13 %1 %2};
+    #math calcVar9 {%14 %1 %2};
+    calculate local $calcVar1 $calcVar2 $calcVar3;
+    battle nav $battleOne calculate local $calcVar4 $calcVar5 $calcVar6;
+    battle nav $battleTwo calculate local $calcVar7 $calcVar8 $calcVar9
+}
+
+#ALIAS {bf}
+{
+    battlegroup nav all fire
+}
+
+#ALIAS {bff}
+{
+    BATTLEGROUP NAV ALL FIRE;
+    FIRE;
+    BATTLEGROUP NAV ALL FIRE LASER;
+    FIRE LASER;
+    BATTLEGROUP NAV ALL FIRE ION;
+    FIRE ION;
+    BATTLEGROUP NAV ALL FIRE MISSILE;
+    FIRE MISSILE;
+    BATTLEGROUP NAV ALL FIRE TORPEDO;
+    FIRE TORPEDO;
+    BATTLEGROUP NAV ALL FIRE ROCKET;
+    FIRE ROCKET
+}
+
+#ALIAS {bfi}
+{
+    battle nav all fire ion;
+    fire ion
+}
+
+#ALIAS {bfm}
+{
+    battle nav all fire missile;
+    fire missile
+}
+
+#ALIAS {bhyper}
+{
+    bspeed 1;
+    battle nav all hyperspace on
+}
+
+#ALIAS {blocal}
+{
+    #if {"%1" != ""}
+    {
+        #math calcVar1 {%3 %1 %2};
+        #math calcVar2 {%4 %1 %2};
+        #math calcVar3 {%5 %1 %2};
+        calculate local $calcVar1 %4 %5;
+        #echo $battleThreePosition;
+        battle nav $battleOne calculate local %3 $calcVar2 %5;
+        #echo $battleOnePosition;
+        battle nav $battleTwo calculate local %3 %4 $calcVar3;
+        #echo $battleTwoPosition
+    };
+    #else
+    {
+        #showme {Usage is :blocal (%%1 is + or a) (%%2 is range) %%3 %%4 %%5}
+    }
+}
+
+#ALIAS {bm}
+{
+    battle message %0
+}
+
+#ALIAS {bma}
+{
+    battlegroup message Battle Positions: Alpha: $battleOne 1, $battleTwo 2, $battleThree 3. Beta: $battleOne 2, $battleTwo 3, $battleThree 1. Charlie: $battleOne 3, $battleTwo 1, $battleThree 2.
+}
+
+#ALIAS {bmal}
+{
+    #3 bm ALPHA POSITION!;
+    bp 3
+}
+
+#ALIAS {bmbe}
+{
+    #3 bm BETA POSITION;
+    bp 1
+}
+
+#ALIAS {bmch}
+{
+    #3 bm CHARLIE POSITION;
+    bp 2
+}
+
+#ALIAS {bn}
+{
+    battle nav %0
+}
+
+#ALIAS {bnav}
+{
+    #echo $battleOne;
+    battlegroup nav $battleOne navstat;
+    #echo $battleTwo;
+    battlegroup nav $battleTwo navstat;
+    navstat
+}
+
+#ALIAS {bat}
+{
+    #variable {battleSet} {1};
+    battle;
+    #log a .tt/battleLog;
+    #delay {bob} {#log off}{1}
+}
+
+#ALIAS {battleoff}
+{
+    #echo {BattleSet off};
+    #variable {battleSet}{0}
+}
+
+#ALIAS {bautoff}
+{
+    battlegroup nav all autopilot off;
+    battle nav all shields on;
+    autopilot off;
+    shield on
+}
+
+#ALIAS {bauton}
+{
+    battle nav all shields on;
+    battle nav all autopilot on;
+    shield on;
+    autopilot on
+}
+
+#ALIAS {bcal}
+{
+    #script {python .tt/bcal.py $enemyradarCoords[1] $battleOnePosition}
+}
+
+#ALIAS {bcalc}
+{
+    #if {"%1" != ""}
+    {
+        calculate '%1 %2' %3 %4 %5;
+        #math {calcVar1} {%3 + $timesBy};
+        #math {calcVar2} {%4 + $timesBy};
+        battlegroup nav $battleOne calculate '%1 %2' %3 $calcVar1 %5;
+        battlegroup nav $battleTwo calculate '%1 %2' $calcVar2 %4 %5
+    };
+    #else
+    {
+        #showme {bcalc %%1 %%2 %%3 %%4 %%5}
+    }
+}
+
+#ALIAS {rollout}
+{
+    bn all autopilot off;
+    autopilot off;
+    bspeed 100;
+    bcour 0 50000 0 50000 0 0 0 0 50000
+}

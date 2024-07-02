@@ -1,0 +1,22 @@
+#action {You finish tapping into the banking network...} {hack $bank}
+
+#action {You failed to hack into the system! A loud beep signals your failure.} {hack $bank}
+
+#action {You can't figure out what to do!} {hack $bank}
+
+#action {Account locked. Your datapad reminds you not to hack it to find out.} {protect $bank}
+
+#action {You can't remember how to start.} {protect $bank}
+
+#action {Damn! Your datapad returns an error message!!} {protect $bank}
+
+#alias {bankhackoff} {
+  #echo {Bank Hacking Off};
+  #unaction {You finish tapping into the banking network...}; 
+  #unaction {You failed to hack into the system! A loud beep signals your failure.};
+  #unaction {You can't figure out what to do!};
+  #unaction {Account locked. Your datapad reminds you not to hack it to find out.};
+  #unaction {You can't remember how to start.};
+  #unaction {Damn! Your datapad returns an error message!!};
+
+}

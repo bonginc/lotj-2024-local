@@ -1,0 +1,15 @@
+#action {The datapad screen lights up with a%*}
+{
+	crackdatapad
+}
+
+#action {You were able to successfully crack the datapad's security key!}
+{
+	lockdatapad 12345;
+	crackdatapad
+}
+
+#action {You punch in%*}
+{
+	crackdatapad
+}

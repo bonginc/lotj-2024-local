@@ -1,0 +1,16 @@
+#echo {remodulate datapad $$targets[1]}
+
+#action {As you finish, you realize%*}
+{
+	remodulate datapad $targets[1]
+}
+
+#action {You can't get it to start working.}
+{
+	remodulate datapad $targets[1]
+}
+
+#action {You finish changing the mode on the datapad.}
+{
+	remodulate datapad $targets[1]
+}

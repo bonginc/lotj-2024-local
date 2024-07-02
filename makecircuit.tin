@@ -1,0 +1,13 @@
+#echo {Command:makecirc Variable:$$circuit};
+
+#alias {makecirc} {
+    	makecircuit $circuit
+};
+
+#action {You finish your work and hold up your newly created circuit.} {
+    	makecircuit $circuit
+};
+
+#action {You hold up your newly created circuit...} {
+	    makecircuit $circuit
+}

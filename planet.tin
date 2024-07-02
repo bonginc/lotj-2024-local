@@ -1,0 +1,334 @@
+#ALIAS {alde}
+{
+    calc alderaan 0 0 500
+}
+
+#ALIAS {arka}
+{
+    calc Perave 10 500 10
+}
+
+#ALIAS {besp}
+{
+    calc anoat 8903 -45331 24532
+}
+
+#ALIAS {core}
+{
+    calc corellian 1567 -10000 21312
+}
+
+#ALIAS {coru}
+{
+    calc corusca 0 500 0
+}
+
+#ALIAS {dant}
+{
+    calc raioballo 5200 890 -26050
+}
+
+#ALIAS {hoth}
+{
+    calc hoth -300 1000 -2300
+}
+
+#ALIAS {iama}
+{
+    calc '62 -10' 5780 -4000 510
+}
+
+#ALIAS {itho}
+{
+    calc ottega 0 0 500
+}
+
+#ALIAS {kami}
+{
+    calc kamino 0 500 0
+}
+
+#ALIAS {kash}
+{
+    calc mytaranor 3900 3900 3400
+}
+
+#ALIAS {korr}
+{
+    calc horuset 0 500 0
+}
+
+#ALIAS {landalde}
+{
+    land alderaan $alderaan
+}
+
+#ALIAS {landarka}
+{
+    land arkania $arkania
+}
+
+#ALIAS {landbesp}
+{
+    land besp $bespin
+}
+
+#ALIAS {landcore}
+{
+    land corellia $corellia
+}
+
+#ALIAS {landcoru}
+{
+    land coruscant $coruscant
+}
+
+#alias {landdant}
+{
+    land dantooine $dant
+}
+
+#ALIAS {landhorr}
+{
+    land horr temple
+}
+
+#ALIAS {landhoth}
+{
+    land hoth Trans
+}
+
+#ALIAS {landitho}
+{
+    land ithor taf
+}
+
+#ALIAS {landkash}
+{
+    land kash $kash
+}
+
+#ALIAS {landkorr}
+{
+    land korr $korriban
+}
+
+#ALIAS {landlore}
+{
+    land lorell a
+}
+
+#ALIAS {landlorr}
+{
+    land lorr $lorrd
+}
+
+#ALIAS {landmand}
+{
+    land mand $mand
+}
+
+#ALIAS {landmon}
+{
+    land mon $dac
+}
+
+#ALIAS {landnabo}
+{
+    land nabo $nabo
+}
+
+#ALIAS {landnal}
+{
+    land nal $nalh
+}
+
+#ALIAS {landord}
+{
+    land ord $ord
+}
+
+#ALIAS {landrylo}
+{
+    land rylo $ryloth
+}
+
+#ALIAS {landstar}
+{
+    land star a
+}
+
+#ALIAS {landtato}
+{
+    land tatooine $tato
+}
+
+#ALIAS {landwroo}
+{
+    land wroo $wroo
+}
+
+#ALIAS {lore}
+{
+    calc '108 -15' 0 500 0
+}
+
+#ALIAS {lorr}
+{
+    calc kanz 3500 4000 4000
+}
+
+#ALIAS {mand}
+{
+    calc mandalore 3340 4500 -10000
+}
+
+#ALIAS {mon}
+{
+    calc calamari 500 0 0
+}
+
+#ALIAS {nabo}
+{
+    calc chommel 100 500 0
+}
+
+#ALIAS {nal}
+{
+    calc y'toub 12500 5250 -300
+}
+
+#ALIAS {nim}
+{
+    calc meridian -4500 -4500 1200
+}
+
+#ALIAS {ord}
+{
+    calc bright 0 600 0
+}
+
+#ALIAS {peta}
+{
+    calc '42 12' 14295 925 11582
+}
+
+#alias {roos}
+{
+    calc '62 36' -17570 4634 34077
+}
+
+#ALIAS {rylo}
+{
+    calc gaulus 400 -19000 33000
+}
+
+#ALIAS {s7}
+{
+    calc '38 -50' 2519 25934 7154
+}
+
+#ALIAS {showalde}
+{
+    showplanet alderaan resources
+}
+
+#ALIAS {showarka}
+{
+    showplanet arkania resources
+}
+
+#ALIAS {showbesp}
+{
+    showplanet bespin resources
+}
+
+#ALIAS {showcore}
+{
+    showplanet corellia resources
+}
+
+#ALIAS {showcoru}
+{
+    showplanet coruscant resources
+}
+
+#ALIAS {showdant}
+{
+    showplanet dantooine resources
+}
+
+#ALIAS {showitho}
+{
+    showplanet ithor resources
+}
+
+#ALIAS {showkash}
+{
+    showplanet kashyyyk resources
+}
+
+#ALIAS {showkorr}
+{
+    showplanet korriban resources
+}
+
+#ALIAS {showlore}
+{
+    showplanet lorell resources
+}
+
+#ALIAS {showlorr}
+{
+    showplanet lorrd resources
+}
+
+#ALIAS {showmand}
+{
+    showplanet mandalore resources
+}
+
+#ALIAS {showmon}
+{
+    showplanet mon resources
+}
+
+#ALIAS {shownabo}
+{
+    showplanet naboo resources
+}
+
+#ALIAS {shownal}
+{
+    showplanet 'Nal Hutta' resources
+}
+
+#ALIAS {shownimd}
+{
+    showplanet 'nim drovis' resources
+}
+
+#ALIAS {showord}
+{
+    showplanet 'Ord Mantell' resources
+}
+
+#ALIAS {showrylo}
+{
+    showplanet ryloth resources
+}
+
+#ALIAS {showtato}
+{
+    showplanet tatooine resources
+}
+
+#ALIAS {showwroo}
+{
+    showplanet wroona resources
+}
+
+#ALIAS {wroo}
+{
+    calc wroona 0 500 0
+}

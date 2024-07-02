@@ -1,0 +1,34 @@
+#ALIAS {initlua}
+{
+    #run lua lua;
+    #debug all on;
+    function date (ses);
+    tintin_show(ses, os.date ("%Y-%m-%d"));
+    end;
+    function time (ses, time);
+    tintin(ses, string.format("#var time %s", os.date (time)));
+    end;
+    function pi (ses);
+    tintin(ses, string.format("#var pi %s", math.pi));
+    end;
+    function tintin (ses, command);
+    print(string.format("tintin (%s) %s", ses, command));
+    end;
+    function tintin_show (ses, command);
+    print(string.format("tintin_show (%s) %s", ses, command));
+    end;
+    #action {tintin (%%1) %%2}{#%%1 %%2};
+    #action {tintin_show (%%1) %%2}{#%%1 #showme %%2};
+    #nop Return to the startup session;
+    #gts
+}
+
+#ALIAS {example}
+{
+    #nop Lets call some Lua functions (gts is the name of the startup session);
+    #lua pi("gts");
+    #lua time("gts", "%a %d %b %Y %I:%M %p %S");
+    #nop {Like sending commands to a mud, sending something to Lua takes;a small amount of time, so the request to display the updated;time variable should be tunneled through the lua session.};
+    #lua tintin("gts", "#showme Today is \$time");
+    #lua tintin("gts", "#showme Pi is \$pi")
+}

@@ -1,0 +1,4 @@
+#highlight {*CLICK* ... your blaster needs a new ammunition cell!} {underscore blink}
+#highlight {%*explodes in a blinding flash of light!} {underscore blink}
+#highlight {Target Locked.} {underscore blink}
+#highlight {Your datapad displays 'Target's radar jammed!' in flashing text.} {underscore blink orange}

@@ -1,0 +1,230 @@
+#format IAC  %a 255
+#format DONT %a 254
+#format DO   %a 253
+#format WONT %a 252
+#format WILL %a 251
+#format SB   %a 250
+#format SE   %a 240
+
+#format MSDP %a  69
+
+#format VAR  %a  01
+#format VAL  %a  02
+
+#alias {msdp_setup}
+{
+#nop	#split 0 0 0 -70;
+#nop	#split {Cargoship $cargoship} {4};
+#nop	#split {Health $MSDP_HEALTH} {3};
+#nop	#split {Energy $MSDP_SHIPENERGY};
+#nop	#split {Shield $MSDP_SHIPSHIELD};
+#nop	#split {Room $MSDP_ROOMNAME} {2};
+}
+
+#event {SESSION CONNECTED}
+{
+	msdp_setup
+}
+
+#event {SESSION DISCONNECTED}
+{
+	#map write .tt/map
+}
+
+#var {MSDP_REPORTABLE_VARIABLES}
+{
+	{MOVEMENTMAX};
+	{MOVEMENT};
+        {HEALTH};
+        {HEALTHMAX};
+		{MANA};
+		{MANAMAX};
+        {AC};
+        {PILOTING};
+        {SHIPENERGY};
+		{SHIPMAXENERGY};
+        {SHIPSHIELD};
+        {SHIPHULL};
+        {MONEYINV};
+        {MONEYBANK};
+        {MONEYTOTAL};
+        {CURRENTAMMO};
+        {LIGHTTIME};
+        {OPPONENTHEALTHMAX};
+        {OPPONENTHEALTH};
+        {SHIPSYSX};
+        {SHIPSYSY};
+        {SHIPSYSZ};
+        {SHIPGALX};
+        {SHIPGALY};
+        {SHIPHEADX};
+        {SHIPHEADY};
+        {SHIPHEADZ};
+        {SHIPSYSNAME};
+        {ROOMEXITS};
+      	{ROOMVNUM};
+      	{ROOMNAME};
+        {SHIPSPEED};
+      	{SHIPMAXHULL};
+      	{SHIPMAXSHIELD};
+      	{SHIPMAXSPEED};
+      	{CHARACTERNAME};
+        {COMMCHANNEL};
+        {COMMENCRYPT};
+        {MEDPACPOWER};
+        {BOTTINGTIME};
+		{MAXAMMO};
+		{CURRENTAMMO};
+}
+#nop Translation table to handle implementation differences.
+
+#var {DIR_NAME}
+{
+	{n} {N}
+	{e} {E}
+	{s} {S}
+	{w} {W}
+	{u} {U}
+	{d} {D}
+	{north} {N}
+	{east} {E}
+	{south} {S}
+	{west} {W}
+	{up} {U}
+	{down} {D}
+}
+
+#nop Turn debug telnet on to see telnet events.
+
+#config {debug telnet} {off}
+
+#nop Utility function to generate color gradients, requires 256 color terminal.
+
+#function {colscale}
+{
+	#switch {10 * %1 / %2}
+	{
+		#case {0} {#return };
+		#case {1} {#return };
+		#case {2} {#return };
+		#case {3} {#return };
+		#case {4} {#return };
+		#case {5} {#return };
+		#case {6} {#return };
+		#case {7} {#return };
+		#case {8} {#return };
+		#case {9} {#return };
+		#default  {#return }
+	}
+}
+
+#event {IAC WILL MSDP}
+{
+        #send {$IAC$DO$MSDP\};
+
+	msdp_report
+}
+
+#event {IAC SB MSDP}
+{
+	#var {MSDP_%0} {%1};
+}
+
+#nop Places status information on the split line, this will only work properly if all used variables are reported by the server.
+
+#event {IAC SB MSDP IAC SE}
+{
+	#if {&{MSDP_ROOM_EXITS} == 0}
+	{
+		#return
+	};
+
+	#format {prompt} {};
+
+	#format {prompt} {$prompt<038> Hp: @colscale{$MSDP_HEALTH;$MSDP_HEALTHMAX}%+4s<238>/<138>%-4s } {$MSDP_HEALTH} {$MSDP_HEALTHMAX};
+	#format {prompt} {$prompt<238> Gd: %-8s } {$MSDP_MONEYTOTAL};
+
+	#var exits {};
+
+	#foreach {n;north;e;east;s;south;w;west;u;up;d;down} {exit}
+	{
+		#if {&{MSDP_ROOM_EXITS}[$exit] == 0}
+		{
+			#continue
+		};
+
+		#if {"${MSDP_ROOM_EXITS}[$exit]" == "{O|OPEN}"}
+		{
+			#var {exits} {$exits<138>$DIR_NAME[$exit]}
+		};
+		#else
+		{
+			#var {exits} {$exits<168>$DIR_NAME[$exit]}
+		}
+	};
+	#format {prompt} {$prompt <238>Ex: %-6s} {$exits   <088>};
+
+	#line ignore #showme {$prompt} {1}
+}
+
+#nop Automapping support for the ROOM variable.
+	
+#event {IAC SB MSDP ROOM}
+{
+	#var {MSDP_ROOM} {%1};
+
+	#map goto {$MSDP_ROOM[VNUM]} {dig};
+
+	#map set roomarea $MSDP_ROOM[AREA];
+	#map set roomname $MSDP_ROOM[NAME];
+	#map set roomterrain $MSDP_ROOM[TERRAIN];
+	#map set roomcolor <178>;
+
+	#nop Create unmapped exits and color unexplored rooms red.;
+
+	#foreach {$MSDP_ROOM[EXITS][]} {EXIT}
+	{
+		#map get {roomexit} {EXIT_LIST};
+
+		#if {&EXIT_LIST[$EXIT] == 0}
+		{
+			#map get {roomvnum} {EXIT_VNUM} {$MSDP_ROOM[EXITS][$EXIT]};
+
+			#map dig {$EXIT} {$MSDP_ROOM[EXITS][$EXIT]};
+
+			#if {$EXIT_VNUM == 0}
+			{
+				#map set {roomcolor} {<118>} {$MSDP_ROOM[EXITS][$EXIT]}
+			}
+		}
+	}
+}
+
+#nop Ask the server to report all keys inside MSDP_REPORTABLE_VARIABLES
+
+#event {IAC SB MSDP} 
+{ 
+    #var {MSDP_%0} {%1} 
+}
+
+#alias {msdp_report}
+{
+        #var result {$IAC$SB$MSDP${VAR}REPORT};
+
+        #foreach {*MSDP_REPORTABLE_VARIABLES[]} {tmp}
+        {
+                #var result {$result${VAL}$tmp}
+        };
+
+        #send {$result$IAC$SE\}
+}
+
+#alias {msdp_send}
+{
+	#send {$IAC$SB$MSDP${VAR}SEND${VAL}%0$IAC$SE\}
+}
+
+#alias {msdp_list}
+{
+	#send {$IAC$SB$MSDP${VAR}LIST${VAL}%0$IAC$SE\}
+}

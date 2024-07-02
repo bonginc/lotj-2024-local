@@ -1,0 +1,2 @@
+#action {A flashing light *BLIPS* on the console next to -HYPERJUMP LOCKED-} {matchvector $targets[1]}
+#action {You failed to match your navigation data to the target vessel.} {matchvector $targets[1]}

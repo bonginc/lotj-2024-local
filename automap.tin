@@ -1,0 +1,239 @@
+#variable {sizeset} {50}
+
+#alias {move}
+{
+	#map move %0
+}
+
+#alias {map}
+{
+    #map map
+}
+
+#alias {fixit}
+{
+	rinfo;
+	colorcheck $MSDP_ROOMVNUM;
+	#map delete $MSDP_ROOMVNUM;
+	#map vnum $MSDP_ROOMVNUM;
+	rinfo;
+}
+
+#alias {newroom}
+{
+	#map dig {%0} {new};
+	move %0;
+	#map dig {%0} {new};
+	move %0;
+	#if {%0 == $s}
+	{
+		delroom n
+	};
+	#elseif {%0 == $n}
+	{
+		delroom s
+	};
+	
+	#elseif {%0 == $e}
+	{
+		delroom w
+	};
+
+	#elseif {%0 == $w}
+	{
+		delroom e
+	};
+
+	#elseif {%0 == $ne}
+	{
+		delroom sw
+	};
+
+	#elseif {%0 == "nw"}
+	{
+		delroom se
+	};
+
+	#elseif {%0 == "se"}
+	{
+		delroom nw
+	};
+
+	#elseif {%0 == "sw"}
+	{
+		delroom ne
+	};
+
+	#elseif {%0 == "u"}
+	{
+		delroom d
+	};
+	
+	#elseif {%0 == "d"}
+	{
+		delroom u
+	};
+
+}
+
+#alias {setupmap}
+{
+#nop	#ses mapper localhost 4051;
+#nop	#ses 1;
+	#map read .tt/map;
+	#map flag vtmap on;
+	#map goto $MSDP_ROOMVNUM
+}
+
+#alias {savemap}
+{
+	#map write .tt/map;
+	#echo {SAVING map};
+}
+
+#alias {setroom}
+{
+	#map set {roomnote} {%0};
+}
+
+#alias {run}
+{
+    goto;
+	findnote %0;
+	#path run;
+	${refresh.minimap}
+}
+
+#ALIAS {delroom}
+{
+	#map delete %0;
+	${refresh.minimap}
+}
+{5}
+
+#ALIAS {findarea}
+{
+	#map find {} {} {} {%0} {};
+	#path show
+}
+{5}
+
+#ALIAS {findnote}
+{
+	#map find {} {} {} {} {%0};
+	#path show
+}
+{5}
+
+#ALIAS {findroom}
+{
+	#map find {%0} {} {} {} {};
+	#path show
+}
+{5}
+
+#ALIAS {goto}
+{
+	#map goto ${MSDP_ROOMVNUM};
+}
+{5}
+
+#ALIAS {listarea}
+{
+	#map list {} {} {} {%0} {} {}
+}
+{5}
+
+#ALIAS {listnote}
+{
+	#map list {} {} {} {} {%0} {}
+}
+{5}
+
+#ALIAS {listroom}
+{
+	#map list {%0} {} {} {} {} {}
+}
+{5}
+
+#ALIAS {mapoff}
+{
+	#map {flag} {static} {on};
+	#echo {Room writes disabled!};
+	#event {MAP EXIT ROOM} 
+	{
+		#map map $sizeset $sizeset v mapvar;
+	};
+	savemap;
+	#variable {mapvar} {1}
+}
+{5}
+
+#ALIAS {mapon}
+{
+	#event {MAP EXIT ROOM} 
+	{
+		#map set roomarea ${roomarea};
+		#map vnum $MSDP_ROOMVNUM;
+		#map name $MSDP_ROOMNAME;
+		#map map $sizeset $sizeset v mapvar;
+	};
+	#echo {Mapping enabled! Room Area = <229>${roomarea}<099>. Update with 'zone' command.};
+	#variable {mapvar} {0};
+	#map {flag} {static} {off}
+}
+{5}
+
+#ALIAS {noteroom}
+{
+	#map set roomnote %0;
+	#echo {RoomNote = <229>%0};
+	savemap
+}
+{5}
+
+#ALIAS {rinfo}
+{
+	#map info
+}
+{5}
+
+#ALIAS {symb}
+{
+	#map set roomsymbol %0;
+	#echo {RoomSymbol = <229>%0};
+	savemap
+}
+{5}
+
+#ALIAS {undo}
+{
+	#map undo;
+}
+{5}
+
+#ALIAS {walk}
+{
+	#path walk
+}
+{5}
+
+#ALIAS {zone}
+{
+	#variable {roomarea} {%0};
+	#echo {Zone set to:<229> ${roomarea}}
+}
+{5}
+
+#PATHDIR          {d}  {u}  {32}
+#PATHDIR          {e}  {w}  {2}
+#PATHDIR          {n}  {s}  {1}
+#PATHDIR          {ne}  {sw}  {3}
+#PATHDIR          {nw}  {se}  {9}
+#PATHDIR          {s}  {n}  {4}
+#PATHDIR          {se}  {nw}  {6}
+#PATHDIR          {sw}  {ne}  {12}
+#PATHDIR          {u}  {d}  {16}
+#PATHDIR          {w}  {e}  {8}
+#VARIABLE         {roomarea}  {}
+#VARIABLE         {roomname}  {}

@@ -1,0 +1,3 @@
+#action {You fumble awkwardly for your weapon, and everyone sees it!} {holster;slowdraw $targets[1]}
+#action {You quietly slip%*without anyone noticing.} {'level 1;holster;slowdraw $targets[1]}
+

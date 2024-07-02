@@ -1,0 +1,45 @@
+#alias {stu} {
+  #echo {Study: $targets[1]};
+  study $targets[1];
+  #action {After some time studying you feel you know more.} {
+    study $targets[1];
+  };
+  
+  #action {^You study it for some time, but fail to learn anything about it.} {
+    study $targets[1]
+  };
+
+  #action {^You are now an adept of%*} {
+    nt;
+    study $targets[1]
+  }
+}
+
+#alias {stopStudy} {
+  #echo {Study: Off};
+  #unaction {^You study it for some time, but fail to learn anything about it.};
+  #unaction {^You are now an adept of%*};
+  #unaction {After some time studying you feel you know more.};
+}
+
+#alias {loadScience} {
+  #echo {Loading Science Skills};
+  t bag;
+  t blueprints;
+  t spice;
+  t crytalline;
+  t support; 
+  t machine;
+  t beacon;
+  t dna;
+  t gloves; 
+  t bioplug;
+  t datapad;
+  t tome;
+  t food;
+  t sith; 
+  t data;
+  t engineering; 
+  t chemical;
+  t camera;
+}

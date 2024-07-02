@@ -1,0 +1,61 @@
+#variable waitVar 2;
+#alias {locate} 
+{
+    hold datapad;
+    locateship $targets[1];
+    #action { Dock: %%1}
+    {
+        #variable {shipDock} {"%%1"};
+        #ticker {shipDock} 
+        {
+          #unaction { Dock: %%1};
+          #untick shipDock
+        } {$waitVar}
+    };
+  
+    #action { Planet: %%2}
+      {
+          #variable {shipPlanet} {"%%2"};
+          #ticker {shipPlanet} 
+          {
+            #unaction { Planet: %%2};
+            #untick shipPlanet
+          } {$waitVar}
+      };
+  
+      #action {Ship Information: %%3}
+      { 
+          #variable {shipInfo} {"%%3"};
+          #ticker {shipInfo} 
+          {
+            #unaction {Ship Information: %%3};
+            #untick shipInfo
+          } {$waitVar} 
+      };
+
+      #action {Ship Owner: %%4}
+      {
+          #variable {shipOwner} {"%%4"};
+          #ticker {shipOwner} 
+          {   
+            #script {python .tt/getShip.py $shipOwner $shipInfo $shipDock $shipPlanet $MSDP_CHARACTERNAME};
+            #unaction {Ship Owner: %%*};
+            #untick shipOwner;
+            #variable shipOwner {};
+            #variable shipDock {};
+            #variable shipInfo {};
+            #variable shipPlanet {}
+          } {$waitVar}
+      };
+
+      #action {You manage to locate a record on the target vessel...}
+      {
+        dt;
+        locate
+      };
+
+      #action {You were unable to locate any records on the target ship.}
+      {
+        locate
+      }
+  }

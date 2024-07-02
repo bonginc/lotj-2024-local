@@ -1,0 +1,9 @@
+#class diagnose assign
+{
+    #act {You don't know where to start.} {diagnose self};
+
+    #act {You finish diagnosing%*} {diagnose self};
+
+    #act {Gah, all your information was inconsequential, and out of sequence. Better try again.} {diagnose self};
+    #showme {diagnose self};
+}

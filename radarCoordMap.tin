@@ -1,0 +1,4 @@
+#nop This is the file for a radar map with the players ship in the center
+
+#draw $colorTwo $colorThree boxed map 10 {$halfColsVar + 18} {$getRowsVar - 6} $getColsVar;
+#nop #draw red fat tile 15 {$halfColsVar - 26} {$getRowsVar} {$getColsVar - 12}

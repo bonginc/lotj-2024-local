@@ -1,0 +1,29 @@
+#class kashshadow assign
+{
+	#action {The ship drives hum as the craft stabilizes.}
+	{
+		#2 fly north;
+		fly northwest;
+		fly north;
+		fly east;
+		fly northeast;
+		#2 fly north;
+		fly northwest;
+		fly west;
+		fly north;
+		fly northeast;
+		fly west;
+		#2 fly north;
+		fly northwest;
+		fly north;
+		fly northeast;
+		fly north;
+		fly east;
+		#2 fly northeast;
+		#2 fly east;
+		fly southeast;
+		#2 fly south;
+		#2 fly west;
+		fly north
+	}
+}

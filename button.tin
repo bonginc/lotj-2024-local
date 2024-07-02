@@ -1,0 +1,880 @@
+#nop bom corner is 35, 128, -1 -1
+
+#nop directions topcorner bottomcorner
+
+#nop Move button setup
+#alias {
+    buttons
+}
+{
+    #draw $colorOne $colorThree $alignvar $boxvar 2 124 4 132 NorthEast;
+    #button {
+        2; 124; 4; 132;
+    } {
+        ne; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme NorthEast
+    };
+
+    #nop #draw $colorOne $colorThree $alignvar $boxvar 19 115 -14 -24 NorthWest;
+    #button {
+        19; 115; -14; -24
+    } {
+        nw; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme NorthWest
+    };
+
+    #nop #draw $colorOne $colorThree $alignvar $boxvar 19 115 -14 -14 North;
+    #button {
+        19; 115; -14; -14
+    } {
+        n; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme North
+    };
+
+    #nop #draw $colorOne $colorThree $alignvar $boxvar 22 115 -11 -24 West;
+    #button {
+        22; 115; -11; -24
+    } {
+        w; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme West
+    };
+
+    #nop #draw $colorTwo $colorThree $alignvar $boxvar 22 115 -11 -14 Look;
+    #button {
+        22; 115; -11; -14
+    } {
+        look; #bell; goto; #showme Look;#bell
+    };
+
+    #nop #draw $colorOne $colorThree $alignvar $boxvar 22 115 -11 -4 East;
+    #button {
+        22; 115; -11; -5
+    } {
+        e; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme East
+    };
+
+    #nop #draw $colorOne $colorThree $alignvar $boxvar 25 115 -8 -24 SouthWest;
+    #button {
+        25; 115; -8; -24
+    } {
+        sw; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme SouthWest
+    };
+
+    #nop #draw $colorOne $colorThree $alignvar $boxvar 25 115 -8 -14 South;
+    #button {
+        25; 115; -8; -14
+    } {
+        s; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme South
+    };
+
+    #nop #draw $colorOne $colorThree $alignvar $boxvar 25 115 -8 -4 SouthEast;
+    #button {
+        25; 115; -8; -4
+    } {
+        se; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme SouthEast
+    };
+
+
+
+
+    #nop #draw $colorOne $colorThree $alignvar $boxvar 28 115 -5 -19 Up;
+    #button {
+        28; 115; -5; -19
+    } {
+        u; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme Up
+    };
+
+    #nop #draw $colorOne $colorThree $alignvar $boxvar 28 115 -5 -4 Down;
+    #button {
+        28; 115; -5; -4
+    } {
+        d; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme Down
+    };
+
+    #nop buttons one through ?
+
+    #nop #draw $colorTwo $colorThree $alignvar $boxvar 19 115 -14 -34 $drawSaber;
+    #button {
+        19; 115; -14; -34
+    } {
+        #if {
+            $drawSaberVar == 1
+        } {
+            #bell; #if {
+                $gotovar == 1
+            } {
+                goto
+            };
+            #variable drawSaber {Holster};
+            dra;
+            #showme {
+                Draw
+            };
+            #variable drawSaberVar 0;
+        };
+        #else {
+            #bell; #if {
+                $gotovar == 1
+            } {
+                goto
+            };
+            #variable drawSaber Repe;
+            hols;
+            #showme {
+                Holster
+            };
+            #variable drawSaberVar 1;
+        };
+    };
+
+    #nop other button setup;
+
+    #nop #draw $colorThree $colorThree $alignvar $boxvar 19 115 -14 -41 First;
+    #button {
+        19; 115; -14; -41
+    } {
+            #if {
+                "$MSDP_HEALTH" == "$MSDP_HEALTHMAX"
+            }
+            {
+                #ECHO Stop!;
+                #bell;
+                #if {
+                    $gotovar == 1
+                } {
+                    goto
+                };
+                #variable firs 1;
+                #delay {
+                    2
+                } {
+                    #unvariable {
+                        healthFull
+                    };
+                };
+                remove medpac;
+                put medpac back
+            };
+            #else
+            {
+                #bell; 
+                #if {
+                    $gotovar == 1
+                } {
+                    goto
+                };
+                first;
+                #math {
+                    MSDP_MEDPACPOWER
+                } {
+                    $MSDP_MEDPACPOWER - 1
+                };
+            };
+    };
+
+    #nop Kill button;
+
+    #nop #draw $colorOne $colorThree $alignvar $boxvar 22 115 -11 -34 Inv;
+    #button {
+        22; 115; -11; -34
+    } {
+        inventory;
+        #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        };
+        #showme {
+            Inventory}
+    };
+
+    #nop Flee button;
+
+    #nop #draw $colorTwo $colorOne $alignvar $boxvar 25 115 -8 -41 Flee;
+    #button {
+        25; 115; -8; -41
+    } {
+        #bell; #if {
+            $gotovar == 1
+        } {
+            goto;
+            #bell
+        };
+        flee;
+        #bell;
+        #showme Flee
+    };
+
+    #nop Draw button setup;
+
+    #nop #draw $colorTwo $colorThree $alignvar $boxvar 25 115 -8 -34 $drawHols;
+    #button {
+        25; 115; -8; -34
+    } {
+        #if {
+            $scanOn == 1
+        } {
+            #bell; #if {
+                $gotovar == 1
+            } {
+                goto
+            };
+            #variable drawHols Holster;
+            draw;
+            #showme {
+                Draw
+            };
+            #variable scanOn 0;
+        };
+        #else {
+            #bell; 
+            #if {$gotovar == 1} 
+            {
+                goto
+            };
+            #variable drawHols Draw;
+            holster;
+            #showme {Holster};
+            #variable scanOn 1;
+        };
+    };
+
+    #nop Scan, #if command is in tabbedWindow;
+
+    #nop #draw $colorTwo $colorThree $alignvar $boxvar 22 115 -11 -41 $scanvarlabel;
+    #button {
+        22; 115; -11; -41
+    } {
+    
+        #if {
+            $scanvar == 1
+        } {
+            #bell; #if {
+                $gotovar == 1
+            } {
+                goto
+            };
+            #variable scanvarlabel Walk;
+            #showme {Scan};
+            #variable scanvar 0;
+            buttons1
+        };
+        #else {
+            #bell; 
+            #if {$gotovar == 1} 
+            {
+                goto
+            };
+            #variable scanvarlabel Scan;
+            #showme {Walk};
+            #variable scanvar 1;
+            buttons
+        };
+		comm_window_draw_tabs;
+    };
+    
+
+    #nop #draw $colorTwo $colorThree $alignvar $boxvar 28 115 -5 -41 $boxes[1];
+    #button {
+        28 115 -5 -41
+    } {
+        #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; $buttonCommands[1]
+    };
+
+    #nop #draw $colorTwo $colorThree $alignvar $boxvar 31 115 -2 -41 $boxes[2];
+    #button {
+        31 115 -2 -41
+    } {
+        #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; $buttonCommands[2]
+    };
+
+    #nop #draw $colorTwo $colorThree $alignvar $boxvar 28 115 -5 -34 $boxes[3];
+    #button {
+        28 115 -5 -34
+    } {
+        #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; $buttonCommands[3]
+    };
+
+    #nop #draw $colorTwo $colorThree $alignvar $boxvar 31 115 -2 -34 $boxes[4];
+    #button {
+        31 115 -2 -34
+    } {
+        #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; $buttonCommands[4]
+    };
+
+    #nop #draw $colorTwo $colorThree $alignvar $boxvar 31 115 -2 -4 $boxes[5];
+    #button {
+        31 115 -2 -4
+    } {
+        #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; $buttonCommands[5]
+    };
+    
+    
+    #nop #draw $colorTwo $colorThree $alignvar $boxvar 31 115 -2 -26 $boxes[6];
+    #button {
+        31 115 -2 -26
+    } {
+        #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; $buttonCommands[6]
+	};
+
+
+    #nop #draw $colorTwo $colorThree $alignvar $boxvar 31 115 -2 -19 $boxes[7];
+    #button {
+        31 115 -2 -19
+    } {
+        #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; $buttonCommands[7]
+	};
+
+    #nop #draw $colorTwo $colorThree $alignvar $boxvar 31 115 -2 -12 $boxes[8];
+    #button {
+        31 115 -2 -12
+    } {
+        #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; $buttonCommands[8]
+    };
+    
+    #nop #draw $colorTwo $colorThree $alignvar $boxvar 19 115 -2 -1 $boxes[9];
+    #button {
+        19; 115; -2; -1;
+    } {
+        #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; $buttonCommands[9]
+    };
+
+    #nop #EVENT {
+        SWIPED E
+    }
+    {
+        #if {
+            %2 >= 1 && %2 <= 10 && %3 >= 1 && %3 <= 20
+        } {
+            #nop #draw red green box 22 115 -7 -41 flip
+        }
+    };
+
+
+    #nop end here;
+
+    #nop updated text $boxvar;
+
+    #nop #draw $colorTwo $colorThree lalign $boxvar 17 115 19 -4 <149>Health <129>$MSDP_HEALTH<109>/<139>$MSDP_MOVEMENT<109>/<119>$MSDP_MANA <109><199>Planet: $planet Targ: $targets[1];
+
+    #nop #draw $colorTwo $colorThree lalign $boxvar 52 2 -3 -3 Test;
+};
+
+#nop Move button setup;
+
+
+
+
+
+
+
+
+
+
+
+
+#nop Scan button setup
+
+#alias {
+    buttons1
+}
+{
+    #nop #draw $colorOne $colorThree $alignvar $boxvar 19 115 -14 -4 Scan NE;
+    #button {
+        19; 115; -14; -5
+    } {
+        scne; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme  Scan NorthEast
+    };
+
+    #nop #draw $colorOne $colorThree $alignvar $boxvar 19 115 -14 -24 Scan NW;
+    #button {
+        19; 115; -14; -24
+    } {
+        scnw; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme Scan NorthWest
+    };
+
+    #nop #draw $colorOne $colorThree $alignvar $boxvar 19 115 -14 -14 Scan NW;
+    #button {
+        19; 115; -14; -14
+    } {
+        scn; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme Scan North
+    };
+
+    #nop #draw $colorOne $colorThree $alignvar $boxvar 22 115 -11 -24 Scan West;
+    #button {
+        22; 115; -11; -24
+    } {
+        scw; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme Scan West
+    };
+
+    #nop #draw $colorTwo $colorThree $alignvar $boxvar 22 115 -11 -14 Look;
+    #button {
+        22; 115; -11; -14
+    } {
+        look; #bell; goto; #showme Look;#bell
+    };
+
+    #nop #draw $colorOne $colorThree $alignvar $boxvar 22 115 -11 -4 Scan East;
+    #button {
+        22; 115; -11; -5
+    } {
+        sce; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme Scan East
+    };
+
+    #nop #draw $colorOne $colorThree $alignvar $boxvar 25 115 -8 -24  Scan SW;
+    #button {
+        25; 115; -8; -24
+    } {
+        scsw; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme Scan SouthWest
+    };
+
+    #nop #draw $colorOne $colorThree $alignvar $boxvar 25 115 -8 -14 Scan S;
+    #button {
+        25; 115; -8; -14
+    } {
+        scs; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme South
+    };
+
+    #nop #draw $colorOne $colorThree $alignvar $boxvar 25 115 -8 -4 Scan SE;
+    #button {
+        25; 115; -8; -4
+    } {
+        scse; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme Scan SouthEast
+    };
+
+
+
+
+    #nop #draw $colorOne $colorThree $alignvar $boxvar 28 115 -5 -19 Scan Up;
+    #button {
+        28; 115; -5; -19
+    } {
+        scu; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme Scan Up
+    };
+
+    #nop #draw $colorOne $colorThree $alignvar $boxvar 28 115 -5 -4 Scan Down;
+    #button {
+        28; 115; -5; -4
+    } {
+        scd; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme Scan Down
+    };
+
+
+
+
+    #nop Lightsaber button setup;
+
+    #nop #draw $colorTwo $colorThree $alignvar $boxvar 19 115 -14 -34 $drawSaber;
+    #button {
+        19; 115; -14; -34
+    } {
+        #if {
+            $drawSaberVar == 1
+        } {
+            #bell; #if {
+                $gotovar == 1
+            } {
+                goto
+            };
+            #variable drawSaber Holster;
+            dr;
+            #showme {
+                Draw Saber
+            };
+            #variable drawSaberVar 0;
+        };
+        #else {
+            #bell; #if {
+                $gotovar == 1
+            } {
+                goto
+            };
+            #variable drawSaber Saber;
+            ho;
+            #showme {
+                Holster Saber
+            };
+            #variable drawSaberVar 1;
+        };
+    };
+
+    #nop other button setup;
+
+    #nop #draw $colorThree $colorThree $alignvar $boxvar 19 115 -14 -41 First;
+    #button {
+        19; 115; -14; -41
+    } {
+            #if {
+                "$MSDP_HEALTH" == "$MSDP_HEALTHMAX"
+            }
+            {
+                #ECHO Stop!;
+                #bell;
+                #if {
+                    $gotovar == 1
+                } {
+                    goto
+                };
+                #variable firs 1;
+                #delay {
+                    2
+                } {
+                    #unvariable {
+                        healthFull
+                    };
+                };
+            };
+            #else
+            {
+                #bell; 
+                #if {
+                    $gotovar == 1
+                } {
+                    goto
+                };
+                first;
+                #math {
+                    MSDP_MEDPACPOWER
+                } {
+                    $MSDP_MEDPACPOWER - 1
+                };
+            };
+    };
+
+    #nop Kill button;
+
+    #nop #draw $colorOne $colorThree $alignvar $boxvar 22 115 -11 -34 Kill;
+    #button {
+        22; 115; -11; -34
+    } {
+        kill $targets[1];
+        #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        };
+        #showme {
+            Kill $targets[1]}
+    };
+
+    #nop Flee button;
+
+    #nop #draw $colorTwo $colorOne $alignvar $boxvar 25 115 -8 -41 Flee;
+    #button {
+        25; 115; -8; -41
+    } {
+        #bell; #if {
+            $gotovar == 1
+        } {
+            goto;
+            #bell
+        };
+        flee;
+        #bell;
+        #showme Flee
+    };
+
+    #nop Draw button setup;
+
+    #nop #draw $colorTwo $colorThree $alignvar $boxvar 25 115 -8 -34 $drawHols;
+    #button {
+        25; 115; -8; -34
+    } {
+        #if {
+            $scanOn == 1
+        } {
+            #bell; #if {
+                $gotovar == 1
+            } {
+                goto
+            };
+            #variable drawHols Holster;
+            draw;
+            #showme {
+                Draw
+            };
+            #variable scanOn 0;
+        };
+        #else {
+            #bell; #if {
+                $gotovar == 1
+            } {
+                goto
+            };
+            #variable drawHols Draw;
+            holster;
+            #showme {
+                Holster
+            };
+            #variable scanOn 1;
+        };
+    };
+
+    #nop Walk;
+
+    #nop #draw $colorTwo $colorThree $alignvar $boxvar 22 115 -11 -41 $scanvarlabel;
+    #button {
+        22; 115; -11; -41
+    } { 
+    	#if {
+            $scanvar == 1
+        } {
+            #bell; #if {
+                $gotovar == 1
+            } {
+                goto
+            };
+            #variable scanvarlabel Walk;
+            #showme {Scan};
+            #variable scanvar 0;
+            buttons1
+        };
+        #else {
+            #bell; 
+            #if {$gotovar == 1} 
+            {
+                goto
+            };
+            #variable scanvarlabel Scan;
+            #showme {Walk};
+            #variable scanvar 1;
+            buttons
+        };
+		comm_window_draw_tabs
+    };
+
+    #nop #draw $colorTwo $colorThree $alignvar $boxvar 28 115 -5 -41 $boxes[1];
+    #button {
+        28 115 -5 -41
+    } {
+        #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; $buttonCommands[1]
+    };
+
+    #nop #draw $colorTwo $colorThree $alignvar $boxvar 31 115 -2 -41 $boxes[2];
+    #button {
+        31 115 -2 -41
+    } {
+        #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; $buttonCommands[2]
+    };
+
+    #nop #draw $colorTwo $colorThree $alignvar $boxvar 28 115 -5 -34 $boxes[3];
+    #button {
+        28 115 -5 -34
+    } {
+        #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; $buttonCommands[3]
+    };
+
+    #nop #draw $colorTwo $colorThree $alignvar $boxvar 31 115 -2 -34 $boxes[4];
+    #button {
+        31 115 -2 -34
+    } {
+        #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; $buttonCommands[4]
+    };
+
+    #nop #draw $colorTwo $colorThree $alignvar $boxvar 31 115 -2 -4 $boxes[5];
+    #button {
+        31 115 -2 -4
+    } {
+        #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; $buttonCommands[5]
+    };
+    
+    #nop #draw $colorTwo $colorThree $alignvar $boxvar 31 115 -2 -26 $boxes[6];
+    #button {
+        31 115 -2 -26
+    } {
+        #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; $buttonCommands[6]
+	};
+
+
+    #nop #draw $colorTwo $colorThree $alignvar $boxvar 31 115 -2 -19 $boxes[7];
+    #button {
+        31 115 -2 -19
+    } {
+        #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; $buttonCommands[7]
+	};
+	
+    #nop #draw $colorTwo $colorThree $alignvar $boxvar 31 115 -2 -12 $boxes[8];
+    #button {
+        31 115 -2 -12
+    } {
+        #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; $buttonCommands[8]
+	};
+	
+	
+    #nop #draw $colorTwo $colorThree $alignvar $boxvar 19 115 -2 -1 $boxes[9];
+    #button {
+        19; 115; -2; -1;
+    } {
+        #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; $buttonCommands[9]
+    };
+
+    #nop #EVENT {
+        SWIPED E
+    }
+    {
+        #if {
+            %2 >= 1 && %2 <= 10 && %3 >= 1 && %3 <= 20
+        } {
+            #nop #draw red green box 22 115 -7 -41 flip
+        }
+    };
+
+
+    #nop end here;
+
+    #nop updated text $boxvar;
+
+    #nop #draw $colorTwo $colorThree lalign $boxvar 17 115 19 -4 <149>Health <129>$MSDP_HEALTH<109>/<139>$MSDP_MOVEMENT<109>/<119>$MSDP_MANA <109><199>Planet: $planet Targ: $targets[1];
+};
+
+buttons
+
+#nop Move button setup

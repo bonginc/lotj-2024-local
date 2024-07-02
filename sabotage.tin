@@ -1,0 +1,24 @@
+#class sabotage assign
+{
+	#showme Repairship and sabotage on automatic;
+	
+	#action {^You manage to disable the ship's drive!}
+	{
+		repairship drive
+	};
+
+	#action {^Ship's drive repaired.}
+	{
+		sabotage engine
+	};
+
+	#action {^You fail to locate the source of the problem.}
+	{
+		repairship drive
+	};
+
+	#action {^You fail to locate that system.}
+	{
+		sabotage engine
+	}
+}

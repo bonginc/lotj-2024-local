@@ -1,0 +1,10 @@
+#action {You finish your work and hold up your newly created container.}
+{
+	makecontainer $container
+};
+
+#action {You can't figure out what to do.}
+{
+	makecontainer $container
+};
+#echo {makecontainer $$container}

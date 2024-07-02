@@ -1,0 +1,559 @@
+#action {\{([A-z0-9])*.*}<([A-z0-9])*.*>\[([A-z0-9])*.*}
+{
+    #show worked
+}
+
+#action {%1\x7BJedi %2\}{
+    comm_window_show clan %1\x7BJedi %2\n;
+    comm_window_draw_tabs;
+    #line log .tt/clan
+} {7}
+
+#action {%1\x7BAntarian Rangers%2\}{
+    comm_window_show clan %1\x7BAntarian Rangers%2\n;
+    comm_window_draw_tabs;
+    #line log .tt/clan
+} {7}
+
+#action {%1\x7BArchives %2\}{
+    comm_window_show clan %1\x7BJedi %2\n;
+    comm_window_draw_tabs;
+    #line log .tt/clan
+} {7}
+
+#ACTION {~%1CommNet %2}
+{
+    comm_window_show comm %1CommNet %2\n;
+    comm_window_draw_tabs;
+    #line log .tt/com;
+#nop    #line gag
+} {7}
+
+#ACTION {^You wake and climb quickly to your feet.$}{
+	#delay {2} {#read .tt/character.tin}
+}
+
+#nop #ACTION {A taxi picks you up and drives you to a safe location.}
+{
+	@goto{}
+}
+
+#ACTION {%*^[Hail from%*}
+{
+    comm_window_show ooc %0\n;
+    comm_window_draw_tabs;
+    #line log .tt/ooc.tin;
+    #line gag
+}
+{3}
+
+#ACTION {%*'%1 %2' suddenly pops into the system with a flicker.}
+{
+    t %1
+}
+
+#ACTION {%*Broadcasting Network%*}
+{
+    comm_window_show broadcasts %0\n;
+    comm_window_draw_tabs;
+    #line log .tt/broadcasts.tin
+}
+
+#ACTION {Nah... You feel too relaxed...}
+{
+	@goto{}
+}
+
+#action {You flee%*} 
+{
+	@goto{}
+}
+
+#nop #ACTION {%1 ask%2}
+{
+    comm_window_show say %1 ask%2\n;
+    comm_window_draw_tabs;
+    #line log .tt/say.tin
+} {3}
+
+#ACTION {%1buzzes%2}
+{
+
+    comm_window_show comm %1 buzzes%2\n;
+    comm_window_draw_tabs;
+    #line log .tt/com.tin
+}
+
+#nop #ACTION {%1 say%2}
+{
+    comm_window_show say %1 say%2\n;
+    comm_window_draw_tabs;
+    #line log .tt/say.tin
+} {3}
+
+#nop #ACTION {%1whisp%2}
+{
+    comm_window_show say %1whisper%2\n;
+    comm_window_draw_tabs;
+    #line log .tt/say.tin
+}
+
+#ACTION {%1 %2 (good)}
+{
+    #regexp {%1} {{.*} {.*}$}
+    {
+        t &2;#showme &2 added;
+    }
+}
+
+#ACTION {%1 %2 (poor)}
+{
+    #regexp {%1} {{.*} {.*}$}
+    {
+        t &2;#showme &2 added;
+    }
+}
+
+#ACTION {%1 %2 (worn)}
+{
+    #regexp {%1} {{.*} {.*}$}
+    {
+        t &2;#showme &2 added;
+    }
+}
+
+#ACTION {Autopilot OFF.}
+{
+    #variable {autopilot} {Off};
+    #variable inShip 1
+}
+
+#ACTION {Autopilot ON.}
+{
+    #variable {autopilot} {On};
+    #variable inShip 0
+}
+
+#nop #action {%1[Incoming Transmission to%2\n}
+{
+    comm_window_show say %1 %2;
+    comm_window_draw_tabs;
+    #line log .tt/clan.tin
+    
+}
+
+#nop #action {%1[Outgoing Transmission to%2\n}
+{
+    comm_window_show say %1 %2;
+    comm_window_draw_tabs;
+    #line log .tt/clan.tin
+    
+}
+
+#ACTION {Camera signal read... signal number %1}
+{
+    #list {monitor} {add} {%1};
+    #list {monitorSize} {size} {$monitor}
+}
+
+#ACTION {^Current Coordinates: %1 %2 %3}
+{
+    addradarCoords {%1 %2 %3}
+}
+
+#ACTION {Your medpac seems to be empty.}
+{
+    throw medpac;
+    #variable firs 1
+}
+
+#ACTION {^You turn%*off.}
+{
+    #variable {flashlightOnOff} {Off}
+}
+
+#ACTION {^You turn%*on, dousing the room in light.}
+{
+    #variable {flashlightOnOff} {<588><110>On<070>}
+}
+
+#ACTION {^[001]%*'%1 %2'%*-<Pos: %3>-}
+{
+    #variable {battleOne} {%1};
+    #variable {battleOnePosition} {%3}
+}
+
+#ACTION {^[002]%*'%1 %2'%*-<Pos: %3>-}
+{
+    #variable {battleTwo} {%1};
+    #variable {battleTwoPosition} {%3}
+}
+
+#ACTION {^[L]%*'%1 %2'%*-<Pos: %3>-}
+{
+    #variable {battleThree} {%1};
+    #variable {battleThreePosition} {%3}
+}
+
+#ACTION {%1IMM%2}
+{
+    comm_window_show ooc %1IMM%2;
+    comm_window_draw_tabs;
+    #line log .tt/ooc.tin;
+}
+
+#ACTION {%1NEWBIE%2}
+{
+    comm_window_show ooc %1 %2;
+    comm_window_draw_tabs;
+    #line log .tt/ooc.tin;
+    #line gag
+}
+
+#ACTION {%1RPC%2}
+{
+    comm_window_show ooc %1 %2;
+    comm_window_draw_tabs;
+    #line log .tt/ooc.tin;
+    #line gag
+}
+
+#ACTION {(OOC)%2}
+{
+    comm_window_show ooc %2;
+    comm_window_draw_tabs;
+    #line log .tt/ooc.tin;
+    #line gag
+}
+
+#nop #ACTION {A voice inside your mind*}
+{
+    comm_window_show say %1;
+    comm_window_draw_tabs;
+    #line log .tt/say.tin
+}
+
+#nop #ACTION {[INTERCOM: %1}
+{
+    comm_window_show say %1\n;
+    comm_window_draw_tabs;
+    #line log .tt/ooc.tin;
+    #line gag
+}
+
+#GAG {Huh?}
+#nop #GAG {^$}
+
+#action {%*C.%*}
+{
+    #if {"$true" == "1"}
+    {
+        goto;
+    };
+    comm_window_draw_tabs;
+    #draw $colorTwo $colorThree lalign $boxvar {$getRowsVar - 6} 1 -2 {$halfColsVar + 18} <109> Name:<169> $MSDP_CHARACTERNAME<109>
+    XYZ: <129>$MSDP_SHIPSYSX/$MSDP_SHIPSYSY/$MSDP_SHIPSYSZ <109>
+    Current X Y: <129>$MSDP_SHIPGALX/$MSDP_SHIPGALY $plusMinus <109>\n
+    Health:<129> $MSDP_HEALTH<109>/<129>$MSDP_HEALTHMAX <109>
+    Move: <129>$MSDP_MOVEMENT<109>/<129>$MSDP_MOVEMENTMAX <109>
+    Mana: <129>$MSDP_MANA<109>/<129>$MSDP_MANAMAX <109>\n
+    Energy: <129>$MSDP_SHIPENERGY<109>/<129>$MSDP_SHIPMAXENERGY <109>
+    Shield: <129>$MSDP_SHIPSHIELD<109>/<129>$MSDP_SHIPMAXSHIELD <109>
+    Hull: <129>$MSDP_SHIPHULL<109>/<129>$MSDP_SHIPMAXHULL<109>
+    Speed: <129>$MSDP_SHIPSPEED/$MSDP_SHIPMAXSPEED <109>\n
+    Flashlight: $flashlightOnOff<109>
+    Heading: <129>$planet<109>
+    Target: <129>$targets[1]<109>
+    Coords: <129>$enemyradarCoords[1];
+
+    #nop top left top right bottom left bottom right;
+    
+    #nop map border;
+    #nop #draw $colorTwo $colorThree boxed map 10 {$halfColsVar + 18} {$getRowsVar - 6} $getColsVar;
+
+    #nop Bottom border;
+    #draw $colorTwo $colorThree lalign $boxvar {$getRowsVar - 6} {$halfColsVar + 18} -2 {$getColsVar};
+
+    #nop top left border;
+    #draw $colorTwo $colorThree lalign $boxvar 10 $getColsVar {$getRowsVar - 5} {$getColsVar};
+
+    #nop Flashlight button;
+    #nop #draw $colorTwo $colorThree lalign $boxvar {$getRowsVar -3} 1 -2 14;
+    #button {
+        {$getRowsVar -3}; 1; -2; 14;
+    } {
+        use $flash
+    };
+
+    #nop Shield recharge;
+    #nop #draw $colorTwo $colorThree lalign $boxvar {$getRowsVar -4} {25} {-3} {33};
+    #button {
+    	{$getRowsVar -4}; {25}; {-3}; {33};
+    } {
+    	recharge;
+    	#showme <fca>Recharge Shield&D
+    };
+
+    
+    #button {
+    	{$getRowsVar -4}; {25}; {-3}; {33}; SCROLLED MOUSE BUTTON ONE
+    } {
+    	recharge;
+    	#showme <fca>long press
+    };
+
+    #nop ______________________________________________________________________;
+
+    #nop Top Button setup;
+    #draw $colorOne $colorThree $alignvar $boxvar 1 {$halfColsVar + 18} 4 {$halfColsVar + 26} <118>$boxes[1];
+    #button {
+        1; {$halfColsVar + 18}; 4; {$halfColsVar + 26};
+    } {
+        $buttonCommands[1];
+        #showme $boxes[1]
+    };
+
+    #draw $colorOne $colorThree $alignvar $boxvar 4 {$halfColsVar + 18} 7 {$halfColsVar + 26} <118>$boxes[2];
+    #button {
+        4; {$halfColsVar + 18}; 7; {$halfColsVar + 26}; 
+    } {
+        $buttonCommands[2]; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme $boxes[2]
+    };
+
+    #draw $colorOne $colorThree $alignvar $boxvar 7 {$halfColsVar + 18} 10 {$halfColsVar + 26} <118>$boxes[3];
+    #button {
+        7; {$halfColsVar + 18}; 10; {$halfColsVar + 26};
+    } {
+        $buttonCommands[3]; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme $boxes[3]
+    };
+    
+    #draw $colorOne $colorThree $alignvar $boxvar 1 {$halfColsVar + 26} 4 {$halfColsVar + 34} <118>$boxes[4];
+    #button {
+        1; {$halfColsVar + 26}; 4; {$halfColsVar + 34};
+    } {
+        $buttonCommands[4]; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme $boxes[4]
+    };
+    
+    #draw $colorOne $colorThree $alignvar $boxvar 4 {$halfColsVar + 26} 7 {$halfColsVar + 34} <118>$boxes[5];
+    #button {
+        4; {$halfColsVar + 26}; 7; {$halfColsVar + 34};
+    } {
+        $buttonCommands[5]; #bell; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme $boxes[5]
+    };
+    
+    #draw $colorOne $colorThree $alignvar $boxvar 7 {$halfColsVar + 26} 10 {$halfColsVar + 34} <118>$boxes[6];
+    #button {
+        7; {$halfColsVar + 26}; 10; {$halfColsVar + 34};
+    } {
+        $buttonCommands[6]; #bell; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme $boxes[6]
+    };
+    
+    #draw $colorOne $colorThree $alignvar $boxvar 1 {$halfColsVar + 34} 4 {$halfColsVar + 42} <118>$boxes[7];
+    #button {
+        1; {$halfColsVar + 34}; 4; {$halfColsVar + 42};
+    } {
+        $buttonCommands[7]; #bell; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme $boxes[7]
+    };
+    
+    #draw $colorOne $colorThree $alignvar $boxvar 4 {$halfColsVar + 34} 7 {$halfColsVar + 42} <118>$boxes[8];
+    #button {
+        4; {$halfColsVar + 34}; 7; {$halfColsVar + 42};
+    } {
+        $buttonCommands[8]; #bell; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme $boxes[8]
+    };
+    
+    #draw $colorOne $colorThree $alignvar $boxvar 7 {$halfColsVar + 34} 10 {$halfColsVar + 42} <118>$boxes[9];
+    #button {
+        7; {$halfColsVar + 34}; 10; {$halfColsVar + 42};
+    } {
+        $buttonCommands[9]; #bell; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme $boxes[9]
+    };
+   
+
+    #nop First aid;
+    #draw $colorOne $colorThree $alignvar $boxvar 1 {$halfColsVar + 42} 4 {$halfColsVar + 50} <118>$boxes[10];
+    #button {
+        1; {$halfColsVar + 42}; 4; {$halfColsVar + 50};
+    } {
+        $buttonCommands[10]; #bell; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme $boxes[10]
+    };
+    
+    #draw $colorOne $colorThree $alignvar $boxvar 4 {$halfColsVar + 42} 7 {$halfColsVar + 50} <118>$boxes[11];
+    #button {
+        4; {$halfColsVar + 42}; 7; {$halfColsVar + 50};
+    } {
+        $buttonCommands[11]; #bell; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme $boxes[11]
+    };
+    
+    #draw $colorOne $colorThree $alignvar $boxvar 7 {$halfColsVar + 42} 10 {$halfColsVar + 50} <118>$boxes[12];
+    #button {
+        7; {$halfColsVar + 42}; 10; {$halfColsVar + 50};
+    } {
+        $buttonCommands[12]; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme $boxes[12]
+
+    };
+    
+    #draw $colorOne $colorThree $alignvar $boxvar 1 {$halfColsVar + 50} 4 {$halfColsVar + 58} <118>$boxes[13];
+    #button {
+        1; {$halfColsVar + 50}; 4; {$halfColsVar + 58};
+    } {
+        #if {
+            $scanOn == 1
+        } {
+        $buttonCommands[13]; #bell; #if {
+                $gotovar == 1
+            } {
+                goto
+            };
+        };
+    };
+
+    #draw $colorOne $colorThree $alignvar $boxvar 4 {$halfColsVar + 50} 7 {$halfColsVar + 58} <118>$boxes[14];
+    #button {
+        4; {$halfColsVar + 50}; 7; {$halfColsVar + 58};
+    } {
+        #if {
+            $scanOn == 1
+        } {
+        $buttonCommands[14]; #bell; #if {
+                $gotovar == 1
+            } {
+                goto
+            };
+        };
+    };
+
+    #draw $colorOne $colorThree $alignvar $boxvar 7 {$halfColsVar + 50} 10 {$halfColsVar + 58} <118>$boxes[15];
+    #button {
+        7; {$halfColsVar + 50}; 10; {$halfColsVar + 58};
+    } {
+        $buttonCommands[15]; #bell; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme $boxes[15]
+    };
+
+    #draw $colorOne $colorThree $alignvar $boxvar 1 {$halfColsVar + 58} 4 {$halfColsVar + 66} <118>$boxes[16];
+    #button {
+        1; {$halfColsVar + 58}; 4; {$halfColsVar + 66};
+    } {
+        $buttonCommands[16]; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme $boxes[16]
+    };
+
+    #draw $colorOne $colorThree $alignvar $boxvar 4 {$halfColsVar + 58} 7 {$halfColsVar + 66} <118>$boxes[17];
+    #button {
+        4; {$halfColsVar + 58}; 7; {$halfColsVar + 66};
+    } {
+        $buttonCommands[17]; #bell; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme $boxes[17]
+    };
+
+    #draw $colorOne $colorThree $alignvar $boxvar 7 {$halfColsVar + 58} 10 {$halfColsVar + 66} <118>$boxes[18];
+    #button {
+        7; {$halfColsVar + 58}; 10; {$halfColsVar + 66};
+    } {
+        $buttonCommands[18]; #bell; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme $boxes[18]
+    };
+
+    #draw $colorOne $colorThree $alignvar $boxvar {$getRowsVar - 6} {$halfColsVar + 18} {$getRowsVar - 1} {$halfColsVar + 26} <118>$boxes[19];
+    #button {
+        {$getRowsVar - 6}; {$halfColsVar + 18}; {$getRowsVar - 1}; {$halfColsVar + 26};
+    } {
+        $buttonCommands[19]; #bell; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme $boxes[19]
+    };
+
+    #draw $colorOne $colorThree $alignvar $boxvar {$getRowsVar - 6} {$halfColsVar + 26} {$getRowsVar - 1} {$halfColsVar + 34} <118>$boxes[20];
+    #button {
+        {$getRowsVar - 6}; {$halfColsVar + 26}; {$getRowsVar - 1}; {$halfColsVar + 34};
+    } {
+        $buttonCommands[20]; #bell; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme $boxes[20]
+    };
+
+    #draw $colorOne $colorThree calign $boxvar {$getRowsVar - 6} {$halfColsVar + 34} {$getRowsVar -1} {$halfColsVar + 43} <118>$boxes[21];
+    #button {
+        {$getRowsVar - 6}; {$halfColsVar + 34}; {$getRowsVar - 1}; {$halfColsVar + 43};
+    } {
+            $buttonCommands[21]; #bell; #bell; #if {
+            $gotovar == 1
+        } {
+            goto
+        }; #showme $boxes[21]
+    };
+
+    #draw $colorOne $colorThree calign $boxvar {$getRowsVar - 6} {$halfColsVar + 43} {$getRowsVar -1} {$getColsVar} <118>$boxes[22];
+    #button {
+	{$getRowsVar - 6}; {$halfColsVar + 43}; {$getRowsVar - 1}; {$getColsVar};
+        } {
+	    $buttonCommands[22]; #bell; #bell; 
+	    #if {
+    	$gotovar == 1
+	} { 
+        goto
+	}; 
+        #showme $boxes[22]
+    };    
+}

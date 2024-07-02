@@ -1,0 +1,31 @@
+#alias {vent} {feel ventriloquate %0}
+#alias {medi} {meditate}
+#alias {armor} {fe armor;fe vitality}
+#alias {aware} {fe aware}
+#alias {fr} {fe repulse}
+#alias {fh} {fe 'force healing' %1}
+#alias {levi} {feel levitate %1 %2}
+#alias {fasi} {feel farsight %1}
+#alias {calm} {fe calm}
+#alias {conc} {fe 'force conceal'}
+#alias {mask} {fe mask %1}
+#alias {batt} {fe battle}
+#alias {fw} {fe 'force wave' %1}
+#alias {fc} {fe 'force crush' %1}
+#alias {fg} {fe 'force grab' %1}
+#alias {fp} {fe 'force push' %1}
+#alias {fs} {fe 'force speed'}
+#alias {fj} {fe 'force jump'}
+#alias {fb} {throw blade %1}
+#alias {vit} {fe vitality}
+
+#alias {far} {fe farsight $targets[1]}
+
+#action {The Force is not strong enough within you.} {
+    #if {$meditate == 1} {
+        #variable meditate 0;
+        medi
+    }
+}
+
+#variable meditate 1

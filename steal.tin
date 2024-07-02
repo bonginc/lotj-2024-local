@@ -1,0 +1,24 @@
+#action {Oops, you messed this one up!}
+{
+	steal $targets[1] $targets[2]
+}
+
+#action {You can't manage to pry it away.}
+{
+	steal $targets[1] $targets[2]
+}
+
+#action {You managed to steal it!}
+{
+	slip $targets[1] $targets[2];
+	steal $targets[1] $targets[2]
+	
+}
+
+#alias {stopsteal} 
+{
+	#echo {STOP STEALING!};
+	#unaction {You managed to steal it!};
+	#unaction {Oops, you messed this one up!};
+	#unaction {You can't manage to pry it away.}
+}

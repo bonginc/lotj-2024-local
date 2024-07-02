@@ -1,0 +1,154 @@
+commands
+(  1) '               (  0) ,               (  0) ;               
+(  1) ^               (  0) accelerate      (  0) addpilot        
+(  0) ammo            (  0) appoint         (  1) arm             
+(  0) autorecharge    (  0) autotrack       (  0) affected        
+(  0) afk             (  0) ansi            (  0) activate        
+(  0) appraise        (  1) apply           (  1) autopilot       
+(  1) aquest          (  1) autolaunch      (  1) aconfig         
+(  1) apprentice      (  0) approach        (  0) addcrew         
+(  0) abdicate        (  0) account         (  2) assistance      
+( 50) arena           (100) accept          (  0) apprenticestat  
+(  0) alignment       (  1) alliance        (  1) antenna         
+(  1) actiondesc      (  0) battery         (  0) bomb            
+(  0) bounties        ( 50) bounty          (  0) buy             
+(  0) board           (  1) bug             (  0) bury            
+(  1) buyhome         (  1) bank            (  1) buzz            
+(  1) buyvendor       (  1) buycargo        (  0) block           
+(  0) buyship         (  0) bind            (100) beep            
+(  0) blockade        (  0) battlegroup     (  1) bot             
+(  0) banklog         (  1) buyclanvendor   (  1) buycontraband   
+(  0) calculate       (100) capture         (  0) chaff           
+(  0) charge          (  0) clantalk        (  0) counciltalk     
+(  0) close           (  0) closehatch      (  0) consider        
+(  0) channels        (  0) clans           (  0) clanbuyship     
+(  0) compare         (  0) commands        (  0) config          
+(  0) course          (  1) clansellship    ( 10) cloak           
+(  1) closebay        ( 10) complain        (  0) collectgold     
+(  2) carry           (  1) compute         (  0) changes         
+(  1) censor          (  0) clanmessage     (  1) cg              
+(  1) cgtalk          (  1) cgwho           (  0) camoflauge      
+(  0) credit          (  0) credits         (  0) clan_greet      
+(  0) currentcom      (  1) compress        (  0) clanmotd        
+(100) challenge       (100) court           (  0) closeshop       
+(  0) color           (  1) controldroid    (  1) claws           
+(  1) clandescription (  5) changeleader    (  0) cast            
+(  1) colorcheck      (  1) cmotd           (  0) down            
+(  0) donate          (  0) drink           (  0) drop            
+(  0) demote          (  0) description     (  3) dig             
+[1;30m(  0) dismount        (  1) dismiss         (  1) dismantle       
+(  1) dub             (  1) draw            (  0) deschome        
+(  0) datastat        (  0) dye             (  0) division        
+(  1) datamem         (  0) duty            (  1) droids          
+(  1) droidstat       (  0) descshop        (  1) descarmor       
+(  1) depositclangold (  0) east            (  0) eat             
+(  0) emote           (  0) empower         (  0) enlist          
+(  0) exits           (  0) examine         (  0) equipment       
+(  0) empty           (  0) enter           (  0) entryvector     
+(  1) eject           (  1) escape          (  1) email           
+(  0) energize        (  1) fire            (  1) feel            
+(  0) fill            (  0) follow          (  0) flee            
+(  1) face            (  0) flist           (  1) fprompt         
+(  0) float           (100) forced_entry    (  0) fleetradar  
+(  0) duty            (  1) droids          
+(  1) droidstat       (  0) descshop        (  1) descarmor       
+(  1) depositclangold (  0) east            (  0) eat             
+6m  0) enlist            0) empower         (
+(  0) exits           (  0) examine         (  0) equipment       
+(  0) empty           (  0) enter           (  0) entryvector     
+(  1) eject           (  1) escape          (  1) email           
+0) energize        (  1) fire            (  1) feel            
+(  0) fill            (  0) follow          (  0) flee            
+(  1) face            (  0) flist           (  1) fprompt         
+0m) forced_entry    (  0) fleetradar      
+(  0) factions        (  0) get             (  8) gravitywell     
+(  0) give            (  0) gtell           (  0) group           
+1;34mgreet            (  1) gold            (  0) 
+(  5) grab            (  0) gender          ( 10) gag             
+(  0) help            (  0) hail            (  0) hyperspace      
+(  0) hold            (  0) hlist           (  5) homepage        
+mholster         (  1) history         (  0) homedesc        
+(  0) headlights      (  5) holidays        (  0) inventory       
+(  1) idea            (  1) induct          (  0) info            
+com        (  1) injurys         
+(  0) introduce       (  1) immchat         (  0) inform          
+(  0) inductlog       (  1) jettison        (  0) kill            
+      knock           (  0) look            (  0) land       
+(  1) launch          (  0) lock            (  0) level           
+(  0) list            (  0) languages       (  0) leave           
+(  0) leaveship       (  0) light           (  0) lightspeed      
+ (  0) listcargo       (  1) locker          
+(  0) loadship        ( 40) lockinfo        (  0) lastname        
+(  1) lockdatapad     (  1) lclasschange    (  1) lockers         
+0m(  0) mea              1) makespice       
+(  0) mer             (  0) mail            (  0) message         
+(  5) murde           (  7) murder          (100) marry           
+(  1) moons           (  1) money           (  0) manifest        
+[1;36m  1) memorycheck     (  0) mindtalk        (  1) mailbox         
+(  1) mainchange      (  0) north           (  0) name            
+(  0) ne              (  0) nw              (  1) note            
+  0) newbiechat      (  0) northeast       
+(  0) northwest       (  1) news            (  1) namehome        
+(  5) nameshop        (  5) newswrite       (  1) navstatus       
+;30m) order           (  0) newname         (  0
+(  0) open            (  0) openbay         (  0) openhatch       
+(  1) outcast         (  1) ooc             (100) overthrow       
+(  1) osay            (  0) put             (  0) password        
+) practice        (  0) pull            (  0) push            
+(  1) pager           (  0) planets         (  1) promote         
+(  0) proximity       (  1) placevendor     (  0) pricevendor     
+34mpturrets        (  1) package         
+(  0) press           (  0) pose            (  0) pilot           
+(  0) publictitle     (  1) pageaccount     (  1) placeclanvendor 
+ff           anvendor (  1) prompt          (  0) qua
+(  0) qui             (  1) quit            (  0) qstat           
+(  0) radar           (  0) recharge        (  0) refuel          
+(  0) reload          (  0) remove          (  0) rempilot        
+         (  1) resign          (  0) repair          
+( 25) repairship      (  1) reply           (  0) rent            
+(  0) return          (  0) revert          (  1) radio           
+   (  1) renameship      1) remotebay    
+(  0) rmote           (  1) rpc             (  0) realname        
+(  2) report          ( 10) roster          (  1) renamedroid     
+(  1) rpctrial        (  1) resident        (  0) south           
+[1;30m(  0) se              (  0) sw              (  0) show            
+(  1) say             (  0) save            (  0) score           
+(  0) shields         (  0) sleep           (  0) stand           
+(  1) sellship        (  1) setblaster      
+(  0) ships           (  0) shove           (  0) sit             
+(  0) slist           (  0) socials         (  0) southeast       
+6m  0) speed             0) speak           (
+(  0) starsystems     (  1) status          (  1) systemtalk      
+(  1) shiptalk        (  1) sound           (  1) setwages        
+(  1) sellhome        (  1) selfdestruct    ( 30) sethome         
+1) sellvendor      (  5) setlock         (  1) setcode         
+(  1) sellcargo       (  1) setdivision     (  1) setencryption   
+(  0) struggle        (  0) su              (  0) subdue          
+0m) setadjective    (  0) statrep         
+(  0) stop            (  0) stylehair       (  0) showdivision    
+(  0) showsocial      (  0) switchmode      (  0) squad           
+1;34msuicide          (  0) showskincolor   (  0) 
+(  0) submit          (  0) squadron        (  5) sellclan        
+(  0) skincolor       (  1) surname         ( 15) slice           
+( 15) secure          (  1) stripship       (  1) sellclanvendor  
+(  1) sellcontraband  (  1) tell            (  0) take            
+(  0) takedrug        (  0) target          (  0) tamp            
+(  0) title           (  0) trajectory      (  1) typo            
+(  1) train           (  1) tune            (  0) tractorbeam     
+(  1) talk            ( 30) transferfuel    (  0) taxi            
+(  1) tone            (  1) tradeship       (  0) textcolor       
+(  0) team            (  0) tip             (  0) tips            
+(  0) transmit        (  1) think           (  1) tradedroid      
+(  0) teach           (  1) time            (  1) tuck            
+(  0) up              (  0) unlock          (  0) use             
+( 10) undock          (  1) unholster       (  0) unbind          
+(  0) unloadship      ( 10) ungag           (  1) upkeep          
+(  1) unlockdatapad   (  0) vector          (  0) value           
+(  0) velocity        (  0) visible         (  1) version         
+(  0) west            (  0) wake            (  0) who             
+(  0) withdraw        (  0) wear            (  0) wield           
+(  0) wimpy           (  0) wizlist         (  1) whisper         
+(  1) war             (  1) wounds          (  0) watch           
+(  1) weather         (  0) yell            (  0) zap             
+(  1) zonetime        
+

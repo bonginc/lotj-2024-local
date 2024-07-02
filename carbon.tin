@@ -1,0 +1,44 @@
+#class carbon assign 
+{
+#showme {getcarb is the alias};
+
+#action {Your search reveals a chunk of carbon!}{get carbon;walk;search};
+
+#action {A cold piece carbonite has been left here.} {get carbon};
+
+#alias {getcarb} {
+  get carb;
+  se;
+  get carb;
+  se;
+  get carb;
+  s;
+  get carb;
+  s;
+  get carb;
+  s;
+  s;
+  get carb;
+  sw;
+  get carb;
+  s;
+  get carb;
+  sw;
+  get carb;
+  ne;
+  n;
+  ne;
+  n;
+  ne;
+  get carb;
+  ne;
+  get carb;
+  sw;
+  sw;
+  n;
+  n;
+  nw;
+  nw;
+  inventory;
+}
+}

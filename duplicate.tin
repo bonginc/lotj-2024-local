@@ -1,0 +1,17 @@
+#action {You can't figure out what to do with the parts.} {
+  duplicate $targets[1]
+}
+
+#action {You finish your work and hold up your duplicate key.} {
+  duplicate $targets[1]
+}
+
+#action {With a startle, you realise you have made a totally useless} {
+  duplicate $targets[1]
+}
+
+#alias {duplicateoff} {
+  #unaction {You can't figure out what to do with the parts.};
+  #unaction {You finish your work and hold up your duplicate key.};
+  #unaction {With a startle, you realise you have made a totally useless};
+}

@@ -1,0 +1,15 @@
+#alias {autofly} {
+  #echo {Autofly on};
+  laun $targets[1];
+  #action {You fail to work the controls properly!} {laun $targets[1]};
+  #action {You feel a slight thud as the ship sets down on the ground.} {nt;laun $targets[1]};
+}
+
+#alias {autoflyoff} {
+  #echo {AutoFly Off};
+  #unaction {Landing sequence complete.};
+  #variable {targets} {};
+  #variable {enterPlanet} {0};
+  #unaction {You fail to work the controls properly!};
+  #unaction {You feel a slight thud as the ship sets down on the ground.} 
+}

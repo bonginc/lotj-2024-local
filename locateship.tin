@@ -1,0 +1,16 @@
+#echo {locateship $$targets[1]}
+
+#action {You were unable to locate any records on the target ship.}
+{
+	locateship $targets[1]
+}
+
+#action {You manage to locate a record on the target vessel...}
+{
+	locateship $targets[1]
+}
+
+#action {You can't seem to call up the right information on the datapad!}
+{
+	locateship $targets[1]
+}

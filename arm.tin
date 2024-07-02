@@ -1,0 +1,15 @@
+#class arm assign 
+{
+	#alias {armit}
+	{
+		#loop {1} {$$1} {grenadeloop}
+		{
+			get grenade mystery;
+			hold grenade;
+			arm $$1;
+			remove grenade;
+			put grenade boom;
+		};
+		look in boom
+	}
+}

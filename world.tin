@@ -1,0 +1,143 @@
+#show {Type addworld to add your mud}
+#show {Type deleteworld to delete your mud}
+#show {Type connect <mud> to connect your mud}
+
+#EVENT {PROGRAM START}
+{
+    #class worlddata read .tt/worlddata.tin;
+    #if {&{worldlist} == 0}
+    {
+        #class worlddata open;
+        #list worldlist clear;
+        #class worlddata close
+    };
+    
+    #info system save;
+    #script {dir} {ls -d .tt/archive};
+    #if {&dir[] == 0}
+    {
+          #system mkdir .tt/archive;
+          #showme {<ffa>Created the <afa>archive<ffa> folder.}
+    };
+    #script {dir} {ls -d .tt/archive/bin};
+    #if {&dir[] == 0}
+    {
+          #system mkdir .tt/archive/bin;
+          #showme {<ffa>Created the <afa>archive/bin<ffa> folder.}
+    };
+    #draw {light orange} box 0 1 3 50 {<afa>TinTin++ $info[SYSTEM][CLIENT_VERSION] beta updater.};
+    #switch {{%3}}
+    {
+          #case {{adi}}
+          {
+               adi
+          };
+          #case {{archive}}
+          {
+               archive
+          };
+          #case {{download}}
+          {
+               download
+          };
+          #case {{install}}
+          {
+               install
+          };
+          #case {{history}}
+          {
+               history
+          };
+          #case {{revert}}
+          {
+               revert
+          };
+          #default
+          {
+          #draw {light orange} box 0 1 8 50 {<ffa><afa>     adi<ffa>: archive + download + install}{<ffa><afa> archive<ffa>: archive current source and binary}{<ffa><afa>download<ffa>: download the beta
+source code}{<ffa><afa> install<ffa>: install downloaded source code}{<ffa><afa> history<ffa>: history of compiled binaries}{<afa><afa>  revert<ffa>: revert to an archived binary}
+          }
+     }
+}
+
+#ALIAS {addworld}
+{
+    #if {"%3" == ""}
+    {
+        #showme Syntax: addworld <name> <host> <port> [character name] [password]
+    };
+    #else
+    {
+        #variable worldlist[%1][name] %1;
+        #variable worldlist[%1][host] %2;
+        #variable worldlist[%1][port] %3;
+        #if {"%4" != ""}
+        {
+            #variable worldlist[%1][char] %4
+        };
+        #if {"%5" != ""}
+        {
+            #variable worldlist[%1][pass] %5
+        };
+        #if {&worldlist[%1][char]}
+        {
+            #showme The world %1 (%2 %3) and the character %4 (%5) has been added.
+        };
+        #else
+        {
+            #showme The world %1 (%2 %3) has been added.
+        };
+        #class worlddata write .tt/worlddata.tin
+    }
+}
+
+#ALIAS {deleteworld}
+{
+    #if {&worldlist[%1] != 0}
+    {
+        #unvariable worldlist[%1];
+        #class worlddata write worlddata.tin;
+        #showme The world %1 has been deleted.
+    };
+    #else
+    {
+        #showme The world %1 could not be found.
+    }
+}
+
+#ALIAS {connect}
+{
+    #if {"%1" == ""}
+    {
+        #echo {%h} {{ WORLD LIST }};
+        #foreach {*worldlist[]} {world}
+        {
+            #echo {%-20s %s %s %s} {$worldlist[$world][name]} {$worldlist[$world][host]} {$worldlist[$world][port]} {$worldlist[$world][char]}
+        }
+    };
+    #elseif {&worldlist[%1] != 0}
+    {
+        #variable mud {%1};
+        #session $worldlist[%1][name] $worldlist[%1][host] $worldlist[%1][port] $worldlist[%1][char]
+    };
+    #else
+    {
+        #showme Could not find world %1.
+    }
+}
+
+#EVENT {SESSION CONNECTED}
+{
+    #variable mud @gts{$mud};
+    #if {&worldlist[$mud]}
+    {
+        #if {&worldlist[$mud][char]}
+        {
+            #send {$worldlist[$mud][char]};
+            #if {&worldlist[$mud][pass]}
+            {
+                #send {$worldlist[$mud][pass]}
+            }
+        }
+    }
+}

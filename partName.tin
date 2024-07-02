@@ -1,0 +1,67 @@
+#list split_targets clr 
+
+#var split_targets_row 1 
+#var targets_max_len 18
+
+#function get_split_targets 
+{ 
+  #var result $partName; 
+  
+  #foreach {$partName} 
+  { 
+    #var resultName $resultName M T
+  } 
+}  
+
+#function get_split_targets 
+{ 
+  #var result $partName; 
+  
+  #foreach {$partName} 
+  { 
+    #var resultName $resultName M T
+  } 
+}  
+
+#function get_target_len 
+{ 
+  #list partName len resultName
+} 
+
+#function get_target_len 
+{ 
+  #list partName len resultName
+} 
+
+#ali show_target 
+{ 
+  	#showme {@get_split_targets{1}} {$split_targets_row}
+}
+
+#alias {partName} 
+{
+  colorcheck %0;
+  #list partName ins 1 %0; 
+  #if {@get_target_len{} > $targets_max_len} 
+  { 
+    #list partName del -1;
+  };
+  show_targets
+} 
+
+#ali np 
+{ 
+  #list partName ins -1 $partName[1]; 
+  #list partName del 1;
+  show_targets
+} 
+
+#alias {nn} 
+{
+  #list partName ins 1 $partName[-1]; 
+  #list partName del 1;
+  show_targets
+  
+}
+
+#var partName {}

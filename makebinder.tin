@@ -1,0 +1,5 @@
+
+#function makebinders {
+    #action {You finish your work and hold up your new set of binders.} {makebinder $binder};
+    #action {Right as you are about to begin, you sneeze.} {makebinder $binder}
+}

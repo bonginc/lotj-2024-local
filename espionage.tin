@@ -1,0 +1,31 @@
+#alias {kitc} {
+  #3 south;
+  se;
+  #4 south;
+  sw;
+  w;
+  n;
+  ap twi;
+}
+
+#action {You step closer to her.} {give recipe twi;bakery}
+
+#alias {bakeryoff} {#unaction {You step closer to her.}}
+
+#alias {bakery} {
+  south;
+  north;
+  'yes;
+  #delay {8} {
+    west;
+    #4 north;
+    ne;
+    e;
+    #3 north;
+    'pantry;
+    look desk;
+    look corner;
+    kitchen;
+    kitc
+  }
+}

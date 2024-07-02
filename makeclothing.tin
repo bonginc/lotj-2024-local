@@ -1,0 +1,8 @@
+#action {You finish your work and hold up your newly created clothing.} {
+        give jack jor;makeclothing $clothing
+};
+#action {You can't figure out what to do.} {
+        makeclothing $clothing
+};
+#variable {clothing} {body a thermal jacket with a zipper};
+#echo {$$clothing $clothing}

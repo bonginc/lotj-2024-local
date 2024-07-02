@@ -1,0 +1,20 @@
+#action {You need to be piloting the ship to hijack it.}
+{
+	pilot;
+	hijack
+}
+
+#action {You fail to figure out the correct launch code.}
+{
+	hijack
+}
+
+#action {Launch sequence initiated.}
+{
+	launch abort;
+}
+
+#action {The ship settles back down on the landing area.}
+{
+	hijack
+}

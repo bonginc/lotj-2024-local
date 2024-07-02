@@ -1,0 +1,40 @@
+#read .tt/sector.tin
+
+#variable {spiVar} {0}
+
+#showme {$spiVar}
+
+#alias {spiral}
+{
+    #math {spiVar} {$spiVar + 1};
+    $spiralVar[$spiVar]
+}
+
+#variable {spiralVar}
+{
+    {1} {x+}
+    {2} {y+}
+    {3} {x-}
+    {4} {x-}
+    {5} {y-}
+    {6} {y-}
+    {7} {x+}
+    {8} {x+}
+    {9} {x+}
+    {10}{y+}
+    {11}{y+}
+    {12}{y+}
+    {13}{x-}
+    {14}{x-}
+    {15}{x-}
+    {16}{x-}
+    {17}{y-}
+    {18}{y-}
+    {19}{y-}
+    {20}{y-}
+    {21}{x+}
+    {22}{x+}
+    {23}{x+}
+    {24}{x+}
+    {25}{graphit;$lastPlanet;#variable spiVar 0;#show Sector index: $spiVar}
+}

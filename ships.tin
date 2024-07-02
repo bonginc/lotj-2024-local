@@ -1,0 +1,186 @@
+#ALIAS {cen}
+{
+    #variable true 0;
+    open $cr90;
+    enter $cr90;
+    goto;
+    close;
+    south;
+    3;
+    #6 north;
+    remove bear;
+    wear envirosuit;
+    autopilot off;
+    shield on;
+    pilot
+}
+
+#ALIAS {cex}
+{
+    shield on;
+    autopilot on;
+    remove envirosuit;
+    wear bear;
+    #6 south;
+    1;
+    north;
+    open;
+    leave;
+    close $cr90;
+    fuel $cr90;
+    #variable true 1
+}
+
+#ALIAS {sen}
+{
+    #variable true 0;
+    open $sship;
+    enter $sship;
+    goto;
+    close;
+    up;
+    #4 north;
+    pi;
+    autopilot off;
+    shield on
+}
+
+#ALIAS {sex}
+{
+    shield on;
+    autopilot on;
+    #3 south;
+    down;
+    open;
+    leave;
+    close $sship;
+    fuel $sship full;
+    #variable true 1
+}
+
+#alias {ten}
+{
+    #variable true 0;
+	open %0;
+	enter %0;
+	close;
+	#2 north;
+	pilot;
+	autopilot off
+}
+
+#alias {tex}
+{
+	autopilot on;
+	#2 south;
+	open;
+	leave;
+	#delay {4} {goto;#showme goto};
+    #variable true 1
+}
+
+#ALIAS {xen}
+{
+    #variable true 0;
+    #variable {radarOn} {1};
+    open $xship[0] $hatch;
+    enter $xship[0];
+    close hatch;
+    autopilot off;
+    shields on;
+    pilot;
+    envi
+}
+
+#ALIAS {xex}
+{
+    envi;
+    #variable {radarOn} {0};
+    shields on;
+    autopilot on;
+    open hatch;
+    leave;
+    close $xship[0];
+    refuel $xship[0] full;
+    #variable true 1;
+}
+
+
+#ALIAS {xsen}
+{
+    #variable {radarOn} {1};
+    open $cargoship $hatch;
+    enter $cargoship;
+    close hatch;
+    w;
+    #2 nw;
+    #2 n;
+    autopilot off;
+    shields on;
+    pilot;
+    envi
+}
+
+#ALIAS {xsex}
+{
+    envi;
+    #variable {radarOn} {0};
+    shields on;
+    autopilot on;
+    #2 s;
+    #2 se;
+    e;
+    open hatch;
+    leave;
+    close $cargoship;
+    refuel $cargoship full;
+}
+
+#ALIAS {13en}
+{
+    #variable true 0;
+    @openship{$cargoship};
+    u;
+    ne;
+    n;
+    pilot;
+    autopilot off;
+    shield on
+}
+
+#ALIAS {13ex}
+{
+    shield on;
+    autopilot on;
+    s;
+    sw;
+    d;
+    #variable true 1;
+    @closeship{$cargoship}
+}
+
+#ALIAS {24en}
+{
+    #variable true 0;
+    @openship{$cargoship};
+    nw;
+    e;
+    e;
+    n;
+    pilot;
+    autopilot off;
+    shield on
+}
+
+#ALIAS {24ex}
+{
+    shield on;
+    autopilot on;
+    s;
+    w;
+    w;
+    se;
+    #variable true 1;
+    @closeship{$cargoship}
+}
+

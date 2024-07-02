@@ -1,0 +1,66 @@
+#showme {If next to the first fibre south of the cart ride. Use syrenup};
+#showme {If at the top with east and southwest. Use syren}
+
+#alias {syren}
+{
+	get fibre;
+	southwest;
+	southwest;
+	west;
+	north;
+	west;
+	west;
+	southwest;
+	northwest;
+	west;
+	west;
+	southwest;
+	south;
+	east;
+	south;
+	southwest;
+	southeast;
+	south;
+	southwest;
+}
+
+#alias {syrenup}
+{
+	get fibre;
+	northeast;
+	north;
+	northwest;
+	northeast;
+	north;
+	west;
+	north;
+	northeast;
+	east;
+	east;
+	southeast;
+	northeast;
+	east;
+	east;
+	south;
+	east;
+	northeast;
+	northeast;
+}
+
+#action {A twisting, glossy fibre from the centre of some sort of plant has been dropped here.}
+{
+	#if {$syren == 1}
+	{	
+		#var {syren} {0};
+		syren;
+		#unaction A twisting, glossy fibre from the centre of some sort of plant has been dropped here.;
+	};
+	#if {$syren == 0} {
+		#var {syren} {1};
+		syrenup;
+	    #unaction A twisting, glossy fibre from the centre of some sort of plant has been dropped here.;
+	};
+}
+
+#var {syren} {1}
+#ticker {look} {look} {30}	

@@ -1,0 +1,21 @@
+#CLASS {worlddata} OPEN
+
+#VARIABLE {worldlist}
+{
+    {fallout} 
+    {
+        {host} {falloutmud.org}
+        {name} {fallout}
+        {port} {2222}
+    }
+    {jedi} 
+    {
+        {char} {radnoff}
+        {host} {legendsofthejedi.com}
+        {name} {jedi}
+        {pass} {online}
+        {port} {5656}
+    }
+}
+
+#CLASS {worlddata} CLOSE

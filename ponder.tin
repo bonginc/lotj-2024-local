@@ -1,0 +1,10 @@
+#action {You ponder for some time, and things seem clearer.}
+{
+        ponder
+}
+
+#action {You ponder for some time, but fail to figure anything out.}
+{
+        ponder
+}
+

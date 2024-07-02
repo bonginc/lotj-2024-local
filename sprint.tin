@@ -1,0 +1,22 @@
+#action {But you are already moving as fast as you can!}
+{
+	#delay {delayBut} {sprint} {5}
+}
+
+#action {You're too tired to do that right now.}
+{
+	rest;
+	#delay {delayTire} {stand;sprint} {$delayTimer}
+}
+
+#action {You can't quite muster the will to move that quickly.}
+{
+	sprint;
+}
+
+#action {Your body courses with power!}
+{
+	#delay {delayBody} {sprint} {5}
+}
+
+#variable {delayTimer} {240}

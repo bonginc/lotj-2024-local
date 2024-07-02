@@ -1,0 +1,12 @@
+#action {You botched....%*}
+{
+	slip $part $targets[1]
+}
+
+#action {You slip%*}
+{
+	slip $part $targets[1]
+}
+
+#variable {target} {drone}
+#variable {part} {lamp}

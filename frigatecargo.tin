@@ -1,0 +1,216 @@
+#alias {sellarka}
+{
+	#variable {amount} {9500};
+        sellcontraband $cargoship spice $amount;
+        buycontraband $cargoship 'Medical supplies' $amount
+	#variable {cargoRyloth} {0};
+	#variable {cargoWroona} {0};
+	#variable {cargoArkania} {1};
+	#showme $cargoship;
+
+}
+
+#alias {sellwroo}
+{
+	#variable {amount} {500};
+        sellcargo $cargoship 'Medical supplies' $amount;
+        buycargo $cargoship water $amount
+	#variable {cargoRyloth} {0};
+	#variable {cargoWroona} {1};
+	#variable {cargoArkania} {0};
+	#showme $cargoship;
+}
+
+#alias {sellrylo}
+{
+	#variable {amount} {500};
+        sellcargo $cargoship water $amount;
+        buycargo $cargoship spice $amount;
+	#variable {cargoRyloth} {1};
+	#variable {cargoWroona} {0};
+	#variable {cargoArkania} {0};
+	#showme $cargoship;
+}
+
+#alias {fenter}
+{
+	#unaction {You're not carrying any of the resources onboard!};
+        loadship $frigateCargo04 $frigate 2;
+        open $frigate;
+        enter $frigate;
+        close;
+        south;
+        up;
+        #5 north;
+        up;
+        north;
+        autopilot off;
+        shield on;
+        pilot;
+        cb
+}
+
+#alias {fexit}
+{
+        openbay all;
+        shield on;
+        autopilot on;
+        south;
+        down;
+        #4 south;
+        west;
+        unload $frigateCargo01;
+        unload $frigateCargo02;
+        #2 east;
+        unload $frigateCargo03;
+        unload $frigateCargo04;
+        west;
+        south;
+        down;
+        north;
+        open hatch;
+        leave;
+        close $frigate;
+        fuel $frigate;
+        var cargoship $frigateCargo01;
+}
+
+#ALIAS {laun}
+{
+        launch;
+        var planet %1;
+        #action {^The ship leaves the platform far behind as it flies into space} {west;$planet;east;pilot;#unaction {^The ship leaves the platform far
+ behind as it flies into space}}
+}
+{5}
+
+#action {Landing sequence complete.}
+{
+	fexit;
+}
+
+#action {You exit the ship.} 
+{
+	#ticker {sell} {sell$planet} {5};
+	sellFrigate01;
+}
+
+#ACTION {Hyperjump complete.}
+{
+                var planet1 $planet;
+                #replace {planet} {$planet} {$planet+1};
+                $planet;
+                var planet $planet1;
+}
+{5}
+
+#ACTION {Hyperspace Calculations have been completed.}
+{
+        hyper;
+        #ticker {hyper}{hyper} {30}
+}
+{5}
+
+#ACTION {You begin orbiting%0}
+{
+        land$planet
+}
+{5}
+
+#ACTION {You push forward the hyperspeed lever.}
+{
+        untick hyper
+}
+{5}
+
+#alias {sellFrigate01}
+{
+	#variable cargoship $frigateCargo01;
+	#showme {$cargoship};
+	#ticker {sell} {sell$planet} {5};
+	#unaction {You're not carrying any of the resources onboard!};
+	#ACTION {You're not carrying any of the resource onboard!}
+	{
+		untick sell;
+		#variable cargoship $frigateCargo03;
+		sellFrigate02;
+	}
+}
+{5}
+
+#alias {sellFrigate02}
+{
+	loadship $frigateCargo01 $frigate 1;
+	#variable cargoship $frigateCargo02;
+	#showme {$cargoship};
+	#ticker {sell} {sell$planet} {5};
+	#unaction {You're not carrying any of the resources onboard!};
+	#ACTION {You're not carrying any of the resource onboard!}
+	{
+		untick sell;
+		#variable cargoship $frigateCargo03;
+		sellFrigate03;
+	}
+}
+{5}
+
+#alias {sellFrigate03}
+{
+	loadship $frigateCargo02 $frigate 1;
+	#showme {$cargoship};
+	#ticker {sell} {sell$planet} {5};
+	#unaction {You're not carrying any of the resources onboard!};
+	#ACTION {You're not carrying any of the resource onboard!}
+	{
+		untick sell;
+		#variable cargoship $frigateCargo04;
+		sellFrigate04;
+	}
+{5}
+
+}
+
+#alias {sellFrigate04}
+{
+	loadship $frigateCargo03 $frigate 2;
+	#showme {$cargoship};
+	#ticker {sell} {sell$planet} {5};
+	#unaction {You're not carrying any of the resources onboard!};
+	#ACTION {You're not carrying any of the resource onboard!}
+	{
+		untick sell;
+		#variable cargoship $frigateCargo01;
+		#if {$run == 1}
+		{
+			fenter;
+		}
+	}
+{5}
+}
+
+#action {You enter Mark-I Assault Frigate 'Celadon'.}
+{
+		#if {$cargoRyloth==1}
+		{
+			laun arka;
+		};
+		#if {$cargoWroona==1}
+		{
+			laun rylo;
+		};
+		#if {$cargoArkania==1}
+		{
+			laun wroo;
+		};
+}
+
+#variable {cargoRyloth} {0}
+#variable {cargoWroona} {0}
+#variable {cargoArkania} {0}
+#variable {cargo} {1}
+#variable {frigate} {Celadon}
+#variable {frigateCargo01} {TGPod01}
+#variable {frigateCargo02} {TGPod02}
+#variable {frigateCargo03} {TGPod03}
+#variable {frigateCargo04} {TGPod04}
+#variable {run} {0}

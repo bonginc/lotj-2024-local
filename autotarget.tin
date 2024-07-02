@@ -1,0 +1,182 @@
+#nop This code was taken from the tintin forum and written by PowerGod and also doctorly. Edited by Bonginc to work with Legends of the Jedi mud. www.legendsofthejedi.com.
+#nop http://tintin.sourceforge.net/board/viewtopic.php?t=2439
+#nop Still a work in progress. 
+#nop Things that work: Using the prox command pulls a random target that's in space.
+#nop Things to add: choosing the closest ship and targeting it without loosing the current target.
+#nop Also have capital ships listed with position listed.
+
+#alias {inf} {info $targets[1]}
+
+#alias {fa} {
+  face $targets[1]
+}
+
+#nop  intercom Facing: $targets[1];
+
+#alias {ttt} {
+  #variable {radarCoords} {};
+  #variable {pirateShips} {};
+  #variable {enemyradarCoords} {};
+  #variable {targets} {};
+  #variable {time} {};
+  #variable {partName} {};
+  #variable {holdLocation} {};
+  #variable {channelName} {};
+  #variable {channelNumber} {};
+  #variable {cargos} {};
+  #variable {planetCargo} {};
+  #variable {creditamount} {};
+  #variable {EnergyBone} {};
+  #variable {HullBone} {};
+  #variable {CrewBone} {};
+  #variable {EnergyBtwo} {};
+  #variable {HullBtwo} {};
+  #variable {CrewBtwo} {};
+  #variable {shipName[1]} {};
+  show_targets
+}
+
+#list split_targets clr 
+
+#var split_targets_row 1 
+#var targets_max_len 18
+
+#function get_split_targets 
+{ 
+  #var result $targets; 
+  
+  #foreach {$targets} 
+  { 
+    #var result $result M T
+  } 
+}  
+
+#function get_target_len 
+{ 
+  #list targets len result
+} 
+
+#alias {pc} 
+{
+  #list planetCargo ins 1 %0; 
+
+  #if {@get_target_len{} > $targets_max_len} 
+  { 
+    #list planetCargo del -1 
+  } 
+} 
+
+#alias {cargo} 
+{
+  #list cargos ins 1 %0; 
+
+  #if {@get_target_len{} > $targets_max_len} 
+  { 
+    #list cargos del -1 
+  } 
+} 
+
+#alias {addradarCoords} 
+{
+  #list radarCoords ins 1 %0; 
+
+  #if {@get_target_len{} > $targets_max_len} 
+  { 
+    #list radarCoords del -1 
+  }
+} 
+
+
+#alias {enemyradarCoords} 
+{
+  #list enemyradarCoords ins 1 %0; 
+
+  #if {@get_target_len{} > $targets_max_len} 
+  { 
+    #list enemyradarCoords del -1 
+  }
+} 
+
+#alias {t} 
+{
+  #list targets ins 1 %0; 
+
+  #if {@get_target_len{} > $targets_max_len} 
+  { 
+    #list targets del -1 
+  };
+  show_targets
+} 
+
+#alias {pt} 
+{
+  #list pirateShips ins 1 %0; 
+
+  #if {@get_target_len{} > $targets_max_len} 
+  { 
+    #list pirateShips del -1 
+  };
+  show_targets
+} 
+
+#alias {dt}
+{
+  #list enemyradarCoords del +1;
+  #list targets del +1;
+  show_targets
+}
+
+#alias {tf}
+{
+	targ $targets[1]
+}
+
+#alias {tt} 
+{ 
+  #echo {Targeting: $targets[1]};
+  star
+} 
+
+#alias {jm}
+{
+	jam $targets[1]
+}
+
+#alias {stat}
+{
+	status $targets[1]
+}
+
+#ali np 
+{ 
+  #list planetCargo ins -1 $planetCargo[1]; 
+  #list planetCargo del 1;
+  #list cargos ins -1 $cargos[1]; 
+  #list cargos del 1;
+  #showme $planetCargo[1];
+  #showme $cargos[1];
+  show_targets
+} 
+
+#ali nt 
+{ 
+  #list enemyradarCoords ins -1 $enemyradarCoords[1];
+  #list enemyradarCoords del 1;
+  #list targets ins -1 $targets[1]; 
+  #list targets del 1;
+  show_targets
+} 
+
+#ali lt
+{ 
+  #list targets ins 1 $targets[-1]; 
+  #list targets del -1;
+  show_targets
+}
+
+#ali pin 
+{ 
+  #list pirateShips ins -1 $pirateShips[1]; 
+  #list pirateShips del 1;
+  show_targets
+} 

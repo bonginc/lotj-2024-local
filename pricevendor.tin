@@ -1,0 +1,3 @@
+#alias {pv} {
+    #loop %1 %2 numbs {pricevendor $numbs.%3 %4}
+}

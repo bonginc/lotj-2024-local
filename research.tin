@@ -1,0 +1,15 @@
+#action {You study for hours on end, but fail to gather any knowledge.} {
+  research $targets[1];
+}
+
+#action {You can't learn%*}
+{
+  dt;
+  res
+}
+
+#action {You finish your studies and feel much more skilled.} {
+  research $targets[1];
+}
+
+#variable {researchCounter} {0}

@@ -1,0 +1,149 @@
+#substitute {~\e[1;37mExits: %1} {\e[1;37mExits: @dir_link{%1}}
+
+#var {dir_table} {{North}{n}{Northeast}{ne}{East}{e}{Southeast}{se}{South}{s}{Southwest}{sw}{West}{w}{Northwest}{nw}{Up}{u}{Down}{d}}
+
+#event {PRESSED LINK DIR MOUSE BUTTON ONE}
+{
+    #if {&dir_table[%4]}
+    {
+        #line sub var #send {$dir_table[%4]}
+    }
+}
+
+#function dir_link
+{
+    #var result {%0};
+
+    #replace result {\b%+\b} {\e]68;1;DIR;&1\a\e[4m&1\e[24m};
+}
+
+#function goto {
+	#delay {2}{goto};
+	#return {gotogoto}
+}
+
+#function openship {
+	open %0;
+	enter %0;
+	close;
+	#map leave;
+	#return {lastship}
+}
+
+#function closeship {
+	open;
+	leave;
+	close %0;
+	refuel %0 full;
+	@goto{};
+	#return {lastship}
+}
+
+#function tracking {
+	#nop F5, Hide, Track target, Room $alreadyInRoom;
+	#if {"$alreadyInRoom" == "0"}
+	{
+		#action {You're already in the same room!}
+		{
+			ap $targets[1];
+			#action {You step closer to%*}
+			{
+        #if ("$hide" == "1") {
+			    hide;
+        };
+				draw;
+				$ambushOrBackstab $targets[1];
+				#unaction {You step closer to%*};
+			};
+			#unaction {You're already in the same room!};
+		};
+	};
+	#if {"$targets[1]" == "$targets[1]"} 
+	{	
+		#echo {TRACKING: $targets[1]};
+		track $targets[1];
+	
+		#action {You sense a trail towards the northwest...}
+		{
+			nw;
+			#unaction You sense a trail towards the northwest...
+		};
+	
+		#action {You sense a trail towards the northeast...}
+		{
+			ne;
+			#unaction You sense a trail towards the northeast...
+		};
+	
+		#action {You sense a trail towards the southwest...}
+		{
+			sw;
+			#unaction You sense a trail towards the southwest...
+		};
+
+		#action {You sense a trail towards the southeast...}
+		{
+			se;
+			#unaction You sense a trail towards the southeast...
+		};
+	
+		#action {You sense a trail towards the south...}
+		{
+			s;
+			#unaction You sense a trail towards the south...
+		};
+	
+		#action {You sense a trail towards the west...}
+		{
+			w;
+			#unaction You sense a trail towards the west...
+		};
+		
+		#action {You sense a trail towards the east...}
+		{
+			e;
+			#unaction You sense a trail towards the east...
+		};	
+
+		#action {You sense a trail towards the north...}
+		{
+			n;
+			#unaction You sense a trail towards the north...
+		};
+		#action {You sense a trail towards the up...}
+		{
+			u;
+			#unaction You sense a trail towards the up...
+		};
+		#action {You sense a trail towards the down...}
+		{
+			d;
+			#unaction You sense a trail towards the down...
+		};
+	};
+	#else 
+	{
+		#echo Hiding;
+		hide
+	}
+}
+
+#function draw
+{
+	#if {$scanOn == 1} 
+	{
+		#bell;
+		#if {$gotovar == 1} {goto};
+	    #variable boxes[19] \nHolster;
+	    draw %0;
+	    #variable scanOn 0;
+	    };
+	#else {
+	    #bell;
+	    #if {$gotovar == 1} {goto};
+        #variable boxes[19] \nDraw;
+        holster %0;
+	    #variable scanOn 1
+    };
+	#return {result}
+}

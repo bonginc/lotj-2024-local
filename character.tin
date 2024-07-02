@@ -1,0 +1,22 @@
+#nop This is the character setup
+
+#alias {setupName}
+{
+    #if {"$MSDP_CHARACTERNAME" == ""}
+    {
+        #variable xship[0] {01};
+        #variable xship[1] {02};
+        #variable xship[2] {03};
+        #variable xship[3] {04};
+        #variable xship[4] {05};
+        #variable rship {};
+        #variable sship {pub};
+        #variable cargoship {};
+      	#variable cloak cloak;
+      	#variable bank
+    };
+};
+
+showPilot;
+setupName;
+#showme setupName Loaded;

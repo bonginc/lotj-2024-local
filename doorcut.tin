@@ -1,0 +1,19 @@
+#action {You use your tool to carefully cut the hatchway.} {
+  repairhatch $targets[1];
+}
+
+#action {You try to slice through the hatch, but it holds strong.} {
+  doorcut $targets[1];
+}
+
+#action {You finish repairing CX-133 Chaos Fighter 'GoGoGo's hatch.} {
+  doorcut $targets[1];
+}
+
+#action {You can't remember how to cut it right.} {
+  doorcut $targets[1]
+}
+
+#action {You messed it up. Better start again.} {
+  doorcut $targets[1]
+}

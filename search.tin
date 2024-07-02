@@ -1,0 +1,3 @@
+#action {You find nothing.} {search}
+
+#action {Your search reveals a chunk of carbon!} {get carbon;walk;search}

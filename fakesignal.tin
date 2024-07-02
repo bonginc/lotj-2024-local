@@ -1,0 +1,14 @@
+#action {Your attempt to trick the target vessel has failed.}
+{
+	fake $targets[1] $targets[2];
+}
+
+#action {You can't figure out what to do!}
+{
+	fake $targets[1] $targets[2]
+}
+
+#action {You finish transmitting the hangar access codes.}
+{
+	fake $targets[1] $targets[2]
+}

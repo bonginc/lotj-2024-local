@@ -1,0 +1,52 @@
+#ACTION {After all that, you fail to decrypt the file.}
+        {
+            decr self;
+        	#var {self} {2}
+        }
+        {5}
+        
+        #ACTION {After all that, you fail to encrypt the file.}
+        {
+            encr self;
+        	#var {self} {1}
+        }
+        {5}
+        
+        #ACTION {File Decrypted.}
+        {
+            encr self;
+        	#var {self} {1}
+        }
+        {5}
+        
+        #ACTION {File encrypted to rating:%*}
+        {
+            decr self;
+        	#var {self} {2}
+        }
+        {5}
+        
+        #ACTION {Hmm, their file is already encrypted.}
+        {
+            decr self;
+        	#var {self} {2}
+        }
+        {5}
+        
+        #ACTION {Hmm, their file isn't encrypted.}
+        {
+            encrypt self;
+        	#var {self} {2}
+        }
+        {5}
+        
+        
+        #ACTION {You fail to call up the right info on the datapad.}
+        {
+            encr self;
+        	#var {self} {1}
+        }
+        {5}
+        
+        #variable {self} {2}
+ 

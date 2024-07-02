@@ -1,0 +1,35 @@
+#class buildship assign
+{
+
+#alias {setship} {
+	#variable shipName[1] %0
+};
+
+#alias {doship} {
+	get $partName[1];
+	buildship $shipName[1] $partName[1]
+};
+
+#action {You finish modifying the ship.} 
+{
+	doship
+};
+
+#action {Your%*doesn't need any more of that.}
+{
+	drop all.$partName[1];
+	np;
+	doship
+};
+
+#action {You step away from your finished%*!} 
+{
+	np;
+	doship
+};
+
+#variable {partName[1]} {engines};
+#variable {partName[2]} {circuits};
+#variable {partName[3]} {weapons};
+#variable {partName[4]} {hull}
+}

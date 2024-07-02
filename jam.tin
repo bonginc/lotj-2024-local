@@ -1,0 +1,24 @@
+#echo {jam $$target[1]}
+
+#class jam assign
+{
+	#action {You fail to get a signal lock.}
+	{
+		jam $targets[1]
+	};
+
+	#action {You fail to jam them.}
+	{
+		jam $targets[1]
+	};
+
+	#action {Your datapad displays 'Target's radar jammed!' in flashing text.} 
+	{
+		#delay 15 jam $targets[1]
+	};
+
+	#action {That ship's radar is already jammed.}
+	{
+		#delay {10} {jam $targets[1]};
+	}
+}

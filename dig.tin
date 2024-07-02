@@ -1,0 +1,5 @@
+#class dig assign
+{
+    #action {Your dig uncovered nothing.} {dig};
+    #action {Your dig uncovered%} {get %0}
+}

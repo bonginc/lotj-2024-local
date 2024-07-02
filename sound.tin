@@ -1,0 +1,34 @@
+#nop #action {%*SOUND(blaster%*}
+{
+        #system mplayer mplayer .tt/sound/blaster.wav &> /dev/null &
+}
+
+#action {You push forward the hyperspeed lever.}
+{
+        #system mplayer mplayer .tt/sound/lightspeed.wav &> /dev/null &
+}
+
+#nop #action {%*SOUND(computer)}
+{
+        #system mplayer mplayer .tt/sound/computer.wav &> /dev/null &
+}
+
+#action {You close%*}
+{
+        #system mplayer mplayer .tt/sound/door.wav &> /dev/null &
+}
+
+#action {You open%*}
+{
+        #system mplayer mplayer .tt/sound/door.wav &> /dev/null &
+}
+
+#action {The doors to the lift slide close as it begins to travel to a new destination.}
+{
+	#system mplayer mplayer .tt/sound/door.wav &> /dev/null &
+}
+
+#action {The turbolift arrives at its stop, and the doors slide smoothly open.}
+{
+	#system mplayer mplayer .tt/sound/door.wav &> /dev/null &
+}

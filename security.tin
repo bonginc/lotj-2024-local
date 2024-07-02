@@ -1,0 +1,9 @@
+#action {You disable %* security routines for this spot.} {security}
+
+#action {You enable %* security routines for this spot.} {disable}
+
+#alias {securityoff} {
+  #echo {Security Off};
+  #unaction {You disable %* security routines for this spot.};
+  #unaction {You enable %* security routines for this spot.};
+}

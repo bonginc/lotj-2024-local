@@ -1,0 +1,18 @@
+#alias {rp} {
+    #if {"$targets[1]" == "vibroblade" || "$targets[1]" == "pistol"} {
+      rpw $targets[1];
+      dt;
+    };
+    #else {
+      #foreach {1} {repair} {
+        #variable {repairing} {$targets[$repair]};
+        remove $repairing;
+        repairarmor $repairing;
+        #action {You finish your work and hold up the fully repaired%*} {
+          wear $repairing;
+          dt;
+          #unaction {You finish your work and hold up the fully repaired%*};
+        }
+      }
+    }
+  }

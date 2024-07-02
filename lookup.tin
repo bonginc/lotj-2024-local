@@ -1,0 +1,12 @@
+#class lookup assign
+{
+	#action {You find a file matching their information}
+	{
+		lookup self
+	};
+	
+	#action {Damn, you must have entered the wrong data!}
+	{
+		lookup self
+	}
+}

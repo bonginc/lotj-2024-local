@@ -1,0 +1,19 @@
+#action {Your search reveals%*} {
+  conceal $targets[1]
+}
+
+#action {There, you've hidden it from view.} {
+  search 
+}
+
+#action {You find nothing.} {
+  search
+}
+
+#action {Well, you finish... but the item is no less visible} {
+  conceal $targets[1]
+}
+
+#action {Arg. You can't figure out how to hide it.} {
+  conceal $targets[1]
+}

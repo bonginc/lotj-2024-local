@@ -1,0 +1,161 @@
+#EVENT {PROGRAM START}
+{
+    #nop Find out what OS you are running.;
+    #script {SYSTEM[OS]} {uname -o};
+    #script {SYSTEM[KERNEL]} {uname -s};
+    #script {SYSTEM[VERSION]} {tail /proc/version};
+    #switch {"$SYSTEM[VERSION][1]"}
+    {
+        #case {"%*Microsoft@Microsoft.com%*"}
+        {
+            #variable OS WSL
+        };
+        #case {"CYGWIN%*"}
+        {
+            #variable OS Cygwin
+        };
+        #default
+        {
+            #switch {"$SYSTEM[OS][1]"}
+            {
+                #case {"Android"}
+                {
+                    #variable OS Android
+                };
+                #case {"Cygwin"}
+                {
+                    #variable OS Cygwin
+                };
+                #case {"WSL"}
+                {
+                    #variable OS WSL
+                };
+                #case {"GNU/Linux"}
+                {
+                    #variable OS Linux
+                };
+                #default
+                {
+                    #switch {"$SYSTEM[KERNEL][1]"}
+                    {
+                        #case {"Linux"}
+                        {
+                            #variable OS Linux
+                        };
+                        #case {"CYGWIN%*"}
+                        {
+                            #variable OS Cygwin
+                        };
+                        #case {"Darwin"}
+                        {
+                            #variable OS Darwin
+                        };
+                        #default
+                        {
+                            #variable OS Unknown
+                        }
+                    }
+                }
+            }
+        }
+    };
+    #if {"$OS" == "WSL"}
+    {
+        #variable {sound_dir} {C:\sounds\}
+    };
+    #else
+    {
+        #variable {sound_dir} {~/.tt/sound}
+    }
+}
+
+#EVENT {IAC WILL MSP}
+{
+    #send {\xFF\xFD\x5A\}
+}
+
+#ACTION {^!!SOUND({\S*}{.*})$}
+{
+    playsound %1;
+    #line gag
+}
+
+#ACTION {^!!MUSIC({\S*}{.*})$}
+{
+    #nop I cannot be bothered adding support for background music.;
+    #line gag
+}
+
+#ALIAS {playsound %1}
+{
+    #if {"%1" == "Off"}
+    {
+        #return
+    };
+    #switch {"$OS"}
+    {
+        #case {"{Android|Linux}"}
+        {
+            #if {"%1" == "%i%*.mp3"}
+            {
+                #system mplayer $sound_dir/%1 &>/dev/null &
+            };
+            #elseif {"%1" == "%i%*.ogg"}
+            {
+                #system ogg123 $sound_dir/%1 &>/dev/null &
+            };
+            #elseif {"%1" == "%i%*.wav"}
+            {
+                #system mplayer $sound_dir/%1 &>/dev/null &
+            };
+            #else
+            {
+                #showme PLAYSOUND: Unknown sound file: %1
+            }
+        };
+        #case {"Cygwin"}
+        {
+            #if {"%1" == "%i%*.wav"}
+            {
+                #system cat $sound_dir/%1 > /dev/dsp &
+            };
+            #else
+            {
+                #system cygstart $sound_dir/%1 &
+            }
+        };
+        #case {"Darwin"}
+        {
+            #system afplay $sound_dir/%1 &
+        };
+        #case {"WSL"}
+        {
+            #system {powershell.exe -c '(New-Object Media.SoundPlayer "${sound_dir}%1").PlaySync()' &}
+        }
+    }
+}
+
+#ALIAS {tts}
+{
+    #switch {"$OS"}
+    {
+        #case {"Android"}
+        {
+            #system {termux-tts-speak %0 &}
+        };
+        #case {"{Cygwin|Linux}"}
+        {
+            #system {espeak "%0" &}
+        };
+        #case {"Darwin"}
+        {
+            #system {say %0 &}
+        };
+        #case {"WSL"}
+        {
+            #nop $SpeechSynthesizer.SelectVoice("Microsoft Zira Desktop");
+            #nop $SpeechSynthesizer.rate=6;
+            #system {powershell.exe -c 'Add-Type –AssemblyName System.Speech;$SpeechSynthesizer = New-Object –TypeName System.Speech.Synthesis.SpeechSynthesizer;$SpeechSynthesizer.Speak("%0")' &}
+        }
+    }
+}

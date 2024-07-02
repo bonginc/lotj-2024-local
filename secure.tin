@@ -1,0 +1,31 @@
+#action {You fail to secure the ship.}
+{
+  secure ship
+}
+
+#action {You fail to slice the ship's computer!}
+{
+  slice ship
+}
+
+#action {The ship is no longer secured.}
+{
+  secure ship
+}
+
+#action {The ship is now secured to rating:%*}
+{
+  slice ship
+}
+
+#action {This ship is not secured!}
+{
+  secure ship
+}
+
+#action {This ship is already secure!}
+{
+  slice ship
+}
+
+

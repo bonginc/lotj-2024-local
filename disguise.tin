@@ -1,0 +1,7 @@
+#class disguise assign 
+{
+	#showme Disguise; disguise apply 1;
+	#action {You finish applying the disguise...} {disguise apply 1};
+	#action {^That is not a valid disguise choice} {disguise apply 1};
+	#action {You somehow fail horribly%*} {disguise apply 1}
+}

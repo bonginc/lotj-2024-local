@@ -1,0 +1,58 @@
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+import sqlite3
+import mpld3
+
+
+plt.rcParams["figure.figsize"] = (8.25, 8.25)
+#plt.rcParams['font.size'] = 16
+
+database = sqlite3.connect('.tt/shipDatabase.db')
+
+def graph_data():
+
+    fig = plt.figure()
+
+    fg_color = "white"
+    both = "both"
+
+    ax = plt.axes()
+    ax.set_facecolor('gray')
+    
+    plt.title("Lotj search map", color=fg_color)
+    plt.xlabel("X coords", color=fg_color)
+    plt.ylabel("Y coords", color=fg_color)
+    
+    plt.xticks(fontsize='20', color=fg_color)
+    plt.yticks(color=fg_color, fontsize='20')
+
+    plt.grid()
+
+    query = 
+    '''
+        SELECT coords.x_coords, coords.y_coords, coords.id, coords.color
+        FROM coords
+
+        UNION
+
+        SELECT planets.x_planet, planets.y_planet, planets.planet, planets.color
+        FROM planets
+        ORDER BY coords.x_coords
+    '''
+    
+    cursorObj = database.cursor()
+    
+    cursorObj.execute(query)
+    
+    rows = cursorObj.fetchall()
+    for row in rows:
+        text = ax.text(row[0], row[1], row[2],color=row[3])
+        plt.scatter(row[0], row[1], color=row[3], s=9)
+
+    html_str = mpld3.fig_to_html(fig)
+    Html_file= open("graph.html","w")
+    Html_file.write(html_str)
+    Html_file.close()
+
+    print("#showme Graph done")
+graph_data()    

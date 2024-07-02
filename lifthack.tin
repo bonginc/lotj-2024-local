@@ -1,0 +1,21 @@
+#class lifthack assign
+{
+	#variable {lifthackLevel} {1};
+	#action {The lift does not move, your datapad beeps in negation.} {lifthack $lifthackLevel};
+	#action {The lift slows down as it reaches it's location, opening up with a ding.}
+	{
+		#if {$lifthackLevel == 2}
+		{
+			#unaction {The lift slows down as it reaches it's location, opening up with a ding.};
+			lifthack $lifthackLevel;
+			#variable {lifthackLevel} {1}
+		};
+
+		#if {$lifthackLevel == 1}
+		{
+			#unaction {The lift slows down as it reaches it's location, opening up with a ding.};
+			lifthack $lifthackLevel;
+			#variable {lifthackLevel} {2}
+		}
+	}
+}

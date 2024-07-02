@@ -1,0 +1,15 @@
+#action {You feel something nibbling at the end of the line!} 
+{
+    #if {$nightDay == 1} 
+    {
+        reel;
+    };
+    #else 
+    {
+        reel;
+        use $flash;
+        get all;
+        l;
+        use $flash
+    };
+}

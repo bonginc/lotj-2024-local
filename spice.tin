@@ -1,0 +1,3 @@
+#action {You finish your work.} {makespice $spice}
+#action {You can't figure out what to do with the stuff.} {makespice $spice}
+#variable {spice} {ryll &zGood &WSpice}

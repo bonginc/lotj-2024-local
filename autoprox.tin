@@ -1,0 +1,17 @@
+#action {%*'%1 %2'%*Prox:%*%3}
+{
+  pt %1
+}
+
+#alias {autoproxoff} {
+  #echo {autoprox Off};
+  #unaction {%*'%1 %2'%*Prox:%*%3};
+  #unalias {showPirate};
+}
+
+#alias {showPirate} {
+  #foreach {$pirateShips} {index} 
+  {
+    #echo $pirateShips[$index]
+  };
+}

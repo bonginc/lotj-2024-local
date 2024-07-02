@@ -1,0 +1,1152 @@
+#ALIAS {action}
+{
+    #read .tt/%1.tin;
+    #echo {You have loaded %1};
+    #variable {action} {%1}
+}
+
+#ALIAS {actiond}
+{
+    actiondesc $actiondesc
+}
+
+#ALIAS {amm}
+{
+    get ammo back;
+    ammo
+}
+
+#ALIAS {ap}
+{
+    approach %1
+}
+
+#ALIAS {apd}
+{
+    ap droid
+}
+
+#ALIAS {apl}
+{
+    autopilot;
+    shield on;
+    pilot;
+    launch
+}
+
+#ALIAS {apt}
+{
+    ap $targets[1]
+}
+
+#ALIAS {balance}
+{
+    bank $bank[1] balance
+}
+
+#ALIAS {bankmove}
+{
+    bank $bank[1] withdraw 1000000;
+    bank $bank[2] deposit 1000000
+}
+
+#ALIAS {botstart}
+{
+    #echo {botcommand = $targets[1]};
+    #variable {botToggle} {On};
+    #variable {botcommand} $targets[1];
+    bot start;
+    $botcommand;
+    #action {You may now bot again.}{afk;bot start;$botcommand}
+}
+
+#ALIAS {botstop}
+{
+    #variable {botToggle} {Off};
+    bot stop;
+    #unaction {^You may now bot again.}
+}
+
+#ALIAS {build}
+{
+    #session jedi legendsofthejedi.com 5600;
+    #read .tt/log;
+    log on;
+    lithium
+}
+
+#ALIAS {c}
+{
+    clan %0
+}
+
+#ALIAS {cal}
+{
+    radar;
+    #showme {calc %1 $enemyradarCoords[1]};
+    #script {python .tt/calc.py %1 $enemyradarCoords[1]}
+}
+
+#ALIAS {capt}
+{
+    trac %1 capture %2
+}
+
+#ALIAS {cargoon}
+{
+    $fillcargo;
+    #read .tt/cargo.tin
+}
+
+#ALIAS {cb}
+{
+    closebay all
+}
+
+
+#ALIAS {ch}
+{
+    chaff
+}
+
+#ALIAS {chanoff}
+{
+    channel -ooc;
+    channel -newbie
+}
+
+#ALIAS {chanon}
+{
+    channel +ooc;
+    channel +newbie
+}
+
+#ALIAS {cl}
+{
+    #path stop;
+    clearstack;
+    goto
+}
+
+#alias {clearmap}
+{
+    #variable plusMinus {};
+    #script {python .tt/clearmap.py};
+    graphit
+}
+
+#ALIAS {jedi}
+{
+    #session jedi legendsofthejedi.com 5656;
+    #read .tt/log;
+    log on
+}
+
+#ALIAS {ct}
+{
+    circle $targets[1]
+}
+
+#ALIAS {db}
+{
+    dub %1 target;
+    t target
+}
+
+#ALIAS {dcc}
+{
+    duty droid currentcom %0
+}
+
+#ALIAS {dd}
+{
+    duty droid drop
+}
+
+#ALIAS {ddrop}
+{
+    duty droid drop %1
+}
+
+#ALIAS {dele}
+{
+    datamem delete %1
+}
+
+#ALIAS {deposit}
+{
+    bank $bank deposit %1
+}
+
+#ALIAS {dest}
+{
+    #loop {1} {10} {true}
+    {
+        hold $targets[1];
+        throw $targets[1];
+        get $targets[1]
+    }
+}
+
+#ALIAS {df}
+{
+    duty $droid follow
+}
+
+#ALIAS {dh}
+{
+    duty $droid holster
+}
+
+#ALIAS {diag}
+{
+    diagnose %1;
+    var targets[1] %1
+}
+
+#ALIAS {ding}
+{
+    #bell ring
+}
+
+#ALIAS {dk}
+{
+    duty $droid kill %1
+}
+
+#ALIAS {do}
+{
+    duty $droid open %1
+}
+
+#ALIAS {dp}
+{
+    duty $droid put %1 $locker
+}
+
+#ALIAS {dr}
+{
+    @draw{simple leather holster}
+}
+
+#ALIAS {dra}
+{
+    @draw{tanned}
+}
+
+#ALIAS {ds}
+{
+    duty $droid leave
+}
+
+#ALIAS {dsay}
+{
+    duty $droid emote %0
+}
+
+#ALIAS {dstat}
+{
+    droidstat
+}
+
+#ALIAS {du}
+{
+    duty $droid use %1
+}
+
+#ALIAS {dw}
+{
+    duty $droid draw;
+    duty $droid equip toy;
+    duty $droid kill %1
+}
+
+#ALIAS {edit}
+{
+    datamem write %1
+}
+
+#ALIAS {eject}
+{
+    datamem eject %1
+}
+
+#ALIAS {envi}
+{
+    #if {$cloakEnvi==1}
+    {
+        remove $cloak;
+        wear envirosuit;
+        #variable {cloakEnvi} {0}
+    };
+    #else
+    {
+        remove envirosuit;
+        wear $cloak;
+        #variable {cloakEnvi} {1}
+    }
+}
+
+#ALIAS {f}
+{
+    fire
+}
+
+#ALIAS {fi}
+{
+    fire ion
+}
+
+#ALIAS {firs}
+{
+    #unvariable {healthFull};
+    holster;
+    get medpac back;
+    hold medpac;
+    eq;
+    first
+}
+
+#alias firstaid
+{
+           #if {
+                "$MSDP_HEALTH" == "$MSDP_HEALTHMAX"
+            }
+            {
+                #ECHO Stop!;
+                #bell;
+                #if {
+                    $gotovar == 1
+                } {
+                    goto
+                };
+                #variable firs 1;
+                #delay {
+                    2
+                } {
+                    #unvariable {
+                        healthFull
+                    };
+                };
+                remove medpac;
+                put medpac back
+            };
+            #else
+            {
+                #bell; 
+                #if {
+                    $gotovar == 1
+                } {
+                    goto
+                };
+                first;
+                #math {
+                    MSDP_MEDPACPOWER
+                } {
+                    $MSDP_MEDPACPOWER - 1
+                };
+            };
+
+}
+
+
+#ALIAS {fl}
+{
+    fire laser
+}
+
+#ALIAS {fleet}
+{
+    fleetradar targets;
+    #log a .tt/fleetradar;
+    #delay {bob} {#log off}{1}
+}
+
+#ALIAS {fm}
+{
+    fire missile
+}
+
+#ALIAS {fr}
+{
+    fire rocket
+}
+
+#ALIAS {ft}
+{
+    fire torpedos
+}
+
+#ALIAS {fuel}
+{
+    refuel %0 full
+}
+
+#alias {fuelsq}
+{
+    #loop {1}{4} {shipLoop} {fuel $xship[$shipLoop]}
+}
+
+#ALIAS {g}
+{
+    group
+}
+
+#ALIAS {gra}
+{
+    ap $targets[1];
+    #action {You step closer to%*} {grab $targets[1];#action {You grab ahold of%*} {#echo {sub $targets[1]};sub $targets[1];};}
+}
+
+#alias {graphit}
+{
+    #script {python .tt/graphCoord.py}
+}
+
+#ALIAS {halt}
+{
+    trac %1 halt
+}
+
+#ALIAS {ho}
+{
+    remove blade;
+    tuck blade drawstring;
+    tuck drawstring greave
+}
+
+#ALIAS {hols}
+{
+    holster tanned
+}
+
+#ALIAS {ht}
+{
+    hitall
+}
+
+#alias {jamit}
+{
+    jam $targets[1]
+}
+
+#ALIAS {k}
+{
+    kill $targets[1]
+}
+
+#ALIAS {kik}
+{
+    kick
+}
+
+
+#ALIAS {laun}
+{
+    launch;
+    var planet %1;
+    #action {The ship leaves the platform far behind as it flies into space} 
+    {
+        $planet;
+        #unaction {^The ship leaves the platform far behind as it flies into space}
+    };
+    #action {[Status]: Hyperspace calculations have been completed.}
+    {
+        #ticker {hyper} {hyper on} {30};
+        #unaction {[Status]: Hyperspace calculations have been completed.};
+        #action {You push forward the hyperspeed lever.}
+        {
+            untick hyper;
+            #unaction {You push forward the hyperspeed lever.
+            };
+            #action {The ship lurches slightly as it comes out of hyperspace.}
+            {
+                look;
+                course $planet;
+                #unaction {The ship lurches slightly as it comes out of hyperspace.};
+                #action {You begin orbiting%*}
+                {
+                    zone $planet;
+                    land$planet;
+                    var planet;
+                    #unaction {You begin orbiting%*}
+                }
+            }
+        }
+    }
+}
+
+#ALIAS {ld}
+{
+    look $droid
+}
+
+#ALIAS {lean}
+{
+    emote leans on #staff
+}
+
+#ALIAS {leav}
+{
+    open hatch;
+    leave;
+    close $cargoship
+}
+
+#ALIAS {lia}
+{
+    look in $ammoCase
+}
+
+#ALIAS {lib}
+{
+    look in bag
+}
+
+#ALIAS {lic}
+{
+    look in $vitapill
+}
+
+#ALIAS {lif}
+{
+    look in $waist
+}
+
+#ALIAS {lil}
+{
+    look in $locker;
+    look in locker
+}
+
+#ALIAS {lip}
+{
+    look in $backpack
+}
+
+#ALIAS {lir}
+{
+    look in armguard
+}
+
+#ALIAS {lis}
+{
+    listc $cargoship
+}
+
+#alias {listship} 
+{
+    #read .tt/locate.tin;
+    #script {python .tt/getShipInfo.py %1 %2 %3}
+}
+
+#ALIAS {lix}
+{
+    look in x
+}
+
+#ALIAS {lmao}
+{
+    emote rolls on the floor dying of laughter
+}
+
+#ALIAS {Load}
+{
+    datamem load %0
+}
+
+#alias {loadskill}
+{
+    #variable {loadSkill} {%0};
+    #list $loadSkill size skillSize;
+    #if {"espionage" == "$loadSkill"}
+    {
+        #loop {$skillSize} {1} {monitorLoop}
+        {
+            t $espionage[$monitorLoop]
+        }
+    };
+    #elseif {"combat" == "$loadSkill"}
+    {
+        #loop {$skillSize} {1} {monitorLoop}
+        {
+            t $combat[$monitorLoop]
+        }
+    };
+    #elseif {"leadership" == "$loadSkill"}
+    {
+        #loop {$skillSize} {1} {monitorLoop}
+        {
+            t $leadership[$monitorLoop]
+        }
+    };
+    #elseif {"engineering" == "$loadSkill"}
+    {
+        #loop {$skillSize} {1} {monitorLoop}
+        {
+            t $engineering[$monitorLoop]
+        }
+    };
+    #elseif {"piloting" == "$loadSkill"}
+    {
+        #loop {$skillSize} {1} {monitorLoop}
+        {
+            t $piloting[$monitorLoop]
+        }
+    };
+    #elseif {"slicer" == "$loadSkill"}
+    {
+        #loop {$skillSize} {1} {monitorLoop}
+        {
+            t $slicer[$monitorLoop]
+        }
+    };
+    #elseif {"medical" == "$loadSkill"}
+    {
+        #loop {$skillSize} {1} {monitorLoop}
+        {
+            t $medical[$monitorLoop]
+        }
+    };
+    #else 
+    {
+        #showme {%1 isn't found.};
+    }
+}
+
+#ALIAS {loh}
+{
+    look out hatch
+}
+
+#ALIAS {lp}
+{
+    look datapad
+}
+
+#ALIAS {m}
+{
+    murder %0
+}
+
+#alias {markit}
+{
+    #script {python .tt/addCoord.py %1 %2 black};
+    graphit
+}
+
+#ALIAS {med}
+{
+    get medpac back;
+    holster;
+    hold medpac
+}
+
+
+#ALIAS {moniall}
+{
+    monitor;
+    #loop {1} {$monitor[-1]} {monitorLoop}
+    {
+        monitor $monitorLoop
+    };
+    stop
+}
+
+#ALIAS {nofi}
+{
+    #if {$nofi==1}
+    {
+        #echo {NO FIGHTING};
+        config +nofight;
+        #variable {nofi} {0}
+    };
+    #elseif {$nofi==0}
+    {
+        #echo {FIGHT};
+        config -nofight;
+        #variable {nofi} {1}
+    }
+}
+
+#ALIAS {ob}
+{
+    openbay all
+}
+
+#ALIAS {oco}
+{
+    locker close
+}
+
+#ALIAS {olo}
+{
+    locker open
+}
+
+#ALIAS {ords}
+{
+    order $order say %0
+}
+
+#ALIAS {ordt}
+{
+    order $order talk %0
+}
+
+#ALIAS {p}
+{
+    proximity
+}
+
+#ALIAS {pd}
+{
+    package deliver
+}
+
+#ALIAS {picka}
+{
+    pick %1;
+    enter %1;
+    close hatch
+}
+
+#ALIAS {pill}
+{
+    get pill container;
+    eat pill
+}
+
+#ALIAS {play}
+{
+    #run {play} {mpc play}
+}
+
+#ALIAS {pload}
+{
+    #showme {Path %1 Loaded};
+	#path load {%1}
+}
+
+#ALIAS {plot}
+{
+    #script {python ~/.tt/plotit.py}
+}
+
+#ALIAS {pp}
+{
+    proximity projectiles
+}
+
+#ALIAS {ps}
+{
+    proximity speed
+}
+
+#ALIAS {pss}
+{
+    proximity ships
+}
+
+#alias {relo}
+{
+	rem pist;
+	amm;
+	wield pist;
+	rem 2.pist;
+	amm;
+	wield pist
+}
+
+#ALIAS {ra}
+{
+    radar;
+    #action {^Uncharted space$} 
+    {
+        log off;
+        #log overwrite .tt/radarList.tin;
+        #delay {1} 
+        {
+            log off;
+            #read .tt/log.tin;
+            log on;
+	    #unaction {^Uncharted space$};
+            #unaction {%*Sector%*};
+            #unaction {%*System%*};
+            #script {python .tt/radarList.py}
+        }
+    };
+    #action {%*Sector$} 
+    {
+        log off;
+        #log overwrite .tt/radarList.tin;
+        #delay {1} 
+        {
+            log off;
+            #read .tt/log.tin;
+            log on;
+            #unaction {%*Sector$};
+            #unaction {%*System$};
+            #script {python .tt/radarList.py}
+        }
+    };
+    #action {%*System$} 
+    {
+        log off;
+        #log overwrite .tt/radarList.tin;
+        #delay {1}
+        {
+            log off;
+            #read .tt/log;
+            log on;
+            #unaction {%*Sector$};
+            #unaction {%*System$};
+            #script {python .tt/radarList.py}
+        }
+    }
+}
+
+#ALIAS {res}
+{
+    research $targets[1]
+}
+
+#nop #ALIAS {reset}
+{
+    tune $comm1 0;
+    tune $comm2 0;
+    tune $comm3 0;
+    tune $comm4 0;
+    tune $comm5 0;
+    seten $comm1 0;
+    seten $comm2 0;
+    seten $comm3 0;
+    seten $comm4 0;
+    seten $comm5 0
+}
+
+#ALIAS {ren}
+{
+	@openship{$rship};
+	u;
+	#2 n;
+	pilot;
+	autopilot off;
+	shield on
+}
+
+#ALIAS {rex}
+{
+	shield on;
+	autopilot on;
+	s;
+	s;
+	d;
+	@closeship{$rship};
+}
+
+#ALIAS {rif}
+{
+    draw low;
+    holster;
+    hold rifle
+}
+
+#ALIAS {rpw}
+{
+    get tookit back;
+    get oil armguard;
+    get dura armguard;
+    remove $targets[1];
+    repairw $targets[1];
+    #action {You finish your work and hold up the fully-restored weapon.} {wield $targets[1];put toolkit back;nt;#unaction {You finish your work and hold up the fully-restored weapon.}}
+}
+
+#ALIAS {rt}
+{
+    retreat %0
+}
+
+#ALIAS {scd}
+{
+    scan down
+}
+
+#ALIAS {sce}
+{
+    scan e
+}
+
+#ALIAS {scn}
+{
+    scan n
+}
+
+#ALIAS {scne}
+{
+    scan ne
+}
+
+#ALIAS {scnw}
+{
+    scan nw
+}
+
+#ALIAS {scs}
+{
+    scan s
+}
+
+#ALIAS {scse}
+{
+    scan se
+}
+
+#ALIAS {scsw}
+{
+    scan sw
+}
+
+#ALIAS {scu}
+{
+    scan up
+}
+
+#ALIAS {scw}
+{
+    scan w
+}
+
+#ALIAS {self}
+{
+    look self
+}
+
+
+#ALIAS {setbattle}
+{
+    #unalias {Hyperjump complete.}
+}
+
+#ALIAS {setmag}
+{
+    #variable {direction} {%0}
+}
+
+#ALIAS {shit}
+{
+    use shield;
+    draw;
+    flee;
+    hide
+}
+
+#ALIAS {shor}
+{
+    short %1;
+    open %1
+}
+
+#alias {showCombat}
+{
+    #list {boxes} {clear};
+    #list {buttonCommands} {clear};
+    #loop {1} {22} {boxVar} 
+    {
+    	#list {boxes} {add} {$combatBoxes[2][$boxVar]};
+    	#list {buttonCommands} {add} {$combatCommands[2][$boxVar]};
+    };:
+}
+
+#alias {showPilot}
+{
+    #list {boxes} {clear};
+    #list {buttonCommands} {clear};
+    #loop {1} {22} {boxVar} 
+    {
+    	#list {boxes} {add} {$combatBoxes[1][$boxVar]};
+    	#list {buttonCommands} {add} {$combatCommands[1][$boxVar]};
+    };:
+}
+
+#ALIAS {shutup}
+{
+    duty $droid ignore
+}
+
+#ALIAS {sl}
+{
+    ap %1;
+    #action {You step closer to%*}{palm case greave;palm zipper case;palm microphone zipper;tune microphone %2;tuck zipper case;tuck case greav;slip microphone %1;#unaction You step closer to%*}
+}
+
+#ALIAS {sld}
+{
+    palm microphone pant;
+    tune microphone %1;
+    drop microphone;
+    conceal microphone
+}
+
+#ALIAS {smoke}
+{
+    palm canister greav;
+    hold canister;
+    arm %1;
+    throw %2
+}
+
+#ALIAS {sni}
+{
+    vibr;
+    get ammo back;
+    ammo;
+    set full;
+    snipe %1 $targets[1]
+}
+
+#ALIAS {snip}
+{
+    draw low;
+    ammo;
+    snipe $direction $targets[1]
+}
+
+#ALIAS {soa}
+{
+    pilot;
+    shield on;
+    autopilot on
+}
+
+#ALIAS {spi}
+{
+    kill spiced
+}
+
+#ALIAS {sq}
+{
+    squadron status
+}
+
+#alias {sch}
+{
+    squadron chaff
+}
+
+#ALIAS {sqr}
+{
+    squadron roll
+}
+
+#alias {sqre}
+{
+    squardon recharge
+}
+
+#ALIAS {st}
+{
+    status
+}
+
+#ALIAS {star}
+{
+    calc perseus -23312 38476 -9861
+}
+
+#ALIAS {sub}
+{
+    subdue $targets[1]
+}
+
+#ALIAS {swi}
+{
+    ap %1;
+    #action {You step closer to him.} {swipe credits %1;#unaction You step closer to him.}
+}
+
+#alias {targ}
+{
+    target $targets[1]
+}
+
+#ALIAS {tato}
+{
+    calc arkanis 2400 2400 1900
+}
+
+#ALIAS {ti}
+{
+    #variable;
+    #ticker
+}
+
+#ALIAS {ticker}
+{
+    %1 %2;
+    #ticker {bob} {%1 %2} {60}
+}
+
+#ALIAS {timestamp}
+{
+    #format {time} {%t} {%H:%M:%S %m-%d-%Y}
+}
+
+#ALIAS {tools}
+{
+    get toolkit back;
+    get oven back;
+    get kit back
+}
+
+#ALIAS {top}
+{
+    #variable {topic} {%1};
+    res
+}
+
+#ALIAS {trai}
+{
+    %1 %2 %3;
+    #ticker {bob} {%1 %2 %3} {%4}
+}
+
+#ALIAS {trans}
+{
+    duty $droid assist;
+    duty $droid currentcom translation
+}
+
+#ALIAS {untick}
+{
+    #unticker %1;
+    #echo {%1 DONE}
+}
+
+#ALIAS {var}
+{
+    #variable {%1} {%2}
+}
+
+#ALIAS {vibr}
+{
+    holster;
+    remove $holster;
+    draw;
+    wear $holster
+}
+
+#ALIAS {View}
+{
+    datamem view %1
+}
+
+#ALIAS {withdraw}
+{
+    bank $bank withdraw %1
+}
+
+#ALIAS {write}
+{
+    datamem write new
+}

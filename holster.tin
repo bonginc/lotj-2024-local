@@ -1,0 +1,17 @@
+#class holster assign
+{
+	#action {You finish your work and hold up a brand new holster.}
+	{
+		makeholster &wa &ggreen &wholster&d
+	};
+
+	#action {You can't figure out how to fit the parts together.}
+	{
+		makeholster &wa &ggreen &wholster&d
+	};
+
+	#action {You're too exhausted to do that right now!}
+	{
+		rest
+	}
+}

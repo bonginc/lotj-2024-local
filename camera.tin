@@ -1,0 +1,8 @@
+#class camera assign
+{
+	#action {You can't seem to call%*} {camera};
+	#action {The camera beeps, signalling that it has been hooked up properly.} {camera};
+	#action {You find a camera and uninstall it.} {install};
+	#action {You were unable to pick up any cameras.} {camera};
+	#action {Wait, how do you do this again?} {install}
+}

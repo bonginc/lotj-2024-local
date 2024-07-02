@@ -1,0 +1,174 @@
+#!/usr/local/bin/tt++
+
+#ALIAS {adi}
+{
+     archive;
+     download;
+     install
+}
+
+#ALIAS {archive}
+{
+     #script {file} {ls -l --time-style=full-iso tintin-beta.tar.gz};
+     #script {exec} {ls -l --time-style=full-iso tt/src/tt++};
+     #showme {};
+     #if {&file[]}
+     {
+          #regexp {$file[1]} {%d-%d-%d %d:%d:%d}
+          {
+               #var date {&1-&2-&3_&4:&5:&6};#system mv tintin-beta.tar.gz .tt/archive/${date}_tintin-beta.tar.gz;#showme {};#showme {<ffa>Archiving <afa>tintin-beta.tar.gz<ffa> dated <afa>$date}
+          }
+     };
+     #else
+     {
+          #showme {<ffa>No archivable sourcecode found.}
+     };
+     #if {&exec[]}
+     {
+          #regexp {$exec[1]} {%d-%d-%d %d:%d:%d}
+          {
+               #var date {&1-&2-&3_&4:&5:&6};#system mv tt/src/tt++ .tt/archive/bin/${date}_tt++;#showme {<ffa>Archiving <afa>tt++ executable   <ffa> dated <afa>$date};
+          }
+     };
+     #else
+     {
+          #showme {<ffa>No archivable binaries found.}
+     }
+}
+
+#ALIAS {download}
+{
+     archive;
+     #showme {};
+     #showme {<ffa>Retrieving <afa>tintin-beta.tar.gz<ffa> from <afa>https://mudhalla.net};
+     #system {wget https://mudhalla.net/tintin-beta.tar.gz};
+     #script {file} {ls -l --time-style=full-iso tintin-beta.tar.gz};
+     #if {&file[]}
+     {
+          #regexp {$file[1]} {%d-%d-%d %d:%d:%d}
+          {
+               #var date {&1-&2-&3_&4:&5:&6};#system cp tintin-beta.tar.gz .tt/archive/${date}_tintin-beta.tar.gz;#showme {};#showme {<ffa>Retrieved <afa>tintin-beta.tar.gz<ffa> dated <afa>$date}
+          };
+          #else
+          {
+               #showme {<ffa>Retrieved <afa>tintin-beta.tar.gz<ffa> dated <faa>unknown date}
+          }
+     };
+     #else
+     {
+          #showme {<ffa>Failed to retrieve <afa>tintin-beta.tar.gz<ffa> <faa>file not found};
+          #return
+     }
+}
+
+#ALIAS {install}
+{
+     #showme {<ffa>Building <afa>TinTin++<ffa>, please remain seated.};
+     #script {file} {ls tt/src/Makefile.in};
+     #if {&file[]}
+     {
+          #system {cp tt/src/Makefile.in tt/src/Makefile.bak}
+     };
+     #system {tar -zxf tintin-beta.tar.gz};
+     #script {diff} {diff tt/src/Makefile.in tt/src/Makefile.bak};
+     #script {file} {ls tt/src/Makefile};
+     #if {&diff[] == 0 && &file[]}
+     {
+          #showme {<ffa>Reconfiguration unnecessary.};
+          #system {cd tt/src/;touch Makefile;make install}
+     };
+     #else
+     {
+          #showme {<ffa>Reconfiguration necessary.};
+          #system {cd tt/src/;./configure;make install}
+     };
+     #showme {<ffa>Installation process finished.}
+}
+
+#ALIAS {history}
+{
+     #script {exec} {ls -l archive/bin};
+     #if {&exec[] == 0}
+     {
+          #showme <ffa>No archived binaries found.;
+          #return
+     };
+     #math count 0;
+     #variable history {};
+     #foreach {$exec[-20..-1]} {binary}
+     {
+          #regexp {$binary} {%d-%d-%d_%d:%d:%d_tt++}
+          {
+               #var date {&1-&2-&3 &4:&5:&6};#math count $count + 1;#list history insert 1 {&0};#echo {<afa>%+3s<ffa> - <afa>tt++<ffa> - <afa>%s} {$count} {$date}
+          }
+     };
+     #if {$count == 0}
+     {
+          #showme <ffa>No archived binaries found.
+     }
+}
+
+#ALIAS {revert}
+{
+     #if {{%0} == {}}
+     {
+          #script {exec} {ls -l .tt/archive/bin};
+          #if {&exec[] == 0}
+          {
+               #showme <ffa>No archived binaries found.;
+               #return
+          };
+          #showme {<ffa>You can revert to one of the following binaries:};
+          #math count 0;
+          #foreach {$exec[-20..-1]} {binary}
+          {
+               #regexp {$binary} {%d-%d-%d_%d:%d:%d_tt++}
+               {
+                    #var date {&1-&2-&3 &4:&5:&6};#math count $count + 1;#list history insert 1 {&0};#echo {<afa>%+3s<ffa> - <afa>tt++<ffa> - <afa>%s} {$count} {$date}
+               }
+          };
+          #showme {};
+          #showme {<ffa>Currently installed binary:};
+          #script {exec} {ls -l --time-style=full-iso /usr/local/bin/tt++};
+          #if {&exec[] == 0}
+          {
+               #showme <ffa>No current binary found.
+          };
+          #else
+          {
+               #regexp {$exec[1]} {%d-%d-%d %d:%d:%d}
+               {
+                    #var date {&1-&2-&3 &4:&5:&6};#echo {<afa>%+3s<ffa> - <afa>tt++<ffa> - <afa>%s} {} {$date}
+               }
+          };
+          #showme <ffa>Use: revert <number> to revert.
+     };
+     #else
+     {
+          #if {%0 >= 1 && %0 <= 20}
+          {
+               #script {exec} {ls -l .tt/archive/bin};
+               #if {&exec[] == 0}
+               {
+                    #showme <ffa>No archived binaries found.;
+                    #return
+               };
+               #foreach {$exec[-1..-20]} {binary}
+               {
+                    #regexp {$binary} {%d-%d-%d_%d:%d:%d_tt++}
+                    {
+                         #var date {&1-&2-&3 &4:&5:&6};#math count $count - 1;#list history insert 1 {&0};
+                    }
+               };
+               #if {&history[%0]}
+               {
+                    #system {cp -f .tt/archive/bin/$history[%0] /usr/local/tt++};
+                    #showme {<afa>.tt/archive/bin/$history[%0]<ffa> copied to <afa>/usr/local/tt++}
+               }
+          };
+          #else
+          {
+               #showme <ffa>Use: revert <number> to revert.
+          }
+     }
+}

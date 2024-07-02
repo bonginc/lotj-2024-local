@@ -1,0 +1,5 @@
+cd ~/.tt/
+git init
+git add .
+git commit -m 'updated'
+git push

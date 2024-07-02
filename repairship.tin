@@ -1,0 +1,17 @@
+#action {Ships drive repaired.} {
+  repairship $repaired;
+}
+
+#action {You fail to locate the source of the problem.} {
+  repairship $repaired;
+}
+
+#action {You are now an adept of ship maintenance!} {
+  repairshipstop;
+};
+
+#alias {repairshipstop} {
+  #unaction Ships drive repaired.;
+  #unaction You fail to locate the source of the problem.;
+  #variable {repaired} {drive};
+}

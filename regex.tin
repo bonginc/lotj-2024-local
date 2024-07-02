@@ -1,0 +1,7 @@
+#action {%1 (good)} {#regex {%1} {{.*} {.*}$} {t &2}}
+
+#nop #regex {[The Liberation Union]} {\b[!-/:-@\[-`\{-~].*The\sLiberation\sUnion\].*} {comm_window_show clan &1}}
+
+№nop #action {[The Liberation Union]} {#regex {%1} {.*} {comm_window_show clan &1;#line log .tt/clan}}
+
+#nop #action {^CommNet ([0-9]+) \\[.*\\][()a-zA-Z<> ]*: (.*)} {#showme &1 &2}

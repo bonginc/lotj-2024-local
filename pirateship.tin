@@ -1,0 +1,2 @@
+#action {Despite your best efforts, you were unable to steal the ship.} {pirateship}
+#action {You have successfully stolen%*} {pirate release $targets[1];pirate}

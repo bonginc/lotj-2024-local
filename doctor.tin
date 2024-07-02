@@ -1,0 +1,29 @@
+#echo {doctor $$targets[1]}
+
+#action {You heal%*} 
+{
+	doctor $targets[1];
+}
+
+#action {You tend to%*}
+{
+  doctor $targets[1];
+}
+
+#action {You're too exhausted to do that right now!}
+{
+	rest;
+	#ticker {doc}
+	{
+		#if {"$MSDP_MOVEMENT" == "$MSDP_MOVEMENTMAX"}
+		{
+			untick doc;
+			stand;
+			doctor $targets[1];
+		};
+		#else
+		{
+			#echo {Hangout};
+		}; 
+	} {30};
+}

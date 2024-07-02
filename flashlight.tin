@@ -1,0 +1,18 @@
+#variable {day} {0}
+#action {%[T.night%} 
+{
+	#if{$day == 0}
+	{	
+		#variable {day} {1};
+		use flash
+	};
+};
+
+#action {%[T.day%} 
+{	
+	#if {$day == 1}
+	{
+		#variable {day} {0};
+		use flash
+	};
+};

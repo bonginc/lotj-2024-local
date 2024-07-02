@@ -1,0 +1,360 @@
+#nop Do not load. Testing functions. Functions need to be moved out and changed to aliases again
+
+#function makearmor {
+
+    #action {You finish working on%0} {
+    	#variable {makearmorVar} {helm};
+	    makearmor $makearmorVar
+    }
+}
+
+
+#function makeblade {
+    #echo {
+        Level 45 Engineering Skill
+  
+        Syntax: makeblade <blade name>
+ 
+        Required Items: Durasteel, Battery, Superconductor, Circuit, an Oven and a Toolkit.
+        This ability allows an engineer to create a custom vibro-blade in a workshop.
+    };
+
+    #action {You finish your work and hold up your newly created blade.} {
+        makeblade $blade
+};
+
+    #action {You can't figure out how to fit the parts together.} {
+        makeblade $blade}
+}
+
+#function makecamera assign
+{
+
+	#variable {makeCamera} {&123a simple camera&D};
+
+	#echo 
+	{
+		buycamera,
+		cameraoff,
+		makecamera
+	};
+	#echo {"VARIABLE:	$$makeCamera"};
+
+	#action {You finish your work and hold up your newly created camera.} {makecamera $makeCamera};
+	#action {You can't figure out how to fit the parts together.} {makecamera $makeCamera};
+	#action {It explodes in a ball of fire!} {makecamera $makeCamera};
+	#alias {buycamera} {buy superconductor;buy circuit;buy battery;buy lens;buy duraplast};
+}
+
+#function makecanteen {
+    #alias {makecanteenStart} {
+        makecanteen a canteen;
+        #action {You finish your work and hold up your newly created canteen.} {makecanteen $canteen};
+        #action {You can't figure out how to fit the parts together.} {makecanteen $canteen}
+        };
+
+        #variable {canteen} {&?a &?c&?a&?n&?t&?e&?e&?n&D};
+        #echo {makecanteenStart starts the script. $canteen is the item}
+}
+
+#function makecircuit {
+    #echo {Command:makecirc Variable:$$circuit};
+
+    #alias {makecirc} {
+    	makecircuit $circuit
+    };
+
+    #action {You finish your work and hold up your newly created circuit.} {
+    	makecircuit $circuit
+    };
+
+    #action {You hold up your newly created circuit...} {
+	    makecircuit $circuit
+    }
+}
+
+#function makeclothing {
+    #action {You finish your work and hold up your newly created clothing.} {
+        give jack jor;makeclothing $clothing
+    };
+    #action {You can't figure out what to do.} {
+        makeclothing $clothing
+    };
+    #variable {clothing} {body a thermal jacket with a zipper};
+    #echo {$$clothing $clothing}
+}
+
+#function makecomlink {
+    #alias {setupcomlink}
+{
+	@comlink{};
+};
+
+#function {comlink} 
+{
+	#ECHO {Lithium's comlink maker. Input the design you want and hit enter this app will append the comlink numbers and the program will use colorcheck %0 so you may verify the comlinks.};
+	#ECHO {Please enter the design for your comlink. IE. &Wa white comlink};
+	#event {RECEIVED INPUT}
+	{
+		#variable {comlink} {%%0};
+		#variable {partName[1]} {$comlink};
+		colorcheck $comlink;
+		#unevent {RECEIVED INPUT};
+		@location{}
+	};
+	#echo {comlink function done}
+};
+
+#function {location}
+{
+	#Echo {Enter location of comlink: Hold, Head, Wrist, Fingers, Ears, Neck.};
+	#event {RECEIVED INPUT}
+	{
+		#variable {location} {%%0};
+		#variable {holdLocation[1]} {$location};
+		#echo {Location Set};
+		#unevent {RECEIVED INPUT};
+		@commNumber{}
+	}
+};
+
+#function {clan}
+{
+	#echo {Enter Clan Name.};
+	#event {RECEIVED INPUT}
+	{
+		#variable {clan} {%%0};
+		#variable {channelName[1]} {$clan};
+		#echo {Clan name set.};
+		#unevent {RECEIVED INPUT};
+		makecom
+	}
+};
+
+#function {commNumber}
+{
+	#echo {Enter comm channel number.};
+	#event {RECEIVED INPUT}
+	{
+		#variable {commNumber} {%%0};
+		#variable {channelNumber[1]} {$commNumber};
+		#echo {Comm Set};
+		#unevent {RECEIVED INPUT};
+		@clan{}
+	}
+};
+
+#alias {buycom}
+{	
+	#ECHO {BUY 10 ITMES FROM CORELLIA ONLY! ARE YOU ON CORELLIA IN THE MALL? Yes/No};
+	#event {RECEIVED INPUT}
+	{
+		#variable {inputCom} {%%0};
+		#if {"$yes"=="$inputCom" == "Yes"}
+		{
+			#10 buy #5;
+			#10 buy #7;	
+			#10 buy #11;
+			#10 buy #9;
+			#10 buy #3;
+			#unevent {RECEIVED INPUT};
+		};
+		#else 
+		{
+			#ECHO {GOTO CORELLIA};
+			#unevent {RECEIVED INPUT}
+		}
+	}
+};
+
+#action {You need a circuit to control the frequency selection.}
+{
+	makecircuit $circuit;
+	#action {You finish your work and hold up your newly created circuit} {
+		makecom;
+		#unaction You finish your work and hold up your newly created circuit
+	}
+};
+
+#action {You finish your work and hold up your newly created comlink.}
+{
+	tune $channelName[$comVar] $channelNumber[$comVar]
+};
+
+#alias {makecom} {
+	#if {"comVar" <= 10} {
+		makecomlink $holdLocation[$comVar] $partName[$comVar] $channelName[$comVar]
+	};
+	#else {
+		#echo DONE!
+	}
+};
+
+#alias {updatename} {
+	#var {channelName[1]} {%0};
+	show_targets
+};
+
+#alias {updatenumber} {
+	#var {channelNumber[1]} {%0};
+	show_targets
+};
+
+#variable {comVar} {1};
+#variable {eOne} {Part Name};
+#variable {eTwo} {Hold Location};
+#variable {eThree} {Channel Name};
+#variable {eFour} {Channel Number};
+#variable {yes} {Yes}
+}
+
+#function makecontainer assign
+{
+	#action {You finish your work and hold up your newly created container.}
+	{
+		makecontainer $container
+	};
+
+	#action {You can't figure out what to do.}
+	{
+		makecontainer $container
+	};
+
+	#echo {makecontainer $$container}
+}
+
+#function makedatapad {
+    #echo {makedatapad $datapad};
+    #action {You finish your work and hold up your newly created datapad.} {makedatapad $datapad};
+    #action {You can't figure out how to fit the parts together.} {makedatapad $datapad};
+    #action {You hold up your newly created datapad...} {makedatapad $datapad}
+}
+
+#function makeflashlight {
+    #action {You finish your work and hold up your newly created flashlight.} {
+    	makeflashlight $flashlight
+    };
+
+    #action {You can't figure out how to fit the parts together.} {
+        makeflashlight $flashlight
+    };
+
+    #alias {stopflashlight} {
+    	#unaction {You can't figure out how to fit the parts together.};
+    	#unaction {You finish your work and hold up your newly created flashlight.}
+    }
+}
+
+#function makeforcepike {
+    #action {You can't figure out how to fit the parts together.} {
+        makeforcepike $forcepike
+    };
+
+    #action {You finish your work and hold up your newly created forcepike.} {
+        makeforcepike $forcepike
+    }
+}
+
+#function makegoggles {
+    #action {You finish your work and hold up your newly created goggles.} {
+        makegoggle $goggle
+    };
+
+    #action {You can't figure out how to fit the parts together.} {
+        makegoggle $goggle
+    }
+}
+
+#function makegrenade {
+    #action {You finish your work and hold up your newly created grenade.} {
+        makegrenade $grenade
+    };
+
+    #action {You're too exhausted to do that right now!} {
+        rest;
+        #ticker {grenade} {stand;makegrenade $grenade;#untick grenade} {360}
+    };
+
+    #action {You can't figure out how to fit the parts together.} {
+        makegrenade $grenade
+    };
+
+    #alias {grenadestop} {
+        #unaction {You're too exhausted to do that right now!};
+        #unaction {#You finish your work and hold up your newly created grenade.};
+        #unaction {You can't figure out how to fit the parts together.}
+    }
+}
+
+#function makeholster {
+    #echo {makeholster $targets[1]};
+    #action {You finish your work and hold up a brand new holster.} {
+        makeholster $targets[1]
+};
+    #action {You can't figure out how to fit the parts together.} {
+        makeholster $targets[1]
+    }
+}
+
+#function makejewelry {
+    #echo {
+Found on Coruscant\n
+Level 30 Engineering Skill
+  
+Syntax: makejewelry <wear location> <name>
+ 
+Required Items: Precious Metal, an Oven and a Toolkit.
+Optional Items: Crystal
+ 
+This ability allows engineers to make jewelry. Crystals can be added, but are
+not required.};
+
+#action {You finish your work and hold up your newly created jewelry.} 
+{
+  give id bundu;
+  #delay {5} {'metal;makejewelry wrist a medical ID bracelet}
+};
+
+#alias {makejewelryoff} {#unaction {You finish your work and hold up your newly created jewelry.}
+    }
+}
+
+#function makelandmine {
+    #action {You finish your work and hold up your newly created landmine.} {
+  makelandmine $landmine
+};
+
+#action {You're too exhausted to do that right now!} {
+  rest;
+  #ticker {landmine} {stand;makelandmine $landmine;#untick landmine} {120}
+};
+
+#action {You can't figure out how to fit the parts together.} {
+  makelandmine $landmine
+};
+
+#alias {landminestop} {
+  #unaction {You're too exhausted to do that right now!};
+  #unaction {#You finish your work and hold up your newly created landmine.};
+  #unaction {You can't figure out how to fit the parts together.}
+    }
+}
+
+#function makemedpac {
+    #action {You finish your work and examine your new, organized medical kit.} {empty wine;makemedpac $medpac};
+
+#action {You will need a liquid container to help dress wounds.} {empty wine;makemedpac $medpac};
+
+#action {You can't figure out how to fit the parts together.} {makemedpac $medpac};
+
+#variable {medpac} {&Oa simple medpac&d}
+}
+
+#class makespice assign {
+    #action {You can't figure out what to do with the stuff.} {
+	makespice bloom $spice
+    };
+    #action {You finish your work.} {
+	makespice bloom $spice
+    }
+}
