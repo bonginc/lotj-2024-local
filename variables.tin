@@ -514,7 +514,7 @@
 #VARIABLE {textcolor} {10}
 #VARIABLE {timesBy} {750}
 #VARIABLE {tone} {nasal}
-#variable {true} {1}
+#variable {true} {0}
 #VARIABLE {vendordesc} {Here is a vendor description}
 #VARIABLE {vitapill} {greaves}
 #VARIABLE {waist} {greave}
