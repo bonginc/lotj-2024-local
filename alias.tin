@@ -67,14 +67,6 @@
     #unaction {^You may now bot again.}
 }
 
-#ALIAS {build}
-{
-    #session jedi legendsofthejedi.com 5600;
-    #read .tt/log;
-    log on;
-    lithium
-}
-
 #ALIAS {c}
 {
     clan %0
