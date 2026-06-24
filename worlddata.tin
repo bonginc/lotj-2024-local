@@ -12,7 +12,6 @@
     {
         {char} {radnoff}
         {host} {legendsofthejedi.com}
-        {name} {jedi}
         {pass} {online}
         {port} {5656}
     }
